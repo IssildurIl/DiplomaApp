@@ -59,7 +59,7 @@ public class Registration extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registration, container, false);
         init(view);
-        return inflater.inflate(R.layout.fragment_registration, container, false);
+        return view;
     }
 
     @Override
