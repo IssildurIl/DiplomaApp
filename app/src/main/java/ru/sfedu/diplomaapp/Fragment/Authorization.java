@@ -38,7 +38,7 @@ public class Authorization extends Fragment {
     private final static int email_field_id = R.id.mailFieldTxt;
     private final static int psw_field_id = R.id.passwordFieldTxt;
     EditText email_field , psw_field;
-
+ 
     public Authorization() {
 
     }
