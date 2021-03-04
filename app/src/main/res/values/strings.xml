@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Приложение для управления проектами с использованием Agile-методологии</string>
+    <string name="reg_name">Введите имя:</string>
+    <string name="reg_last_name">Введите фамилию:</string>
+    <string name="reg_login">Введите логин:</string>
+    <string name="pass_hint">Введите пароль:</string>
+    <string name="mail_hint">Введите электронную почту:</string>
+
+    <string name="valid_btn">Вход</string>
+    <string name="valid_google_btn">Вход через Google</string>
+    <string name="reg_hint_btn">Нет аккаунта?Зарегестрируйтесь!</string>
+    <string name="reg_btn">Регистрация</string>
+    <string name="forget_pass_btn">Забыли пароль?</string>
+    <string name="return_to_auth">Зарегестрированы? Войдите</string>
+    <string name="send_code_btn">Выслать код восстановления на почту</string>
+    <string name="MyChars">Мои задачи</string>
+    <string name="taskdescription">TaskDescription</string>
+    <string name="department">Department</string>
+    <string name="employee">Employee</string>
+</resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/authorization">
+    <fragment
+        android:id="@+id/authorization"
+        android:name="ru.sfedu.diplomaapp.Fragment.Authorization"
+        android:label="fragment_authorization"
+        tools:layout="@layout/fragment_authorization" >
+        <action
+            android:id="@+id/go_to_reg"
+            app:destination="@id/registration" />
+        <action
+            android:id="@+id/go_to_chars"
+            app:destination="@id/chooseTask" />
+        <action
+            android:id="@+id/go_to_forgetPas"
+            app:destination="@id/forgetPassword" />
+        <action
+            android:id="@+id/go_to_chars_google"
+            app:destination="@id/chooseTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/registration"
+        android:name="ru.sfedu.diplomaapp.Fragment.Registration"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/go_to_chars"
+            app:destination="@id/chooseTask" />
+        <action
+            android:id="@+id/action_registration_to_authorization2"
+            app:destination="@id/authorization" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/chooseTask"
+        android:name="ru.sfedu.diplomaapp.Fragment.ChooseTask"
+        android:label="fragment_choose_task"
+        tools:layout="@layout/fragment_choose_task" >
+        <action
+            android:id="@+id/go_to_taskList"
+            app:destination="@id/taskList" />
+        <action
+            android:id="@+id/go_to_createTask"
+            app:destination="@id/createTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPassword"
+        android:name="ru.sfedu.diplomaapp.Fragment.ForgetPassword"
+        android:label="fragment_forget_password"
+        tools:layout="@layout/fragment_forget_password" >
+        <action
+            android:id="@+id/go_to_authorization"
+            app:destination="@id/authorization" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskList"
+        android:name="ru.sfedu.diplomaapp.Fragment.TaskList"
+        android:label="fragment_task_list"
+        tools:layout="@layout/fragment_task_list" />
+    <fragment
+        android:id="@+id/createTask"
+        android:name="ru.sfedu.diplomaapp.Fragment.CreateTask"
+        android:label="fragment_create_task"
+        tools:layout="@layout/fragment_create_task" />
+</navigation>
