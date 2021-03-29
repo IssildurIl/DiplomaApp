@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/auth">
+    <fragment
+        android:id="@+id/auth"
+        android:name="ru.sfedu.diplomaapp.auth.Auth"
+        android:label="fragment_auth"
+        tools:layout="@layout/fragment_auth" >
+        <action
+            android:id="@+id/go_to_reg"
+            app:destination="@id/reg" />
+        <action
+            android:id="@+id/go_to_mainView"
+            app:destination="@id/mainView" />
+    </fragment>
+    <fragment
+        android:id="@+id/reg"
+        android:name="ru.sfedu.diplomaapp.auth.Reg"
+        android:label="fragment_reg"
+        tools:layout="@layout/fragment_reg" >
+        <action
+            android:id="@+id/go_to_auth"
+            app:destination="@id/auth" />
+        <action
+            android:id="@+id/go_two_mainView"
+            app:destination="@id/mainView" />
+    </fragment>
+    <fragment
+        android:id="@+id/hellofragment"
+        android:name="ru.sfedu.diplomaapp.mainlist.HelloAct"
+        android:label="fragment_hellofragment"
+        tools:layout="@layout/fragment_hellofragment" />
+    <fragment
+        android:id="@+id/myTask"
+        android:name="ru.sfedu.diplomaapp.mainlist.MyTask"
+        android:label="fragment_my_task"
+        tools:layout="@layout/fragment_my_task" />
+    <fragment
+        android:id="@+id/myProject"
+        android:name="ru.sfedu.diplomaapp.mainlist.MyProject"
+        android:label="fragment_my_project"
+        tools:layout="@layout/fragment_my_project" />
+    <fragment
+        android:id="@+id/toDo"
+        android:name="ru.sfedu.diplomaapp.mainlist.ToDo"
+        android:label="fragment_to_do"
+        tools:layout="@layout/fragment_to_do" />
+    <fragment
+        android:id="@+id/mainView"
+        android:name="ru.sfedu.diplomaapp.auth.MainView"
+        android:label="fragment_main_view"
+        tools:layout="@layout/fragment_main_view" />
+</navigation>

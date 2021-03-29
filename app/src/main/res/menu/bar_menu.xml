@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/hellofragment"
+        android:icon="@drawable/news"
+        android:title="What`s new?"
+        app:showAsAction = "ifRoom"/>
+    <item
+        android:id="@+id/myProject"
+        android:icon="@drawable/projects"
+        android:title="My Projects"
+        app:showAsAction = "ifRoom"/>
+    <item
+        android:id="@+id/myTask"
+        android:icon="@drawable/tasks"
+        android:title="Tasks"
+        app:showAsAction = "ifRoom"/>
+    <item
+        android:id="@+id/toDo"
+        android:icon="@drawable/todo"
+        android:title="ToDo"
+        app:showAsAction = "ifRoom"/>
+</menu>
