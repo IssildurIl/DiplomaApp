@@ -13,8 +13,8 @@
             android:id="@+id/go_to_reg"
             app:destination="@id/reg" />
         <action
-            android:id="@+id/go_to_mainView"
-            app:destination="@id/mainView" />
+            android:id="@+id/go_to_hellofragment"
+            app:destination="@id/hellofragment" />
     </fragment>
     <fragment
         android:id="@+id/reg"
@@ -25,8 +25,8 @@
             android:id="@+id/go_to_auth"
             app:destination="@id/auth" />
         <action
-            android:id="@+id/go_two_mainView"
-            app:destination="@id/mainView" />
+            android:id="@+id/go_two_hellofragment"
+            app:destination="@id/hellofragment" />
     </fragment>
     <fragment
         android:id="@+id/hellofragment"
@@ -48,9 +48,4 @@
         android:name="ru.sfedu.diplomaapp.mainlist.ToDo"
         android:label="fragment_to_do"
         tools:layout="@layout/fragment_to_do" />
-    <fragment
-        android:id="@+id/mainView"
-        android:name="ru.sfedu.diplomaapp.auth.MainView"
-        android:label="fragment_main_view"
-        tools:layout="@layout/fragment_main_view" />
 </navigation>

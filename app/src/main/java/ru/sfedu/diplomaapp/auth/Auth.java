@@ -37,7 +37,8 @@ public class Auth extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        view.findViewById(R.id.reg_btn).setOnClickListener(view1 -> navController.navigate(R.id.go_to_reg));
-        view.findViewById(R.id.valid_btn).setOnClickListener(view1 -> navController.navigate(R.id.go_to_mainView));
+        getActivity().findViewById(R.id.bottom_navigation_view_constraint).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.reg_btn).setOnClickListener(view1 ->{navController.navigate(R.id.go_to_reg); });
+        view.findViewById(R.id.valid_btn).setOnClickListener(view1 -> navController.navigate(R.id.go_to_hellofragment));
     }
 }
