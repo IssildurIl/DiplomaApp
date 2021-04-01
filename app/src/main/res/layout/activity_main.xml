@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9f9f9f"
+    android:background="#484848"
     tools:context=".MainActivity">
 
 
@@ -25,10 +25,12 @@
     <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
         android:id="@+id/bottom_navigation_view_constraint"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/rounded_shape"
         android:orientation="horizontal"
-        app:bnc_mode="inside"
+        app:bnc_mode="spread"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,46 +41,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bt_active="true"
-            app:bt_colorActive="@color/purple_200"
-            app:bt_colorInactive="@color/teal_200"
+            app:bt_badgeTextSize="8dp"
+            app:bt_colorActive="#f06292"
+            app:bt_colorInactive="#f06292"
             app:bt_icon="@drawable/news"
-            app:bt_title="Updates"
             app:bt_padding="@dimen/internal_padding"
-            app:bt_titlePadding="@dimen/design_bottom_navigation_active_text_size"
-            />
+            app:bt_title="Updates"
+            app:bt_titlePadding="@dimen/design_bottom_navigation_active_text_size" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_projects"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bt_active="true"
-            app:bt_colorActive="@color/purple_200"
-            app:bt_colorInactive="@color/teal_200"
+            app:bt_colorActive="#66bb6a"
+            app:bt_colorInactive="#66bb6a"
             app:bt_icon="@drawable/projects"
-            app:bt_title="Projects"
             app:bt_padding="@dimen/internal_padding"
-            />
+            app:bt_title="Projects" />
+
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_tasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bt_active="true"
-            app:bt_colorActive="@color/purple_200"
-            app:bt_colorInactive="@color/teal_200"
+            app:bt_colorActive="#ce93d8"
+            app:bt_colorInactive="#ce93d8"
             app:bt_icon="@drawable/tasks"
-            app:bt_title="Tasks"
             app:bt_padding="@dimen/internal_padding"
-        />
+            app:bt_title="Tasks" />
+
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_todo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bt_active="true"
-            app:bt_colorActive="@color/purple_200"
-            app:bt_colorInactive="@color/teal_200"
+            app:bt_colorActive="#4fc3f7"
+            app:bt_colorInactive="#4fc3f7"
             app:bt_icon="@drawable/todo"
-            app:bt_title="To do"
-            app:bt_padding="@dimen/internal_padding" />
+            app:bt_padding="@dimen/internal_padding"
+            app:bt_title="To do" />
     </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

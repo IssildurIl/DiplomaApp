@@ -23,46 +23,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        getSupportActionBar().hide();
         bncv = findViewById(R.id.bottom_navigation_view_constraint);
         bncv.setBadgeValue(0,"30");
         bncv.setBadgeValue(1,"20");
         bncv.setBadgeValue(2,"20");
         bncv.setBadgeValue(3,"5");
 
-//        ft =getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.fragmentContainerView,new HelloAct());
-//        ft.commit();
+
         bncv.setNavigationChangeListener(new BubbleNavigationChangeListener() {
             @Override
             public void onNavigationChanged(View view, int position) {
                 switch (position){
                     case 0:
-                        ft =getSupportFragmentManager().beginTransaction();
+                        ft = getSupportFragmentManager().beginTransaction();
+                        //ft.setCustomAnimations(R.anim.go_to_right, R.anim.go_to_left, R.anim.go_to_right, R.anim.go_to_left);
                         ft.replace(R.id.fragmentContainerView,new HelloAct());
+                        //ft.addToBackStack(null);
                         ft.commit();
                         break;
                     case 1:
                         ft =getSupportFragmentManager().beginTransaction();
+                        //ft.setCustomAnimations(R.anim.go_to_right, R.anim.go_to_left, R.anim.go_to_right, R.anim.go_to_left);
                         ft.replace(R.id.fragmentContainerView,new MyProject());
                         ft.commit();
                         break;
                     case 2:
                         ft =getSupportFragmentManager().beginTransaction();
+                        //ft.setCustomAnimations(R.anim.go_to_right, R.anim.go_to_left, R.anim.go_to_right, R.anim.go_to_left);
                         ft.replace(R.id.fragmentContainerView,new MyTask());
                         ft.commit();
                         break;
                     case 3:
                         ft =getSupportFragmentManager().beginTransaction();
+                        //ft.setCustomAnimations(R.anim.go_to_right, R.anim.go_to_left, R.anim.go_to_right, R.anim.go_to_left);
                         ft.replace(R.id.fragmentContainerView,new ToDo());
                         ft.commit();
                         break;
                 }
             }
         });
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-//        bottomNavigationView.setBackground(null);
-//        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
-//        NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9f9f9f"
+    android:background="#484848"
     tools:context=".auth.Auth">
 
 

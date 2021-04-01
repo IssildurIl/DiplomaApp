@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ public class Auth extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         getActivity().findViewById(R.id.bottom_navigation_view_constraint).setVisibility(View.INVISIBLE);
-        view.findViewById(R.id.reg_btn).setOnClickListener(view1 ->{navController.navigate(R.id.go_to_reg); });
+        view.findViewById(R.id.reg_btn).setOnClickListener(view1 ->navController.navigate(R.id.go_to_reg));
         view.findViewById(R.id.valid_btn).setOnClickListener(view1 -> navController.navigate(R.id.go_to_hellofragment));
     }
 }

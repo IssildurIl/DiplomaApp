@@ -36,6 +36,7 @@ public class Reg extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+        getActivity().findViewById(R.id.bottom_navigation_view_constraint).setVisibility(View.INVISIBLE);
         view.findViewById(R.id.reg_btn).setOnClickListener(view1 -> navController.navigate(R.id.go_two_hellofragment));
         view.findViewById(R.id.return_to_auth).setOnClickListener(view1 -> navController.navigate(R.id.go_to_auth));
     }
