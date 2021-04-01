@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/hellofragment"
-        android:icon="@drawable/news"
+        android:icon="@drawable/icons_bell_8_24"
         android:title="What`s new?"
         app:showAsAction = "ifRoom"/>
     <item

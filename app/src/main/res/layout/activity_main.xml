@@ -13,19 +13,19 @@
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="666dp"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view_constraint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
-
     <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
         android:id="@+id/bottom_navigation_view_constraint"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="55dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/rounded_shape"
@@ -44,7 +44,7 @@
             app:bt_badgeTextSize="8dp"
             app:bt_colorActive="#f06292"
             app:bt_colorInactive="#f06292"
-            app:bt_icon="@drawable/news"
+            app:bt_icon="@drawable/icons_bell_8_24"
             app:bt_padding="@dimen/internal_padding"
             app:bt_title="Updates"
             app:bt_titlePadding="@dimen/design_bottom_navigation_active_text_size" />
