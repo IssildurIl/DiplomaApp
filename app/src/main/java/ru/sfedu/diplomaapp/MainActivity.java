@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
                         ft = getSupportFragmentManager().beginTransaction();
                         //ft.setCustomAnimations(R.anim.go_to_right, R.anim.go_to_left, R.anim.go_to_right, R.anim.go_to_left);
                         ft.replace(R.id.fragmentContainerView,new HelloAct());
-                        //ft.addToBackStack(null);
                         ft.commit();
                         break;
                     case 1:

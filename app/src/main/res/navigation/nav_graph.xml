@@ -32,12 +32,20 @@
         android:id="@+id/hellofragment"
         android:name="ru.sfedu.diplomaapp.mainlist.HelloAct"
         android:label="fragment_hellofragment"
-        tools:layout="@layout/fragment_hellofragment" />
+        tools:layout="@layout/fragment_hellofragment" >
+        <action
+            android:id="@+id/go_to_createNewTask_from_Hello"
+            app:destination="@id/createNewTask" />
+    </fragment>
     <fragment
         android:id="@+id/myTask"
         android:name="ru.sfedu.diplomaapp.mainlist.MyTask"
         android:label="fragment_my_task"
-        tools:layout="@layout/fragment_my_task" />
+        tools:layout="@layout/fragment_my_task" >
+        <action
+            android:id="@+id/go_to_createNewTask_from_Task"
+            app:destination="@id/createNewTask" />
+    </fragment>
     <fragment
         android:id="@+id/myProject"
         android:name="ru.sfedu.diplomaapp.mainlist.MyProject"
@@ -47,5 +55,14 @@
         android:id="@+id/toDo"
         android:name="ru.sfedu.diplomaapp.mainlist.ToDo"
         android:label="fragment_to_do"
-        tools:layout="@layout/fragment_to_do" />
+        tools:layout="@layout/fragment_to_do" >
+        <action
+            android:id="@+id/go_to_createNewTask_from_ToDo"
+            app:destination="@id/createNewTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/createNewTask"
+        android:name="ru.sfedu.diplomaapp.backgroundActivity.CreateNewTask"
+        android:label="fragment_create_new_task"
+        tools:layout="@layout/fragment_create_new_task" />
 </navigation>

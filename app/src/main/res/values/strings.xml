@@ -11,6 +11,14 @@
     <string name="forget_pass_btn">Забыли пароль?</string>
     <string name="return_to_auth">Зарегестрированы? Войдите</string>
     <string name="send_code_btn">Выслать код восстановления на почту</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="addPhoto">ДОБАВИТЬ ВЛОЖЕНИЕ</string>
+    <string name="taskName">Название задачи</string>
+    <string name="taskTeg">Нажмите, чтобы добавить заметки…</string>
+    <string name="addPoint">ДОБАВИТЬ ПУНКТ СПИСКА</string>
+    <string name="taskOptions">Назначения и детали</string>
+    <string name="addEmployee">Добавить исполнителя</string>
+    <string name="addProject">Добавить проект</string>
+    <string name="addStatus">Добавить статус</string>
+    <string name="addCalendar">Добавить сроки</string>
+
 </resources>
