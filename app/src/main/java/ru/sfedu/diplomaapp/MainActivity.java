@@ -1,15 +1,15 @@
 package ru.sfedu.diplomaapp;
 
 import android.os.Bundle;
-import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
-import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
-import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
-
+import me.ibrahimsn.lib.SmoothBottomBar;
 import ru.sfedu.diplomaapp.mainlist.HelloAct;
 import ru.sfedu.diplomaapp.mainlist.MyProject;
 import ru.sfedu.diplomaapp.mainlist.MyTask;
@@ -17,49 +17,43 @@ import ru.sfedu.diplomaapp.mainlist.ToDo;
 
 
 public class MainActivity extends AppCompatActivity {
-    BubbleNavigationConstraintView bncv;
+    SmoothBottomBar sbb;
     FragmentTransaction ft;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bncv = findViewById(R.id.bottom_navigation_view_constraint);
-        bncv.setBadgeValue(0,"30");
-        bncv.setBadgeValue(1,"20");
-        bncv.setBadgeValue(2,"20");
-        bncv.setBadgeValue(3,"5");
-
-
-        bncv.setNavigationChangeListener(new BubbleNavigationChangeListener() {
-            @Override
-            public void onNavigationChanged(View view, int position) {
-                switch (position){
-                    case 0:
-                        ft = getSupportFragmentManager().beginTransaction();
-                        //ft.setCustomAnimations(R.anim.go_to_right, R.anim.go_to_left, R.anim.go_to_right, R.anim.go_to_left);
-                        ft.replace(R.id.fragmentContainerView,new HelloAct());
-                        ft.commit();
-                        break;
-                    case 1:
-                        ft =getSupportFragmentManager().beginTransaction();
-                        //ft.setCustomAnimations(R.anim.go_to_right, R.anim.go_to_left, R.anim.go_to_right, R.anim.go_to_left);
-                        ft.replace(R.id.fragmentContainerView,new MyProject());
-                        ft.commit();
-                        break;
-                    case 2:
-                        ft =getSupportFragmentManager().beginTransaction();
-                        //ft.setCustomAnimations(R.anim.go_to_right, R.anim.go_to_left, R.anim.go_to_right, R.anim.go_to_left);
-                        ft.replace(R.id.fragmentContainerView,new MyTask());
-                        ft.commit();
-                        break;
-                    case 3:
-                        ft =getSupportFragmentManager().beginTransaction();
-                        //ft.setCustomAnimations(R.anim.go_to_right, R.anim.go_to_left, R.anim.go_to_right, R.anim.go_to_left);
-                        ft.replace(R.id.fragmentContainerView,new ToDo());
-                        ft.commit();
-                        break;
-                }
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.grey));
+        Fragment fragmentHello = new HelloAct();
+        Fragment fragmentProject = new MyProject();
+        Fragment fragmentTask = new MyTask();
+        Fragment fragmentTodo = new ToDo();
+        sbb = findViewById(R.id.bottom_navigation_view_constraint);
+        sbb.setOnItemSelectedListener(i -> {
+            switch (i){
+                case 0:
+                    replace(fragmentHello);
+                    break;
+                case 1:
+                    replace(fragmentProject);
+                    break;
+                case 2:
+                    replace(fragmentTask);
+                    break;
+                case 3:
+                    replace(fragmentTodo);
+                    break;
             }
+            return true;
         });
+
+    }
+
+    private void replace(Fragment fragment) {
+      ft = getSupportFragmentManager().beginTransaction();
+      ft.replace(R.id.fragmentContainerView,fragment).commit();
     }
 }

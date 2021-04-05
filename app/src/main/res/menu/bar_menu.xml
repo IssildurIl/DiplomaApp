@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/hellofragment"
-        android:icon="@drawable/icons_bell_8_24"
-        android:title="What`s new?"
+        android:icon="@drawable/ic_bell"
+        android:title="Updates"
         app:showAsAction = "ifRoom"/>
     <item
         android:id="@+id/myProject"
-        android:icon="@drawable/projects"
-        android:title="My Projects"
+        android:icon="@drawable/ic_cloud"
+        android:title="Projects"
         app:showAsAction = "ifRoom"/>
     <item
         android:id="@+id/myTask"
-        android:icon="@drawable/tasks"
+        android:icon="@drawable/ic_tasks"
         android:title="Tasks"
         app:showAsAction = "ifRoom"/>
     <item
         android:id="@+id/toDo"
-        android:icon="@drawable/todo"
+        android:icon="@drawable/ic_todo"
         android:title="ToDo"
         app:showAsAction = "ifRoom"/>
 </menu>

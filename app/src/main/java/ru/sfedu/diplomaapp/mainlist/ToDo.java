@@ -1,5 +1,6 @@
 package ru.sfedu.diplomaapp.mainlist;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,9 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import ru.sfedu.diplomaapp.backgroundActivity.CreateTask;
 import ru.sfedu.diplomaapp.R;
 
 
@@ -32,13 +35,17 @@ public class ToDo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_to_do, container, false);
+        View view = inflater.inflate(R.layout.fragment_to_do, container, false);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        view.findViewById(R.id.fab).setOnClickListener(view1 ->navController.navigate(R.id.go_to_createNewTask_from_ToDo));
+        view.findViewById(R.id.fab).setOnClickListener(v -> {
+            Intent intent=new Intent(getContext(), CreateTask.class);
+            startActivity(intent);
+        });
     }
 }

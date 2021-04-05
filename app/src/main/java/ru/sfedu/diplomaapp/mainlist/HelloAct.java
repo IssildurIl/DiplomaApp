@@ -1,5 +1,6 @@
 package ru.sfedu.diplomaapp.mainlist;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.sfedu.diplomaapp.backgroundActivity.CreateTask;
 import ru.sfedu.diplomaapp.R;
 
 public class HelloAct extends Fragment {
@@ -40,6 +42,10 @@ public class HelloAct extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         getActivity().findViewById(R.id.bottom_navigation_view_constraint).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.fab).setOnClickListener(view1 ->navController.navigate(R.id.go_to_createNewTask_from_Hello));
+        view.findViewById(R.id.fab).setOnClickListener(v -> {
+            Intent intent=new Intent(getContext(), CreateTask.class);
+            startActivity(intent);
+        });
     }
+
 }
