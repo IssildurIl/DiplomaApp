@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Приложения для диплома</string>
+    <string name="app_name">ScrumKit</string>
     <string name="mail_hint">Введите адрес электронной почты:</string>
     <string name="mail_rep_hint">Повторите адрес электронной почты:</string>
     <string name="pass_hint">Введите пароль:</string>
@@ -20,5 +20,5 @@
     <string name="addProject">Добавить проект</string>
     <string name="addStatus">Добавить статус</string>
     <string name="addCalendar">Добавить сроки</string>
-
+    <string name="addProjects">Добавить проекты</string>
 </resources>

@@ -91,7 +91,7 @@
         <EditText
             android:id="@+id/addPoint"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="#eceff1"
             android:drawableStart="@drawable/ic_add_blue"
@@ -100,17 +100,13 @@
             android:hint="@string/addPhoto"
             android:textCursorDrawable="@color/grey"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/placeFor"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addPoint" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
