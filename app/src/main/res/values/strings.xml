@@ -21,4 +21,8 @@
     <string name="addStatus">Добавить статус</string>
     <string name="addCalendar">Добавить сроки</string>
     <string name="addProjects">Добавить проекты</string>
+    <string name="projectname">Название проекта</string>
+    <string name="addEmployees">Участники</string>
+    <string name="addnameoremail">Имя пользователя или email</string>
+    <string name="createproject">Создать проект</string>
 </resources>

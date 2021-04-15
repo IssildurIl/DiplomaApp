@@ -31,10 +31,7 @@ import ru.sfedu.diplomaapp.R;
 
 public class CreateTask extends AppCompatActivity {
     EditText mutedAddEmployee,mutedAddProjectTo,mutedAddStatus,mutedAddTime,mutedAddPoint;
-    ImageView placeFor;
     Calendar dateAndTime= Calendar.getInstance();
-    public static final int PERMISSION_CODE = 1000;
-    public static final int IMAGE_PICK_CODE = 1001;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

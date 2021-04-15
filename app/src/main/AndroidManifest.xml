@@ -19,5 +19,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".backgroundActivity.CreateTask"/>
+        <activity android:name=".backgroundActivity.CreateProject"/>
     </application>
 </manifest>

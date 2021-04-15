@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#484848"
-    android:layout_height="match_parent"
-    tools:context=".mainlist.MyProject">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="projectsListViewModel"
+            type="ru.sfedu.diplomaapp.utils.ProjectsViewModel" />
+    </data>
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:background="#484848"
+    android:layout_height="match_parent">
     <TextView
         android:id="@+id/descriptionView1"
         android:layout_width="0dp"
         android:layout_height="28dp"
+        android:layout_marginTop="8dp"
         android:text="Мои проекты"
         android:textColor="@color/white"
         android:textSize="22sp"
@@ -24,8 +30,8 @@
         android:id="@+id/imageButton"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@null"
         android:tint="@color/white"
@@ -33,6 +39,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_magnify" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionView1" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -46,3 +62,4 @@
         app:srcCompat="@drawable/ic_outline_add_24"
         app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

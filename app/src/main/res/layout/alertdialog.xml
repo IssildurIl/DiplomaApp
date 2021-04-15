@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="190dp"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
@@ -14,50 +14,49 @@
         android:layout_marginTop="16dp"
         android:text="Добавить"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <Button
         android:id="@+id/addProject"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
         android:text="@string/addProject"
         android:textAlignment="textStart"
         android:textColor="@color/black"
-        android:textSize="18dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <TextView
+    <Button
         android:id="@+id/addProjects"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="18dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
         android:text="@string/addProjects"
         android:textAlignment="textStart"
         android:textColor="@color/black"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addProject" />
 
-    <TextView
+    <Button
         android:id="@+id/back"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/white"
         android:text="отмена"
         android:textAlignment="textEnd"
         android:textAllCaps="true"
         android:textColor="@color/black"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addProjects" />
