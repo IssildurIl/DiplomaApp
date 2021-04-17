@@ -12,9 +12,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import ru.sfedu.diplomaapp.backgroundActivity.CreateTask;
 import ru.sfedu.diplomaapp.R;
 
 
@@ -36,6 +34,7 @@ public class ToDo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_to_do, container, false);
+        getActivity().findViewById(R.id.navbar).setVisibility(View.VISIBLE);
         return view;
     }
 
@@ -44,8 +43,8 @@ public class ToDo extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         view.findViewById(R.id.fab).setOnClickListener(v -> {
-            Intent intent=new Intent(getContext(), CreateTask.class);
-            startActivity(intent);
+            navController.navigate(R.id.action_toDo_to_createTask);
+            getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
         });
     }
 }

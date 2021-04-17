@@ -1,4 +1,4 @@
-package ru.sfedu.diplomaapp.utils;
+package ru.sfedu.diplomaapp.utils.forprojects;
 
 import android.app.Application;
 
@@ -17,6 +17,17 @@ public class ProjectViewModel extends AndroidViewModel {
     private ProjectDao projectDao;
 
     public LiveData<Project> project;
+    private MutableLiveData<Boolean> _eventAddProject = new MutableLiveData<>();
+    private MutableLiveData<Boolean> _eventUpdProject = new MutableLiveData<>();
+
+    public ProjectViewModel(@NonNull Application application) {
+        super(application);
+
+        appdb = AppDatabase.getDatabase(application);
+        projectDao = appdb.projectDao();
+
+        _eventAddProject.setValue(false);
+    }
 
     public void insertProject(Project project) {
         appdb.databaseWriteExecutor.execute(() -> projectDao.insertProject(project));
@@ -39,27 +50,13 @@ public class ProjectViewModel extends AndroidViewModel {
         this._eventUpdProject.setValue(false);
     }
 
-    private MutableLiveData<Boolean> _eventUpdProject = new MutableLiveData<>();
-
     public LiveData<Boolean> getEventProjectUpd(){
         return _eventUpdProject;
     }
-
-    private MutableLiveData<Boolean> _eventAddProject = new MutableLiveData<>();
 
     public LiveData<Boolean> getEventProjectAdd(){
         return _eventAddProject;
     }
 
 
-
-
-    public ProjectViewModel(@NonNull Application application) {
-        super(application);
-
-        appdb = AppDatabase.getDatabase(application);
-        projectDao =appdb.projectDao();
-
-        _eventAddProject.setValue(false);
-    }
 }

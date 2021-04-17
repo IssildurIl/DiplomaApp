@@ -17,14 +17,17 @@ public interface EmployeeDao {
     LiveData<List<Employee>> getAll();
 
     @Query("SELECT * FROM employee WHERE _id = :id")
-    Employee getById(long id);
+    LiveData<Employee> getById(long id);
 
     @Insert
-    void insert(Employee employee);
+    void insertEmployee(Employee employee);
 
     @Update
     void update(Employee employee);
 
     @Delete
     void delete(Employee employee);
+
+    @Query("Select * FROM employee WHERE email = :email")
+    LiveData<Employee> getEmployeeAuthorisation(String email);
 }

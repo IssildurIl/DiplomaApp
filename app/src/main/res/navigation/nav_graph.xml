@@ -32,20 +32,65 @@
         android:id="@+id/hellofragment"
         android:name="ru.sfedu.diplomaapp.mainlist.HelloAct"
         android:label="fragment_hellofragment"
-        tools:layout="@layout/fragment_hellofragment" />
+        tools:layout="@layout/fragment_hellofragment" >
+        <action
+            android:id="@+id/action_hellofragment_to_createTask"
+            app:destination="@id/createTask" />
+    </fragment>
     <fragment
         android:id="@+id/myTask"
         android:name="ru.sfedu.diplomaapp.mainlist.MyTask"
         android:label="fragment_my_task"
-        tools:layout="@layout/fragment_my_task" />
+        tools:layout="@layout/fragment_my_task" >
+        <action
+            android:id="@+id/action_myTask_to_createTask"
+            app:destination="@id/createTask" />
+    </fragment>
     <fragment
         android:id="@+id/myProject"
         android:name="ru.sfedu.diplomaapp.mainlist.MyProject"
         android:label="fragment_my_project"
-        tools:layout="@layout/fragment_my_project" />
+        tools:layout="@layout/fragment_my_project" >
+        <action
+            android:id="@+id/go_to_editProject"
+            app:destination="@id/editProject" />
+        <action
+            android:id="@+id/action_myProject_to_createProject"
+            app:destination="@id/createProject" />
+    </fragment>
     <fragment
         android:id="@+id/toDo"
         android:name="ru.sfedu.diplomaapp.mainlist.ToDo"
         android:label="fragment_to_do"
-        tools:layout="@layout/fragment_to_do" />
+        tools:layout="@layout/fragment_to_do" >
+        <action
+            android:id="@+id/action_toDo_to_createTask"
+            app:destination="@id/createTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProject"
+        android:name="ru.sfedu.diplomaapp.backgroundActivity.EditProject"
+        android:label="fragment_edit_project"
+        tools:layout="@layout/fragment_edit_project">
+        <argument
+            android:name="projectId"
+            app:argType="long"/>
+        <action
+            android:id="@+id/action_editProject_to_myProject"
+            app:destination="@id/myProject" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTask"
+        android:name="ru.sfedu.diplomaapp.backgroundActivity.CreateTask"
+        android:label="fragment_create_task"
+        tools:layout="@layout/fragment_create_task" />
+    <fragment
+        android:id="@+id/createProject"
+        android:name="ru.sfedu.diplomaapp.backgroundActivity.CreateProject"
+        android:label="fragment_create_project"
+        tools:layout="@layout/fragment_create_project" >
+        <action
+            android:id="@+id/action_createProject_to_myProject"
+            app:destination="@id/myProject" />
+    </fragment>
 </navigation>

@@ -6,14 +6,10 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 import lombok.ToString;
-import ru.sfedu.diplomaapp.models.enums.TaskTypes;
-import ru.sfedu.diplomaapp.models.enums.TypeOfCompletion;
-import ru.sfedu.diplomaapp.utils.DateConverter;
+import ru.sfedu.diplomaapp.utils.forOthers.DateConverter;
 
 @Entity(tableName  = "Task")
 @ToString

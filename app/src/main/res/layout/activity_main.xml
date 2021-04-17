@@ -14,25 +14,22 @@
         android:layout_width="413dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view_constraint"
+        app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
-    <me.ibrahimsn.lib.SmoothBottomBar
-        android:id="@+id/bottom_navigation_view_constraint"
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navbar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:backgroundColor="#484848"
-        app:indicatorColor="#1e88e5"
-        app:iconTint="@color/white"
-        app:iconTintActive="#ff9800"
-        app:activeItem="0"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bar_menu"
+        style="@style/ThemeOverlay.App.BottomNavigationView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bar_menu" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

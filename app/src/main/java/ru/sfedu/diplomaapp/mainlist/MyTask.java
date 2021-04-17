@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import ru.sfedu.diplomaapp.backgroundActivity.CreateTask;
 import ru.sfedu.diplomaapp.R;
 
 public class MyTask extends Fragment {
@@ -33,6 +32,7 @@ public class MyTask extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_task, container, false);
+        getActivity().findViewById(R.id.navbar).setVisibility(View.VISIBLE);
         return view;
     }
 
@@ -41,8 +41,8 @@ public class MyTask extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         view.findViewById(R.id.fab).setOnClickListener(v -> {
-            Intent intent=new Intent(getContext(), CreateTask.class);
-            startActivity(intent);
+            navController.navigate(R.id.action_myTask_to_createTask);
+            getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
         });
     }
 }

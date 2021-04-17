@@ -6,13 +6,11 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import ru.sfedu.diplomaapp.utils.DateConverter;
+import ru.sfedu.diplomaapp.utils.forOthers.DateConverter;
 
 @Data
 @EqualsAndHashCode

@@ -14,12 +14,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import ru.sfedu.diplomaapp.R;
-import ru.sfedu.diplomaapp.utils.ProjectsViewModel;
-import ru.sfedu.diplomaapp.backgroundActivity.CreateProject;
+import ru.sfedu.diplomaapp.utils.forprojects.ProjectDiffCallback;
+import ru.sfedu.diplomaapp.utils.forprojects.ProjectsViewModel;
 import ru.sfedu.diplomaapp.databinding.FragmentMyProjectBinding;
-import ru.sfedu.diplomaapp.utils.ProjectItemAdapter;
+import ru.sfedu.diplomaapp.utils.forprojects.ProjectItemAdapter;
 
 public class MyProject extends Fragment {
     NavController navController;
@@ -41,12 +42,21 @@ public class MyProject extends Fragment {
         pvm = new ViewModelProvider(this).get(ProjectsViewModel.class);
         binding.setProjectsListViewModel(pvm);
 
-        ProjectItemAdapter pia = new ProjectItemAdapter();
+        ProjectItemAdapter pia = new ProjectItemAdapter(new ProjectDiffCallback(), project -> {
+            pvm.onProjectItemClicked(project.get_id());
+        });
         binding.recview.setAdapter(pia);
+
+        pvm.getNavigateToProjectEdit().observe(getViewLifecycleOwner(), projectId -> {
+            if(projectId!=null){
+                NavHostFragment.findNavController(this).navigate(MyProjectDirections.goToEditProject(projectId));
+                pvm.onProjectItemNavigated();
+            }
+        });
 
         pvm.projectList.observe(getViewLifecycleOwner(), projects -> {
             if (projects != null) {
-                pia.setData(projects);
+                pia.submitList(projects);
             }
         });
         return binding.getRoot();
@@ -60,11 +70,11 @@ public class MyProject extends Fragment {
         view.findViewById(R.id.fab).setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             AlertDialog alertDialog = builder.create();
-            View v1 =view.inflate(getContext(),R.layout.alertdialog,null);
+            View v1 = view.inflate(getContext(),R.layout.alertdialog,null);
             alertDialog.setView(v1);
             v1.findViewById(R.id.addProject).setOnClickListener(v2 -> {
-                Intent intent=new Intent(getContext(), CreateProject.class);
-                startActivity(intent);
+                navController.navigate(R.id.action_myProject_to_createProject);
+                getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
             });
             v1.findViewById(R.id.back).setOnClickListener(v22 -> alertDialog.dismiss());
             alertDialog.show();

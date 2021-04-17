@@ -1,80 +1,90 @@
 package ru.sfedu.diplomaapp.backgroundActivity;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.format.DateUtils;
-import android.transition.TransitionManager;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
+import android.text.format.DateUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.Calendar;
 
 import ru.sfedu.diplomaapp.R;
+import ru.sfedu.diplomaapp.databinding.FragmentCreateTaskBinding;
 
-public class CreateTask extends AppCompatActivity {
+public class CreateTask extends Fragment {
+
     EditText mutedAddEmployee,mutedAddProjectTo,mutedAddStatus,mutedAddTime,mutedAddPoint;
     Calendar dateAndTime= Calendar.getInstance();
+    ImageButton returnto;
+    public CreateTask() {
+
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.createnewtask);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        FragmentCreateTaskBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_task,container,false);
+        binding.setLifecycleOwner(this);
+        mutedAddEmployee =binding.addEmployee;
+        mutedAddProjectTo = binding.addProjectTo;
+        mutedAddStatus = binding.addStatus;
+        mutedAddTime = binding.addTime;
+        mutedAddPoint = binding.addPoint;
+        returnto = binding.returnto;
         colorBar();
-        init();
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         buttons();
         setInitialDateTime();
-        }
-    protected void init(){
-        mutedAddEmployee =findViewById(R.id.addEmployee);
-        mutedAddProjectTo = findViewById(R.id.addProjectTo);
-        mutedAddStatus = findViewById(R.id.addStatus);
-        mutedAddTime = findViewById(R.id.addTime);
-        mutedAddPoint = findViewById(R.id.addPoint);
     }
 
     protected void colorBar() {
-        Window window = getWindow();
+        Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.grey));
+        window.setStatusBarColor(ContextCompat.getColor(this.getContext(), R.color.grey));
     }
 
 
-//нажатия
+    //нажатия
     protected void buttons(){
-        findViewById(R.id.returnto).setOnClickListener(v -> {
-            super.onBackPressed();
-            this.finish();
-
+        returnto.setOnClickListener(v -> {
+            requireActivity().onBackPressed();
         });
         mutedAddTime.setOnClickListener(v -> {
             setTime(v);
             setDate(v);
         });
-
     }
-
 
     //Дата и время
     public void setDate(View v) {
-        new DatePickerDialog(CreateTask.this, d,
+        new DatePickerDialog(this.getContext(), d,
                 dateAndTime.get(Calendar.YEAR),
                 dateAndTime.get(Calendar.MONTH),
                 dateAndTime.get(Calendar.DAY_OF_MONTH))
@@ -83,13 +93,13 @@ public class CreateTask extends AppCompatActivity {
 
     // отображаем диалоговое окно для выбора времени
     public void setTime(View v) {
-        new TimePickerDialog(CreateTask.this, t,
+        new TimePickerDialog(this.getContext(), t,
                 dateAndTime.get(Calendar.HOUR_OF_DAY),
                 dateAndTime.get(Calendar.MINUTE), true)
                 .show();
     }
     private void setInitialDateTime() {
-        mutedAddTime.setText(DateUtils.formatDateTime(this,
+        mutedAddTime.setText(DateUtils.formatDateTime(getContext(),
                 dateAndTime.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
                         | DateUtils.FORMAT_SHOW_TIME));
@@ -109,6 +119,4 @@ public class CreateTask extends AppCompatActivity {
         dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         setInitialDateTime();
     };
-
 }
-

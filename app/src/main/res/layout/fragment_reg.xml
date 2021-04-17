@@ -1,131 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#484848"
-    tools:context=".auth.Reg">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mailField"
+    <data>
+        <variable
+            name="employeeListViewModel"
+            type="ru.sfedu.diplomaapp.utils.forRegistration.EmployeeViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="54dp"
-        android:hint="@string/mail_hint"
-        app:boxStrokeColor="@color/grey"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="#484848"
+        tools:context=".auth.Reg">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mailFieldTxt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="220dp" />
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="54dp"
+            android:hint="Введите имя"
+            app:boxStrokeColor="@color/grey"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameFieldTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="220dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mailRepeatField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="54dp"
-        android:hint="@string/mail_rep_hint"
-        app:boxStrokeColor="@color/grey"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mailField">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mailRepeatFieldTxt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mailField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="220dp" />
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="54dp"
+            android:hint="@string/mail_hint"
+            app:boxStrokeColor="@color/grey"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameField">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mailFieldTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="220dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordHint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="54dp"
-        android:hint="@string/pass_hint"
-        app:boxStrokeColor="@color/grey"
-        app:endIconMode="password_toggle"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mailRepeatField">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordHintTxt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mailRepeatField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="260dp" />
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="54dp"
+            android:hint="@string/mail_rep_hint"
+            app:boxStrokeColor="@color/grey"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mailField">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mailRepeatFieldTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="220dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordRepeatHint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="54dp"
-        android:hint="@string/pass_rep_hint"
-        app:boxStrokeColor="@color/grey"
-        app:endIconMode="password_toggle"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordHint">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordRepeatHintTxt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="260dp" />
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="54dp"
+            android:hint="@string/pass_hint"
+            app:boxStrokeColor="@color/grey"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mailRepeatField">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordHintTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="260dp" />
 
-    <Button
-        android:id="@+id/reg_btn"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="54dp"
-        android:text="@string/reg_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordRepeatHint" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/return_to_auth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="54dp"
-        android:text="@string/return_to_auth"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_btn" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordRepeatHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="54dp"
+            android:hint="@string/pass_rep_hint"
+            app:boxStrokeColor="@color/grey"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordHint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordRepeatHintTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="260dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/reg_btn"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="54dp"
+            android:text="@string/reg_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordRepeatHint" />
+
+        <Button
+            android:id="@+id/return_to_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="54dp"
+            android:text="@string/return_to_auth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reg_btn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="projectsListViewModel"
-            type="ru.sfedu.diplomaapp.utils.ProjectsViewModel" />
+            type="ru.sfedu.diplomaapp.utils.forprojects.ProjectsViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

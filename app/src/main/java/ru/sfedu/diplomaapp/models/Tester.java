@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import ru.sfedu.diplomaapp.models.enums.TypeOfTester;
 
-@EqualsAndHashCode(callSuper = true)
 @ToString
 @Data
 @Entity(tableName = "Tester")

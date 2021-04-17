@@ -7,22 +7,26 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import ru.sfedu.diplomaapp.R;
-import ru.sfedu.diplomaapp.databinding.FragmentCreateProjectBinding;
-import ru.sfedu.diplomaapp.models.Project;
+import ru.sfedu.diplomaapp.databinding.FragmentEditProjectBinding;
 import ru.sfedu.diplomaapp.utils.forprojects.ProjectViewModel;
 
 
-public class CreateProject extends Fragment {
-    ProjectViewModel pvm;
-    public CreateProject() {
+public class EditProject extends Fragment {
+
+    private ProjectViewModel pvm;
+    private FragmentEditProjectBinding binding;
+
+    public EditProject() {
 
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,18 +37,23 @@ public class CreateProject extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentCreateProjectBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_project,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_project, container, false);
         binding.setLifecycleOwner(this);
         pvm = new ViewModelProvider(this).get(ProjectViewModel.class);
-        pvm.getEventProjectAdd().observe(getViewLifecycleOwner(), aBoolean -> {
+        pvm.getProject(EditProjectArgs.fromBundle(getArguments()).getProjectId());
+        binding.setProjectViewModel(pvm);
+
+
+        pvm.getEventProjectUpd().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
-                pvm.eventProjectAddFinished();
+                pvm.eventProjectUpdateFinished();
+                NavHostFragment.findNavController(this).navigate(R.id.action_editProject_to_myProject);
             }
         });
 
-        binding.createProjectButton.setOnClickListener(v -> {
-            pvm.insertProject(new Project(binding.projectName.getText().toString()));
-            requireActivity().onBackPressed();
+        binding.editProjectButton.setOnClickListener(v -> {
+            pvm.project.getValue().setTitle(binding.projectName.getText().toString());
+            pvm.updateProject();
         });
         return binding.getRoot();
     }
@@ -52,5 +61,6 @@ public class CreateProject extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 }

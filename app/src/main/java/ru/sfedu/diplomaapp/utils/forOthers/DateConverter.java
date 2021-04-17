@@ -1,4 +1,4 @@
-package ru.sfedu.diplomaapp.utils;
+package ru.sfedu.diplomaapp.utils.forOthers;
 
 import androidx.room.TypeConverter;
 
