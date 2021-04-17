@@ -28,6 +28,6 @@ public interface EmployeeDao {
     @Delete
     void delete(Employee employee);
 
-    @Query("Select * FROM employee WHERE email = :email")
-    LiveData<Employee> getEmployeeAuthorisation(String email);
+    @Query("Select * FROM employee WHERE email = :email and password = :password")
+    LiveData<Employee> getEmployeeAuthorisation(String email, String password);
 }

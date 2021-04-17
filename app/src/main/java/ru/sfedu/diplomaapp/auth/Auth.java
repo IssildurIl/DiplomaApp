@@ -11,7 +11,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.TestOnly;
+
 import ru.sfedu.diplomaapp.R;
+import ru.sfedu.diplomaapp.dao.AppDatabase;
+import ru.sfedu.diplomaapp.dao.EmployeeDao;
 import ru.sfedu.diplomaapp.databinding.FragmentAuthBinding;
 import ru.sfedu.diplomaapp.models.Employee;
 import ru.sfedu.diplomaapp.utils.forRegistration.EmployeeViewModel;
@@ -29,7 +35,6 @@ public class Auth extends Fragment {
     NavController navController;
     EmployeeViewModel evm;
     String pwrd="",email="";
-    Boolean valid = false;
     public Auth() {
 
     }
@@ -49,24 +54,23 @@ public class Auth extends Fragment {
         binding.setEmployeeViewModel(evm);
 
         binding.validBtn.setOnClickListener(v -> {
-            evm.getEmployeeByEmail(binding.mailFieldTxt.getText().toString());
-            if(!nullCheck(binding.mailFieldTxt)){
+            if(!nullCheck(binding.mailFieldTxt) && !nullCheck(binding.passwordFieldTxt)){
                 return;
             }
+            evm.getEmployeeByEmail(binding.mailFieldTxt.getText().toString(), binding.passwordFieldTxt.getText().toString());
             evm.employeeByEmail.observe(getViewLifecycleOwner(),employee -> {
                 if(employee!=null){
                     email = employee.getEmail();
                     pwrd = employee.getPassword();
-                    valid =true;
                 }
-            });
-            if(email.length() == 0){
-                binding.mailFieldTxt.setError("Такой пользователь не зарегестрирован");
-                return;
+                if(email.length() == 0){
+                    binding.mailFieldTxt.setError("Такой пользователь не зарегестрирован");
+                    return;
+                }
+            if(isEquals(pwrd,binding.passwordFieldTxt.getText().toString())){
+                 navController.navigate(R.id.go_to_hellofragment);
             }
-//            if(isEquals(pwrd,binding.passwordFieldTxt.getText().toString())){
-//                binding.regBtn.setOnClickListener(v1 -> navController.navigate(R.id.go_to_hellofragment));
-//            }
+            });
         });
         return binding.getRoot();
     }

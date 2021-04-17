@@ -47,8 +47,8 @@ public class EmployeeViewModel extends AndroidViewModel {
     }
 
 
-    public void getEmployeeByEmail(String email){
-        employeeByEmail = employeeDao.getEmployeeAuthorisation(email);
+    public void getEmployeeByEmail(String email,String password){
+        employeeByEmail = employeeDao.getEmployeeAuthorisation(email,password);
         _eventGetEmployeeByEmail.setValue(true);
     }
     public LiveData<Boolean> getEventGetEmployeeByEmail(){
