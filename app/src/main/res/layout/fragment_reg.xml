@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#484848"
+        android:background="@color/grey"
         tools:context=".auth.Reg">
 
         <com.google.android.material.textfield.TextInputLayout

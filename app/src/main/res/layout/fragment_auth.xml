@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#484848"
+        android:background="@color/grey"
         tools:context=".auth.Auth">
 
 
@@ -47,7 +47,6 @@
             android:layout_marginBottom="16dp"
             android:hint="@string/pass_hint"
             app:boxStrokeColor="@color/grey"
-            app:endIconMode="password_toggle"
             app:errorEnabled="true"
             app:layout_constraintBottom_toTopOf="@+id/valid_btn"
             app:layout_constraintEnd_toEndOf="parent"

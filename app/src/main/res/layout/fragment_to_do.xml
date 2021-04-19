@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#484848"
+    android:background="@color/grey"
     android:layout_height="match_parent"
     tools:context=".mainlist.ToDo">
 

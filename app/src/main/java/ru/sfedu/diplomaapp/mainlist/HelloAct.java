@@ -42,8 +42,8 @@ public class HelloAct extends Fragment {
         navController = Navigation.findNavController(view);
         getActivity().findViewById(R.id.navbar).setVisibility(View.VISIBLE);
         view.findViewById(R.id.fab).setOnClickListener(v -> {
-            navController.navigate(R.id.action_hellofragment_to_createTask);
             getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
+            navController.navigate(R.id.action_hellofragment_to_createTask);
         });
     }
 
