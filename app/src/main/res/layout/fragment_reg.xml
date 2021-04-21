@@ -6,13 +6,13 @@
     <data>
         <variable
             name="employeeListViewModel"
-            type="ru.sfedu.diplomaapp.utils.forRegistration.EmployeeViewModel"/>
+            type="ru.sfedu.diplomaapp.utils.forEmployees.EmployeeViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey"
+        android:background="@color/primary"
         tools:context=".auth.Reg">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -23,7 +23,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="54dp"
             android:hint="Введите имя"
-            app:boxStrokeColor="@color/grey"
+            app:boxStrokeColor="@color/primary"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
             android:layout_marginTop="27dp"
             android:layout_marginEnd="54dp"
             android:hint="@string/mail_hint"
-            app:boxStrokeColor="@color/grey"
+            app:boxStrokeColor="@color/primary"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,7 @@
             android:layout_marginTop="27dp"
             android:layout_marginEnd="54dp"
             android:hint="@string/mail_rep_hint"
-            app:boxStrokeColor="@color/grey"
+            app:boxStrokeColor="@color/primary"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +92,7 @@
             android:layout_marginTop="27dp"
             android:layout_marginEnd="54dp"
             android:hint="@string/pass_hint"
-            app:boxStrokeColor="@color/grey"
+            app:boxStrokeColor="@color/primary"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +116,7 @@
             android:layout_marginTop="27dp"
             android:layout_marginEnd="54dp"
             android:hint="@string/pass_rep_hint"
-            app:boxStrokeColor="@color/grey"
+            app:boxStrokeColor="@color/primary"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -141,6 +141,7 @@
             android:layout_marginTop="27dp"
             android:layout_marginEnd="54dp"
             android:text="@string/reg_btn"
+            android:backgroundTint="@color/third"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -154,6 +155,7 @@
             android:layout_marginTop="27dp"
             android:layout_marginEnd="54dp"
             android:text="@string/return_to_auth"
+            android:backgroundTint="@color/third"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reg_btn" />

@@ -13,7 +13,7 @@
         android:id="@+id/constraintLayout6"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey"
+        android:background="@color/primary"
         app:layoutDescription="@xml/fragment_my_project_xml_constraintlayout6_scene">
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:background="@null"
             android:tint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +47,7 @@
             android:id="@+id/recview"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@drawable/stroke_rec"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            app:backgroundTint="@color/sky"
+            app:backgroundTint="@color/third"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_outline_add_24"

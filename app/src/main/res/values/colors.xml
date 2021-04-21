@@ -7,10 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#a7c0cd</color>
+
+    <color name="primary">#4C3F76</color>
+    <color name = "third">#007E97</color>
+    <color name="secondary">#9495AE</color>
+
+    <color name="grey">#808080</color>
     <color name="blue">#0800FF</color>
     <color name="silver">#cfd8dc</color>
+
     <color name="bluelight">#cfd8dc</color>
     <color name="lighblue">#eceff1</color>
-    <color name="sky">#1e88e5</color>
+<!--    <color name="sky">#1e88e5</color>-->
 </resources>

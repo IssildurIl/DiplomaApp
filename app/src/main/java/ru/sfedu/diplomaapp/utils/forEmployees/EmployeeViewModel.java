@@ -1,4 +1,4 @@
-package ru.sfedu.diplomaapp.utils.forRegistration;
+package ru.sfedu.diplomaapp.utils.forEmployees;
 
 import android.app.Application;
 

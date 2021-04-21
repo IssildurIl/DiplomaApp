@@ -83,7 +83,20 @@
         android:id="@+id/createTask"
         android:name="ru.sfedu.diplomaapp.backgroundActivity.CreateTask"
         android:label="fragment_create_task"
-        tools:layout="@layout/fragment_create_task" />
+        tools:layout="@layout/fragment_create_task" >
+        <action
+            android:id="@+id/action_createTask_to_userList"
+            app:destination="@id/userList" />
+        <argument
+            android:name="ProjectId"
+            app:argType="long"/>
+        <argument
+            android:name="EmployeeId"
+            app:argType="long"/>
+        <action
+            android:id="@+id/action_createTask_to_projectList"
+            app:destination="@id/projectList" />
+    </fragment>
     <fragment
         android:id="@+id/createProject"
         android:name="ru.sfedu.diplomaapp.backgroundActivity.CreateProject"
@@ -92,5 +105,23 @@
         <action
             android:id="@+id/action_createProject_to_myProject"
             app:destination="@id/myProject" />
+    </fragment>
+    <fragment
+        android:id="@+id/userList"
+        android:name="ru.sfedu.diplomaapp.backgroundActivity.listsForCreateTask.UserList"
+        android:label="fragment_user_list"
+        tools:layout="@layout/fragment_user_list" >
+        <action
+            android:id="@+id/action_userList_to_createTask"
+            app:destination="@id/createTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/projectList"
+        android:name="ru.sfedu.diplomaapp.backgroundActivity.listsForCreateTask.ProjectList"
+        android:label="fragment_project_list"
+        tools:layout="@layout/fragment_project_list" >
+        <action
+            android:id="@+id/action_projectList_to_createTask"
+            app:destination="@id/createTask" />
     </fragment>
 </navigation>

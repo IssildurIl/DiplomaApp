@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ import android.widget.EditText;
 
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentAuthBinding;
-import ru.sfedu.diplomaapp.utils.forRegistration.EmployeeViewModel;
+import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeViewModel;
 
 public class Auth extends Fragment {
     NavController navController;
@@ -61,7 +62,9 @@ public class Auth extends Fragment {
 //                 navController.navigate(R.id.go_to_hellofragment);
 //            }
 //            });
-            navController.navigate(R.id.go_to_hellofragment);
+            NavOptions.Builder navBuilder =  new NavOptions.Builder();
+            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+            navController.navigate(R.id.go_to_hellofragment,null,navBuilder.build());
         });
         return binding.getRoot();
     }
@@ -72,7 +75,9 @@ public class Auth extends Fragment {
         navController = Navigation.findNavController(view);
         getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
         view.findViewById(R.id.reg_btn).setOnClickListener(view1 -> {
-            navController.navigate(R.id.go_to_reg);});
+            NavOptions.Builder navBuilder =  new NavOptions.Builder();
+            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+            navController.navigate(R.id.go_to_reg,null,navBuilder.build());});
     }
 
     public boolean isEquals(String pass, String passFromDB){

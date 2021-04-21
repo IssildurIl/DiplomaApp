@@ -37,6 +37,7 @@ public class MyProject extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().findViewById(R.id.navbar).setVisibility(View.VISIBLE);
         FragmentMyProjectBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_project, container, false);
         binding.setLifecycleOwner(this);
         pvm = new ViewModelProvider(this).get(ProjectsViewModel.class);
@@ -49,6 +50,7 @@ public class MyProject extends Fragment {
 
         pvm.getNavigateToProjectEdit().observe(getViewLifecycleOwner(), projectId -> {
             if(projectId!=null){
+                getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
                 NavHostFragment.findNavController(this).navigate(MyProjectDirections.goToEditProject(projectId));
                 pvm.onProjectItemNavigated();
             }
@@ -75,6 +77,7 @@ public class MyProject extends Fragment {
             v1.findViewById(R.id.addProject).setOnClickListener(v2 -> {
                 navController.navigate(R.id.action_myProject_to_createProject);
                 getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
+                alertDialog.dismiss();
             });
             v1.findViewById(R.id.back).setOnClickListener(v22 -> alertDialog.dismiss());
             alertDialog.show();

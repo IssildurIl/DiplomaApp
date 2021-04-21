@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ru.sfedu.diplomaapp.databinding.RvListProjectBinding;
 import ru.sfedu.diplomaapp.models.Project;
-import ru.sfedu.diplomaapp.utils.ClickListener;
+import ru.sfedu.diplomaapp.interfaces.ProjectClickListener;
 
 public class ProjectItemAdapter extends ListAdapter<Project,ProjectItemAdapter.ProjectItemViewHolder> {
 
-    private ClickListener clickListener;
+    private ProjectClickListener projectClickListener;
 
-    public ProjectItemAdapter(@NonNull ProjectDiffCallback diffCallback, ClickListener clickListener) {
+    public ProjectItemAdapter(@NonNull ProjectDiffCallback diffCallback, ProjectClickListener projectClickListener) {
         super(diffCallback);
-        this.clickListener = clickListener;
+        this.projectClickListener = projectClickListener;
     }
 
     @NonNull
@@ -31,7 +31,7 @@ public class ProjectItemAdapter extends ListAdapter<Project,ProjectItemAdapter.P
     public void onBindViewHolder(@NonNull ProjectItemViewHolder holder, int position) {
         if(getCurrentList()!= null){
             Project project = getItem(position);
-            holder.bind(project, clickListener);
+            holder.bind(project, projectClickListener);
         }else{
             holder.binding.projectName.setText("No projects");
         }
@@ -51,9 +51,9 @@ public class ProjectItemAdapter extends ListAdapter<Project,ProjectItemAdapter.P
             RvListProjectBinding binding= RvListProjectBinding.inflate(layoutInflater,parent,false);
             return new ProjectItemViewHolder(binding);
         }
-        private void bind(Project project, ClickListener clickListener){
+        private void bind(Project project, ProjectClickListener projectClickListener){
             binding.setProject(project);
-            binding.setClicklistener(clickListener);
+            binding.setClicklistener(projectClickListener);
             binding.executePendingBindings();
         }
     }

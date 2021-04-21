@@ -7,12 +7,12 @@
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
         motion:duration="1000">
-       <KeyFrameSet>
-           <KeyAttribute
-               motion:motionTarget="@+id/descriptionView1"
-               motion:framePosition="100"
-               android:alpha="100" />
-       </KeyFrameSet>
+        <KeyFrameSet>
+            <KeyAttribute
+                motion:motionTarget="@+id/descriptionView1"
+                motion:framePosition="100"
+                android:alpha="100" />
+        </KeyFrameSet>
         <OnSwipe
             motion:touchAnchorId="@+id/descriptionView1"
             motion:touchAnchorSide="bottom" />
@@ -28,10 +28,10 @@
             motion:layout_constraintHorizontal_bias="0.0"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            android:id="@+id/descriptionView1" >
-            <CustomAttribute
-                motion:attributeName="textSize"
-                motion:customFloatValue="35" />
+            android:id="@+id/descriptionView1">
+        <CustomAttribute
+            motion:attributeName="textSize"
+            motion:customFloatValue="35" />
         </Constraint>
     </ConstraintSet>
 
@@ -46,9 +46,9 @@
             motion:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="8dp">
-        <CustomAttribute
-            motion:attributeName="textSize"
-            motion:customFloatValue="24"/>
-         </Constraint>
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customFloatValue="24"/>
+        </Constraint>
     </ConstraintSet>
 </MotionScene>

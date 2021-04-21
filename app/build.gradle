@@ -48,6 +48,11 @@ dependencies {
     implementation "androidx.room:room-runtime:2.2.6"
     annotationProcessor "androidx.room:room-compiler:2.2.6"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "com.github.skydoves:powerspinner:1.1.7"
+
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
 

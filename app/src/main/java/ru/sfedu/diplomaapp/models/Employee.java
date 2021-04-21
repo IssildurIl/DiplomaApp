@@ -2,6 +2,7 @@ package ru.sfedu.diplomaapp.models;
 
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -23,7 +24,7 @@ public class Employee implements Serializable {
   private String email;
 
   public Employee () { }
-
+  @Ignore
   public Employee(String firstName, String password,String email) {
     this.firstName = firstName;
     this.password = password;

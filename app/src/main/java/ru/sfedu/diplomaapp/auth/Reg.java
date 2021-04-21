@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -20,8 +21,7 @@ import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentRegBinding;
 
 import ru.sfedu.diplomaapp.models.Employee;
-import ru.sfedu.diplomaapp.utils.forRegistration.EmployeeViewModel;
-import ru.sfedu.diplomaapp.utils.forRegistration.EmployeesViewModel;
+import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeViewModel;
 
 public class Reg extends Fragment {
     NavController navController;
@@ -49,12 +49,14 @@ public class Reg extends Fragment {
             }
         });
         binding.regBtn.setOnClickListener(v -> {
-            if(!check(binding)){
+            if(check(binding)){
                 return;
             }
             evm.insertEmployee(new Employee(binding.nameFieldTxt.getText().toString(), binding.passwordHintTxt.getText().toString(),
                     binding.mailFieldTxt.getText().toString()));
-            navController.navigate(R.id.go_two_hellofragment);
+            NavOptions.Builder navBuilder =  new NavOptions.Builder();
+            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+            navController.navigate(R.id.go_two_hellofragment,null,navBuilder.build());
         });
         return binding.getRoot();
         }
@@ -65,14 +67,17 @@ public class Reg extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
-        view.findViewById(R.id.return_to_auth).setOnClickListener(view1 -> navController.navigate(R.id.go_to_auth));
+        view.findViewById(R.id.return_to_auth).setOnClickListener(view1 -> {
+            NavOptions.Builder navBuilder =  new NavOptions.Builder();
+            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+            navController.navigate(R.id.go_to_auth,null,navBuilder.build());});
     }
 
 
     private boolean check(ru.sfedu.diplomaapp.databinding.FragmentRegBinding binding) {
-        if(!nullCheck(binding.nameFieldTxt) || !nullCheck(binding.mailFieldTxt) ||  !isEmailCheck(binding.mailFieldTxt)
-                || !nullCheck(binding.mailRepeatFieldTxt) || !isEquals(binding.mailFieldTxt,binding.mailRepeatFieldTxt)
-                || !nullCheck(binding.passwordHintTxt) || !nullCheck(binding.passwordRepeatHintTxt)
+        if(nullCheck(binding.nameFieldTxt) || nullCheck(binding.mailFieldTxt) ||  !isEmailCheck(binding.mailFieldTxt)
+                || nullCheck(binding.mailRepeatFieldTxt) || !isEquals(binding.mailFieldTxt,binding.mailRepeatFieldTxt)
+                || nullCheck(binding.passwordHintTxt) || nullCheck(binding.passwordRepeatHintTxt)
                 || !isEquals(binding.passwordHintTxt,binding.passwordRepeatHintTxt)){
         }
         return true;
@@ -84,9 +89,9 @@ public class Reg extends Fragment {
     private boolean nullCheck(EditText et){
         if(et.getText().toString().length()==0){
             et.setError("Пустое поле");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
     private boolean isEmailCheck(EditText et){
         if(!isEmail(et.getText().toString())){
