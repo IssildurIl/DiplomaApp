@@ -1,22 +1,16 @@
 package ru.sfedu.diplomaapp.utils.forEmployees;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.RvListEmployeeForCreatingTaskBinding;
 import ru.sfedu.diplomaapp.interfaces.EmployeeClickListener;
-import ru.sfedu.diplomaapp.interfaces.ProjectClickListener;
 import ru.sfedu.diplomaapp.models.Employee;
-import ru.sfedu.diplomaapp.models.Project;
-import ru.sfedu.diplomaapp.utils.forprojects.ProjectItemAdapterForCreatingTask;
 
 public class EmployeeItemAdapterForCreatingTask extends ListAdapter<Employee, EmployeeItemAdapterForCreatingTask.ItemViewHolder> {
 

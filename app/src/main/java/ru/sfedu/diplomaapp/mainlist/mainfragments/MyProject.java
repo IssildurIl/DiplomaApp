@@ -1,7 +1,6 @@
-package ru.sfedu.diplomaapp.mainlist;
+package ru.sfedu.diplomaapp.mainlist.mainfragments;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +16,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import ru.sfedu.diplomaapp.R;
-import ru.sfedu.diplomaapp.utils.forprojects.ProjectDiffCallback;
-import ru.sfedu.diplomaapp.utils.forprojects.ProjectsViewModel;
+import ru.sfedu.diplomaapp.utils.forProjects.ProjectDiffCallback;
+import ru.sfedu.diplomaapp.utils.forProjects.ProjectsViewModel;
 import ru.sfedu.diplomaapp.databinding.FragmentMyProjectBinding;
-import ru.sfedu.diplomaapp.utils.forprojects.ProjectItemAdapter;
+import ru.sfedu.diplomaapp.utils.forProjects.ProjectItemAdapter;
 
 public class MyProject extends Fragment {
     NavController navController;
     ProjectsViewModel pvm;
+    Bundle bundle = new Bundle();
+
     public MyProject() {
 
     }
@@ -37,12 +38,10 @@ public class MyProject extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().findViewById(R.id.navbar).setVisibility(View.VISIBLE);
         FragmentMyProjectBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_project, container, false);
         binding.setLifecycleOwner(this);
         pvm = new ViewModelProvider(this).get(ProjectsViewModel.class);
         binding.setProjectsListViewModel(pvm);
-
         ProjectItemAdapter pia = new ProjectItemAdapter(new ProjectDiffCallback(), project -> {
             pvm.onProjectItemClicked(project.get_id());
         });
@@ -50,8 +49,8 @@ public class MyProject extends Fragment {
 
         pvm.getNavigateToProjectEdit().observe(getViewLifecycleOwner(), projectId -> {
             if(projectId!=null){
-                getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
-                NavHostFragment.findNavController(this).navigate(MyProjectDirections.goToEditProject(projectId));
+                bundle.putLong("My_Task_projectId", projectId);
+                NavHostFragment.findNavController(this).navigate(R.id.editProject,bundle);
                 pvm.onProjectItemNavigated();
             }
         });
@@ -76,7 +75,6 @@ public class MyProject extends Fragment {
             alertDialog.setView(v1);
             v1.findViewById(R.id.addProject).setOnClickListener(v2 -> {
                 navController.navigate(R.id.action_myProject_to_createProject);
-                getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
                 alertDialog.dismiss();
             });
             v1.findViewById(R.id.back).setOnClickListener(v22 -> alertDialog.dismiss());

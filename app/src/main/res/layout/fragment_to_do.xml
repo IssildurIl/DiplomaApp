@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     app:layoutDescription="@xml/fragment_to_do_scene"
-    tools:context=".mainlist.ToDo">
+    tools:context=".mainlist.mainfragments.ToDo">
 
     <TextView
         android:id="@+id/descriptionView1"

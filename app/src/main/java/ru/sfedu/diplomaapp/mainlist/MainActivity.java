@@ -24,8 +24,5 @@ public class MainActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.primary));
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navbar);
-        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
 }

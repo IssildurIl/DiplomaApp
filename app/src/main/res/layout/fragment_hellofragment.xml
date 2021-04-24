@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     app:layoutDescription="@xml/fragment_hellofragment_scene"
-    tools:context=".mainlist.HelloAct">
+    tools:context=".mainlist.mainfragments.HelloAct">
 
     <TextView
         android:id="@+id/descriptionView1"

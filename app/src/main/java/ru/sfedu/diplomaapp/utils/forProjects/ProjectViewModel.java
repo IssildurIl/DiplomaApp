@@ -1,4 +1,4 @@
-package ru.sfedu.diplomaapp.utils.forprojects;
+package ru.sfedu.diplomaapp.utils.forProjects;
 
 import android.app.Application;
 

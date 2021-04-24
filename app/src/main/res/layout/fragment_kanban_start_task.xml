@@ -5,23 +5,26 @@
 
     <data>
         <variable
-            name="employeesListViewModel"
-            type="ru.sfedu.diplomaapp.utils.forEmployees.EmployeesViewModel" />
+            name="tasksListViewModel"
+            type="ru.sfedu.diplomaapp.utils.forTasks.TasksViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".backgroundActivity.listsForCreateTask.UserList">
+        tools:context=".backgroundActivity.kanban.KanbanStartTask">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recview"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@drawable/stroke_rec"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

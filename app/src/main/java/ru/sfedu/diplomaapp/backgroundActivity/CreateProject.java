@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentCreateProjectBinding;
 import ru.sfedu.diplomaapp.models.Project;
-import ru.sfedu.diplomaapp.utils.forprojects.ProjectViewModel;
+import ru.sfedu.diplomaapp.utils.forProjects.ProjectViewModel;
 
 
 public class CreateProject extends Fragment {

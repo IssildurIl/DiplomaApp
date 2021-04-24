@@ -1,12 +1,12 @@
-package ru.sfedu.diplomaapp.mainlist;
+package ru.sfedu.diplomaapp.mainlist.mainfragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -15,11 +15,12 @@ import android.view.ViewGroup;
 
 import ru.sfedu.diplomaapp.R;
 
-public class HelloAct extends Fragment {
+
+public class ToDo extends Fragment {
 
     NavController navController;
 
-    public HelloAct() {
+    public ToDo() {
 
     }
 
@@ -32,8 +33,7 @@ public class HelloAct extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_hellofragment, container, false);
-        getActivity().findViewById(R.id.navbar).setVisibility(View.VISIBLE);
+        View view = inflater.inflate(R.layout.fragment_to_do, container, false);
         return view;
     }
 
@@ -41,11 +41,8 @@ public class HelloAct extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        getActivity().findViewById(R.id.navbar).setVisibility(View.VISIBLE);
         view.findViewById(R.id.fab).setOnClickListener(v -> {
-            getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
-            navController.navigate(R.id.action_hellofragment_to_createTask);
+            navController.navigate(R.id.action_toDo_to_createTask);
         });
     }
-
 }

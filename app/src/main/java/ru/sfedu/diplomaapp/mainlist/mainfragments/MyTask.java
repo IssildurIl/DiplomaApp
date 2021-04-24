@@ -1,4 +1,4 @@
-package ru.sfedu.diplomaapp.mainlist;
+package ru.sfedu.diplomaapp.mainlist.mainfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +32,6 @@ public class MyTask extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_task, container, false);
-        getActivity().findViewById(R.id.navbar).setVisibility(View.VISIBLE);
         return view;
     }
 
@@ -42,7 +41,6 @@ public class MyTask extends Fragment {
         navController = Navigation.findNavController(view);
         view.findViewById(R.id.fab).setOnClickListener(v -> {
             navController.navigate(R.id.action_myTask_to_createTask);
-            getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
         });
     }
 }

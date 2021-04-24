@@ -1,16 +1,12 @@
-package ru.sfedu.diplomaapp.utils.forprojects;
+package ru.sfedu.diplomaapp.utils.forProjects;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.RvListProjectForCreatingTaskBinding;
 import ru.sfedu.diplomaapp.interfaces.ProjectClickListener;
 import ru.sfedu.diplomaapp.models.Project;

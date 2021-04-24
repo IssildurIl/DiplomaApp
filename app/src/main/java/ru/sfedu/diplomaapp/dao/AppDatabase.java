@@ -21,10 +21,11 @@ import ru.sfedu.diplomaapp.models.Tester;
 import ru.sfedu.diplomaapp.models.TestersTask;
 
 @Database(entities = {Employee.class, Developer.class, Tester.class, Task.class, DevelopersTask.class,
-        TestersTask.class, Project.class}, version = 4,exportSchema = false)
+        TestersTask.class, Project.class}, version = 7,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract EmployeeDao employeeDao();
     public abstract ProjectDao projectDao();
+    public abstract TaskDao taskDao();
     private static final String DB_NAME = "data.db";
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

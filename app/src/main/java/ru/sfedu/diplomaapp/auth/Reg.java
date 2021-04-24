@@ -49,14 +49,14 @@ public class Reg extends Fragment {
             }
         });
         binding.regBtn.setOnClickListener(v -> {
-            if(check(binding)){
+            if(!check(binding)){
                 return;
             }
             evm.insertEmployee(new Employee(binding.nameFieldTxt.getText().toString(), binding.passwordHintTxt.getText().toString(),
                     binding.mailFieldTxt.getText().toString()));
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-            navController.navigate(R.id.go_two_hellofragment,null,navBuilder.build());
+            navController.navigate(R.id.action_reg_to_navFragment,null,navBuilder.build());
         });
         return binding.getRoot();
         }
@@ -66,7 +66,6 @@ public class Reg extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
         view.findViewById(R.id.return_to_auth).setOnClickListener(view1 -> {
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
@@ -75,12 +74,10 @@ public class Reg extends Fragment {
 
 
     private boolean check(ru.sfedu.diplomaapp.databinding.FragmentRegBinding binding) {
-        if(nullCheck(binding.nameFieldTxt) || nullCheck(binding.mailFieldTxt) ||  !isEmailCheck(binding.mailFieldTxt)
-                || nullCheck(binding.mailRepeatFieldTxt) || !isEquals(binding.mailFieldTxt,binding.mailRepeatFieldTxt)
-                || nullCheck(binding.passwordHintTxt) || nullCheck(binding.passwordRepeatHintTxt)
-                || !isEquals(binding.passwordHintTxt,binding.passwordRepeatHintTxt)){
-        }
-        return true;
+        return nullCheck(binding.nameFieldTxt) && nullCheck(binding.mailFieldTxt) && isEmailCheck(binding.mailFieldTxt)
+                && nullCheck(binding.mailRepeatFieldTxt) && isEquals(binding.mailFieldTxt, binding.mailRepeatFieldTxt)
+                && nullCheck(binding.passwordHintTxt) && nullCheck(binding.passwordRepeatHintTxt)
+                && isEquals(binding.passwordHintTxt, binding.passwordRepeatHintTxt);
     }
 
     public boolean isEmail(String s) {
@@ -89,9 +86,9 @@ public class Reg extends Fragment {
     private boolean nullCheck(EditText et){
         if(et.getText().toString().length()==0){
             et.setError("Пустое поле");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
     private boolean isEmailCheck(EditText et){
         if(!isEmail(et.getText().toString())){

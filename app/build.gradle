@@ -51,8 +51,8 @@ dependencies {
     implementation "com.github.skydoves:powerspinner:1.1.7"
 
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
-
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
 

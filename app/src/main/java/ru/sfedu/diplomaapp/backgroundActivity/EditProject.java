@@ -13,16 +13,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+
 import ru.sfedu.diplomaapp.R;
+import ru.sfedu.diplomaapp.backgroundActivity.kanban.KanbanDoingTask;
+import ru.sfedu.diplomaapp.backgroundActivity.kanban.KanbanEndTask;
+import ru.sfedu.diplomaapp.backgroundActivity.kanban.KanbanStartTask;
 import ru.sfedu.diplomaapp.databinding.FragmentEditProjectBinding;
-import ru.sfedu.diplomaapp.utils.forprojects.ProjectViewModel;
+import ru.sfedu.diplomaapp.utils.forProjects.ProjectViewModel;
 
 
 public class EditProject extends Fragment {
 
     private ProjectViewModel pvm;
     private FragmentEditProjectBinding binding;
-
+    Bundle bundle = new Bundle();
     public EditProject() {
 
     }
@@ -40,14 +46,15 @@ public class EditProject extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_project, container, false);
         binding.setLifecycleOwner(this);
         pvm = new ViewModelProvider(this).get(ProjectViewModel.class);
-        pvm.getProject(EditProjectArgs.fromBundle(getArguments()).getProjectId());
-        binding.setProjectViewModel(pvm);
 
+        pvm.getProject(bundle.getLong("My_Task_projectId"));
+        binding.setProjectViewModel(pvm);
 
         pvm.getEventProjectUpd().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
+                bundle.putInt("item", 1);
+                NavHostFragment.findNavController(this).navigate(R.id.action_editProject_to_navFragment,bundle);
                 pvm.eventProjectUpdateFinished();
-                NavHostFragment.findNavController(this).navigate(R.id.action_editProject_to_myProject);
             }
         });
 
@@ -55,6 +62,14 @@ public class EditProject extends Fragment {
             pvm.project.getValue().setTitle(binding.projectName.getText().toString());
             pvm.updateProject();
         });
+
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getChildFragmentManager(), FragmentPagerItems.with(getContext())
+                .add("", KanbanStartTask.class)
+                .add("", KanbanDoingTask.class)
+                .add("", KanbanEndTask.class)
+                .create());
+        binding.viewpager.setAdapter(adapter);
         return binding.getRoot();
     }
 

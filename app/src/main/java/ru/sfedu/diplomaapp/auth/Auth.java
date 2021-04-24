@@ -64,7 +64,7 @@ public class Auth extends Fragment {
 //            });
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-            navController.navigate(R.id.go_to_hellofragment,null,navBuilder.build());
+            navController.navigate(R.id.action_auth_to_navFragment,null,navBuilder.build());
         });
         return binding.getRoot();
     }
@@ -73,7 +73,6 @@ public class Auth extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        getActivity().findViewById(R.id.navbar).setVisibility(View.INVISIBLE);
         view.findViewById(R.id.reg_btn).setOnClickListener(view1 -> {
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);

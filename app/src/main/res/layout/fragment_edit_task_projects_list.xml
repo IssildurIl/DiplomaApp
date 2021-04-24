@@ -5,14 +5,14 @@
 
     <data>
         <variable
-            name="employeesListViewModel"
-            type="ru.sfedu.diplomaapp.utils.forEmployees.EmployeesViewModel" />
+            name="projectsListViewModel"
+            type="ru.sfedu.diplomaapp.utils.forProjects.ProjectsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".backgroundActivity.listsForCreateTask.UserList">
+        tools:context=".backgroundActivity.listsForEditTask.EditTaskProjectList">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recview"

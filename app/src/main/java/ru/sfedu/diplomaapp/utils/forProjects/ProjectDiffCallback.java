@@ -1,4 +1,4 @@
-package ru.sfedu.diplomaapp.utils.forprojects;
+package ru.sfedu.diplomaapp.utils.forProjects;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
