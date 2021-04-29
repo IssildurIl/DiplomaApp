@@ -16,26 +16,43 @@
         tools:context=".auth.Auth">
 
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/mailField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/cat" />
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/mailField"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
             android:hint="@string/mail_hint"
-            app:boxStrokeColor="@color/primary"
+            app:boxStrokeColor="@color/grey"
             app:errorEnabled="true"
+            app:hintTextColor="@color/grey"
+            app:startIconDrawable="@drawable/ic_email_lock"
             app:layout_constraintBottom_toTopOf="@+id/passwordField"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/animationView">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mailFieldTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/primary"
                 android:singleLine="true"
-                android:textColor="@color/white" />
+                android:textColor="@color/grey" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -43,22 +60,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
             android:hint="@string/pass_hint"
-            app:boxStrokeColor="@color/primary"
+            app:boxStrokeColor="@color/grey"
             app:errorEnabled="true"
+            app:hintTextColor="@color/grey"
             app:layout_constraintBottom_toTopOf="@+id/valid_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mailField"
+            app:startIconDrawable="@drawable/ic_key">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordFieldTxt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/primary"
                 android:inputType="textPassword"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"/>
+                android:textColor="@color/grey" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -66,27 +86,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/valid_btn"
             android:backgroundTint="@color/third"
+            android:text="@string/valid_btn"
+            android:elevation="3dp"
             app:layout_constraintBottom_toTopOf="@+id/reg_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordField" />
 
         <Button
             android:id="@+id/reg_btn"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/third"
-            android:text="@string/reg_hint_btn"
+            android:layout_marginBottom="16dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            style="?attr/materialButtonOutlinedStyle"
+            app:strokeColor="@color/third"
+            app:elevation = "3dp"
+            android:text="@string/reg_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
+            app:layout_constraintTop_toBottomOf="@+id/valid_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

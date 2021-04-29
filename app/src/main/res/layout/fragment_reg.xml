@@ -19,22 +19,24 @@
             android:id="@+id/nameField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="54dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="54dp"
+            android:layout_marginEnd="24dp"
             android:hint="Введите имя"
-            app:boxStrokeColor="@color/primary"
+            app:boxStrokeColor="@color/grey"
             app:errorEnabled="true"
+            app:hintTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconDrawable="@drawable/ic_account_edit">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameFieldTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="220dp" />
+                android:background="@color/primary"
+                android:textColor="@color/grey" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,22 +44,24 @@
             android:id="@+id/mailField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="54dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="27dp"
-            android:layout_marginEnd="54dp"
+            android:layout_marginEnd="24dp"
             android:hint="@string/mail_hint"
-            app:boxStrokeColor="@color/primary"
+            app:boxStrokeColor="@color/grey"
             app:errorEnabled="true"
+            app:hintTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameField">
+            app:layout_constraintTop_toBottomOf="@+id/nameField"
+            app:startIconDrawable="@drawable/ic_email_lock">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mailFieldTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="220dp" />
+                android:background="@color/primary"
+                android:textColor="@color/grey" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,22 +69,24 @@
             android:id="@+id/mailRepeatField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="54dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="27dp"
-            android:layout_marginEnd="54dp"
+            android:layout_marginEnd="24dp"
             android:hint="@string/mail_rep_hint"
-            app:boxStrokeColor="@color/primary"
+            app:boxStrokeColor="@color/grey"
             app:errorEnabled="true"
+            app:hintTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mailField">
+            app:layout_constraintTop_toBottomOf="@+id/mailField"
+            app:startIconDrawable="@drawable/ic_email_lock">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mailRepeatFieldTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="220dp" />
+                android:background="@color/primary"
+                android:textColor="@color/grey" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,23 +94,25 @@
             android:id="@+id/passwordHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="54dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="27dp"
-            android:layout_marginEnd="54dp"
+            android:layout_marginEnd="24dp"
             android:hint="@string/pass_hint"
-            app:boxStrokeColor="@color/primary"
+            app:boxStrokeColor="@color/grey"
             app:errorEnabled="true"
+            app:hintTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mailRepeatField">
+            app:layout_constraintTop_toBottomOf="@+id/mailRepeatField"
+            app:startIconDrawable="@drawable/ic_key">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordHintTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/primary"
                 android:inputType="textPassword"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="260dp" />
+                android:textColor="@color/grey" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,23 +120,25 @@
             android:id="@+id/passwordRepeatHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="54dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="27dp"
-            android:layout_marginEnd="54dp"
+            android:layout_marginEnd="24dp"
             android:hint="@string/pass_rep_hint"
-            app:boxStrokeColor="@color/primary"
+            app:boxStrokeColor="@color/grey"
             app:errorEnabled="true"
+            app:hintTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordHint">
+            app:layout_constraintTop_toBottomOf="@+id/passwordHint"
+            app:startIconDrawable="@drawable/ic_key">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordRepeatHintTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/primary"
                 android:inputType="textPassword"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="260dp" />
+                android:textColor="@color/grey" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,11 +147,11 @@
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="54dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="27dp"
-            android:layout_marginEnd="54dp"
-            android:text="@string/reg_btn"
+            android:layout_marginEnd="24dp"
             android:backgroundTint="@color/third"
+            android:text="@string/reg_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -149,15 +159,16 @@
 
         <Button
             android:id="@+id/return_to_auth"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="54dp"
             android:layout_marginTop="27dp"
-            android:layout_marginEnd="54dp"
+            android:layout_marginEnd="24dp"
+            android:textColor="@color/white"
             android:text="@string/return_to_auth"
-            android:backgroundTint="@color/third"
+            style="?attr/materialButtonOutlinedStyle"
+            app:strokeColor="@color/third"
+            app:elevation = "3dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reg_btn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
