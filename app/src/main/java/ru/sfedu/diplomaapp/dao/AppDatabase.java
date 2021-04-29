@@ -28,7 +28,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TaskDao taskDao();
     private static final String DB_NAME = "data.db";
     private static volatile AppDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 4;
+    private static final int NUMBER_OF_THREADS = 20;
     static public final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     static public AppDatabase getDatabase(final Context context) {

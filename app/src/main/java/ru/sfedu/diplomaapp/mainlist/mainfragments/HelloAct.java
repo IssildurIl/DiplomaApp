@@ -1,10 +1,14 @@
 package ru.sfedu.diplomaapp.mainlist.mainfragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
@@ -14,11 +18,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.sfedu.diplomaapp.R;
+import ru.sfedu.diplomaapp.databinding.FragmentHellofragmentBinding;
+import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeViewModel;
 
 public class HelloAct extends Fragment {
-
+    public static final String APP_PREFERENCES = "settings";
+    public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID"; // имя кота
+    SharedPreferences mSettings;
     NavController navController;
-
+    EmployeeViewModel evm;
+    long employeeId;
     public HelloAct() {
 
     }
@@ -32,8 +41,32 @@ public class HelloAct extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_hellofragment, container, false);
-        return view;
+        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        FragmentHellofragmentBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_hellofragment,container,false);
+        binding.setLifecycleOwner(this);
+        evm = new ViewModelProvider(this).get(EmployeeViewModel.class);
+        binding.setEmployeeListViewModel(evm);
+        Bundle bundle = getParentFragment().getArguments();
+        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
+           employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
+        }
+        try{
+            employeeId = bundle.getLong("Auth_Employee_Id");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(employeeId!=0){
+            evm.getEmployee(employeeId);
+        }
+
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
+        editor.apply();
+        evm.employee.observe(getViewLifecycleOwner(),employee -> {
+            String hellostr = String.format("Добрый день, %s",employee.getFirstName());
+            binding.descriptionView1.setText(hellostr);
+        });
+        return binding.getRoot();
     }
 
     @Override

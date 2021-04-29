@@ -49,6 +49,9 @@
             <CustomAttribute
                 motion:attributeName="textSize"
                 motion:customFloatValue="24"/>
+            <CustomAttribute
+                motion:attributeName="text"
+                motion:customStringValue="Обновления"/>
         </Constraint>
     </ConstraintSet>
 </MotionScene>

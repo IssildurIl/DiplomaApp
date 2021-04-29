@@ -17,6 +17,7 @@ import ru.sfedu.diplomaapp.databinding.FragmentUserListBinding;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeDiffCallback;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeItemAdapterForCreatingTask;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeesViewModel;
+import ru.sfedu.diplomaapp.utils.forTasks.TaskViewModel;
 
 
 public class UserList extends Fragment {
@@ -24,6 +25,7 @@ public class UserList extends Fragment {
     Integer transactionSpinnerVal;
     String transactionTaskName,transactionTaskDescription;
     Long transactionProjectId;
+    TaskViewModel tvm;
     public UserList() {
 
     }

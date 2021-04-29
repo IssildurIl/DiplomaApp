@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,6 +30,7 @@ public class EditProject extends Fragment {
 
     private ProjectViewModel pvm;
     private FragmentEditProjectBinding binding;
+    long projectId;
     Bundle bundle = new Bundle();
     public EditProject() {
 
@@ -43,11 +46,12 @@ public class EditProject extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Bundle getbundle = getArguments();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_project, container, false);
         binding.setLifecycleOwner(this);
         pvm = new ViewModelProvider(this).get(ProjectViewModel.class);
-
-        pvm.getProject(bundle.getLong("My_Task_projectId"));
+        projectId = getbundle.getLong("projectId");
+        pvm.getProject(projectId);
         binding.setProjectViewModel(pvm);
 
         pvm.getEventProjectUpd().observe(getViewLifecycleOwner(), aBoolean -> {
@@ -76,6 +80,6 @@ public class EditProject extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
+
 }

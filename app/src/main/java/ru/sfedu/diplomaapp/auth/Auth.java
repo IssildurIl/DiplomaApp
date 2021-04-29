@@ -26,6 +26,7 @@ public class Auth extends Fragment {
     EmployeeViewModel evm;
     FragmentTransaction ft;
     String pwrd="",email="";
+    long employeeId;
     public Auth() {
 
     }
@@ -45,26 +46,28 @@ public class Auth extends Fragment {
         binding.setEmployeeViewModel(evm);
 
         binding.validBtn.setOnClickListener(v -> {
-//            if(nullCheck(binding.mailFieldTxt) && nullCheck(binding.passwordFieldTxt)){
-//                return;
-//            }
-//            evm.getEmployeeByEmail(binding.mailFieldTxt.getText().toString(), binding.passwordFieldTxt.getText().toString());
-//            evm.employeeByEmail.observe(getViewLifecycleOwner(),employee -> {
-//                if(employee!=null){
-//                    email = employee.getEmail();
-//                    pwrd = employee.getPassword();
-//                }
-//                if(email.length() == 0){
-//                    binding.mailFieldTxt.setError("Такой пользователь не зарегестрирован");
-//                    return;
-//                }
-//            if(isEquals(pwrd,binding.passwordFieldTxt.getText().toString())){
-//                 navController.navigate(R.id.go_to_hellofragment);
-//            }
-//            });
-            NavOptions.Builder navBuilder =  new NavOptions.Builder();
-            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-            navController.navigate(R.id.action_auth_to_navFragment,null,navBuilder.build());
+            if(nullCheck(binding.mailFieldTxt) && nullCheck(binding.passwordFieldTxt)){
+                return;
+            }
+            evm.getEmployeeByEmail(binding.mailFieldTxt.getText().toString(), binding.passwordFieldTxt.getText().toString());
+            evm.employeeByEmail.observe(getViewLifecycleOwner(),employee -> {
+                if(employee!=null){
+                    employeeId = employee.get_id();
+                    email = employee.getEmail();
+                    pwrd = employee.getPassword();
+                }
+                if(email.length() == 0){
+                    binding.mailFieldTxt.setError("Такой пользователь не зарегестрирован");
+                    return;
+                }
+            if(isEquals(pwrd,binding.passwordFieldTxt.getText().toString())){
+                 Bundle bundle = new Bundle();
+                 bundle.putLong("Auth_Employee_Id",employeeId);
+                 NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                 navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+                 navController.navigate(R.id.action_auth_to_navFragment,bundle,navBuilder.build());
+                }
+            });
         });
         return binding.getRoot();
     }

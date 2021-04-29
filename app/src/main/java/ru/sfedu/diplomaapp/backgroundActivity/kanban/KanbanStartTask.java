@@ -23,10 +23,10 @@ import ru.sfedu.diplomaapp.utils.forTasks.TasksViewModel;
 public class KanbanStartTask extends Fragment {
     TasksViewModel tvm;
     Bundle bundle = new Bundle();
+    long projectId;
     public KanbanStartTask() {
 
     }
-
 
 
     @Override
@@ -42,7 +42,6 @@ public class KanbanStartTask extends Fragment {
         binding.setLifecycleOwner(this);
         tvm = new ViewModelProvider(this).get(TasksViewModel.class);
         binding.setTasksListViewModel(tvm);
-
         TaskItemAdapter tia = new TaskItemAdapter(new TaskDiffCallback(), task -> {
             tvm.onTaskItemClicked(task.get_id());
         });
@@ -50,13 +49,14 @@ public class KanbanStartTask extends Fragment {
 
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
             if(taskId!=null){
-                bundle.putLong("TASK_ID", taskId);
+                bundle.putLong("E_TASK_ID", taskId);
                 NavHostFragment.findNavController(this).navigate(R.id.action_kanbanStartTask_to_editTask,bundle);
                 tvm.onTaskItemNavigated();
             }
         });
-
-
+        Bundle bundle = getParentFragment().getArguments();
+        projectId = bundle.getLong("projectId");
+        tvm.getTaskListOpen(projectId);
         tvm.taskListOpen.observe(getViewLifecycleOwner(), tasks -> {
             if (tasks != null) {
                 tia.submitList(tasks);

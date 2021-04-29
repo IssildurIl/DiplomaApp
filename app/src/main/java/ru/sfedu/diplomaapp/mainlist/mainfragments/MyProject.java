@@ -49,8 +49,8 @@ public class MyProject extends Fragment {
 
         pvm.getNavigateToProjectEdit().observe(getViewLifecycleOwner(), projectId -> {
             if(projectId!=null){
-                bundle.putLong("My_Task_projectId", projectId);
-                NavHostFragment.findNavController(this).navigate(R.id.editProject,bundle);
+                bundle.putLong("projectId", projectId);
+                NavHostFragment.findNavController(this).navigate(R.id.go_to_editProject,bundle);
                 pvm.onProjectItemNavigated();
             }
         });

@@ -56,4 +56,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_outline_add_24"
         app:tint="@color/white" />
+
 </androidx.constraintlayout.motion.widget.MotionLayout>

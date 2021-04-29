@@ -27,14 +27,18 @@ public class TasksViewModel extends AndroidViewModel {
         super(application);
         appDatabase = AppDatabase.getDatabase(application);
         taskDao = appDatabase.taskDao();
-        taskListOpen = taskDao.getStartedTask();
-        taskListResume = taskDao.getProcessingTask();
-        taskListFinished = taskDao.getEndedTask();
-
         navigateToTask.setValue(null);
     }
 
-
+    public void getTaskListOpen(long projectId){
+        taskListOpen = taskDao.getStartedTask(projectId);
+    }
+    public void getTaskListResume(long projectId){
+        taskListResume = taskDao.getProcessingTask(projectId);
+    }
+    public void getTaskListFinished(long projectId){
+        taskListFinished = taskDao.getEndedTask(projectId);
+    }
     public void onTaskItemClicked(Long id){
         navigateToTask.setValue(id);
     }

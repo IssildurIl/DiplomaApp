@@ -21,9 +21,7 @@ import ru.sfedu.diplomaapp.utils.forProjects.ProjectsViewModel;
 
 
 public class EditTaskProjectsList extends Fragment {
-    Integer transactionSpinnerVal;
-    String transactionTaskName,transactionTaskDescription;
-    Long transactionEmployeeId;
+    Long transactionEmployeeId,transactionTaskId;
     ProjectsViewModel pvm;
     public EditTaskProjectsList() {
 
@@ -47,14 +45,10 @@ public class EditTaskProjectsList extends Fragment {
         Bundle bundle = this.getArguments();
         Bundle sendBundle = new Bundle();
         try{
-            transactionSpinnerVal = bundle.getInt("E_SPINNER_VAL");
-            transactionTaskName = bundle.getString("E_TASK_NAME");
-            transactionTaskDescription = bundle.getString("E_TASK_DESCRIPTION");
-            transactionEmployeeId = bundle.getLong("E_EMPLOYEE_ID");
-            sendBundle.putString("E_TASK_NAME",transactionTaskName);
-            sendBundle.putString("E_TASK_DESCRIPTION",transactionTaskDescription);
-            sendBundle.putLong("E_EMPLOYEE_ID",transactionEmployeeId);
-            sendBundle.putInt("E_SPINNER_VAL",transactionSpinnerVal);
+            transactionTaskId = bundle.getLong("E_TASK_ID");
+            transactionEmployeeId = bundle.getLong("E_USER_ID");
+            sendBundle.putLong("E_TASK_ID",transactionTaskId);
+            sendBundle.putLong("E_USER_ID",transactionEmployeeId);
         }catch (Exception e){
             e.printStackTrace();
         }

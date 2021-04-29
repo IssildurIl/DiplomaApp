@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -36,14 +37,12 @@ import ru.sfedu.diplomaapp.utils.forTasks.TaskViewModel;
 public class EditTask extends Fragment {
 
     TaskViewModel tvm;
-
     EditText mutedAddEmployee,mutedAddProjectTo,mutedAddTime,mutedAddPoint;
     Calendar dateAndTime= Calendar.getInstance();
-    ImageButton returnto;
     NavController navController;
     ProjectViewModel pvm;
     EmployeeViewModel evm;
-    Long projectId,employeeId,taskId;
+    Long projectId,employeeId,taskId,transactionUserId;
 
     public EditTask() {
 
@@ -67,47 +66,45 @@ public class EditTask extends Fragment {
         binding.setProjectViewModel(pvm);
         binding.setEmployeeViewModel(evm);
         binding.setTaskViewModel(tvm);
-
-        try {
-            Bundle getFromProjectList= this.getArguments();
-            projectId = getFromProjectList.getLong("E_PROJECT_ID");
-            employeeId =  getFromProjectList.getLong("E_EMPLOYEE_ID");
-            taskId = getFromProjectList.getLong("TASK_ID");
-            binding.taskName.setText(getFromProjectList.getString("E_TASK_NAME"));
-            binding.taskDesc.setText(getFromProjectList.getString("E_TASK_DESCRIPTION"));
-            binding.spinner.selectItemByIndex(getFromProjectList.getInt("E_SPINNER_VAL"));
-            tvm.getTask(taskId);
-            tvm.task.observe(getViewLifecycleOwner(),task -> {
-                if(task!=null) {
-                    binding.taskName.setText(task.getTaskName());
-                    binding.taskDesc.setText(task.getTaskDescription());
-                    pvm.getProject(task.getProjectId());
-                    evm.getEmployee(task.getEmployeeId());
-                }
-            });
-            pvm.getProject(projectId);
-            evm.getEmployee(employeeId);
-            binding.addEmployee.setText(getFromProjectList.getString("E_EMPLOYEE_NAME"));
-            binding.addProjectTo.setText(getFromProjectList.getString("E_PROJECT_NAME"));
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
+        catchData(binding);
         tvm.getEventTaskUpd().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
-                NavOptions.Builder navBuilder =  new NavOptions.Builder();
-                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-                navController.navigate(R.id.action_editTask_to_editProject);
-                tvm.eventTaskUpdateFinished();
+                tvm.task.observe(getViewLifecycleOwner(),task -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("projectId",task.getProjectId());
+                    NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                    navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+                    navController.navigate(R.id.action_editTask_to_editProject,bundle,navBuilder.build());
+                    tvm.eventTaskUpdateFinished();
+                });
             }
         });
-
-
         init(binding);
         buttons(binding);
         return binding.getRoot();
     }
+
+    private void catchData(ru.sfedu.diplomaapp.databinding.FragmentEditTaskBinding binding) {
+        try {
+            Bundle getFromProjectList= this.getArguments();
+            taskId = getFromProjectList.getLong("E_TASK_ID");
+            employeeId = getFromProjectList.getLong("E_USER_ID");
+            projectId = getFromProjectList.getLong("E_PROJECT_ID");
+            tvm.getTask(taskId);
+            tvm.task.observe(getViewLifecycleOwner(),task -> {
+                binding.spinner.selectItemByIndex((int) task.getStatus());
+            });
+            if(projectId!=0){
+                pvm.getProject(projectId);
+            }
+            if(employeeId!=0){
+                evm.getEmployee(employeeId);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -123,7 +120,6 @@ public class EditTask extends Fragment {
         mutedAddProjectTo = binding.addProjectTo;
         mutedAddTime = binding.addTime;
         mutedAddPoint = binding.addPoint;
-        returnto = binding.returnto;
     }
 
 
@@ -137,7 +133,7 @@ public class EditTask extends Fragment {
 
     //нажатия
     protected void buttons(FragmentEditTaskBinding binding){
-        returnto.setOnClickListener(v -> {
+        binding.returnto.setOnClickListener(v -> {
             if(binding.taskName.getText().toString().length()!=0){
                 tvm.task.getValue().setTaskName(binding.taskName.getText().toString());
             }
@@ -145,22 +141,10 @@ public class EditTask extends Fragment {
                 tvm.task.getValue().setTaskDescription(binding.taskDesc.getText().toString());
             }
             if(projectId!=null){
-                tvm.task.getValue().setProjectId(employeeId);
-            }else{
-                tvm.task.observe(getViewLifecycleOwner(),task -> {
-                    if(task!=null) {
-                        tvm.task.getValue().setProjectId(task.getProjectId());
-                    }
-                });
+                tvm.task.getValue().setProjectId(projectId);
             }
             if(employeeId!=null){
                 tvm.task.getValue().setEmployeeId(employeeId);
-            }else{
-                tvm.task.observe(getViewLifecycleOwner(),task -> {
-                    if(task!=null) {
-                        tvm.task.getValue().setEmployeeId(task.getEmployeeId());
-                    }
-                });
             }
             tvm.task.getValue().setStatus(binding.spinner.getSelectedIndex());
             tvm.task.getValue().setDeadline(dateAndTime.getTime().getTime());
@@ -170,42 +154,48 @@ public class EditTask extends Fragment {
             setTime(v);
             setDate(v);
         });
+
         mutedAddProjectTo.setOnClickListener(v->{
-            Bundle bundle = new Bundle();
-            if(binding.taskName.getText().length()!=0){
-                bundle.putString("E_TASK_NAME",binding.taskName.getText().toString());
-            }
-            if(binding.taskDesc.getText().length()!=0){
-                bundle.putString("E_TASK_DESCRIPTION",binding.taskDesc.getText().toString());
-            }
-            if(binding.spinner.length()!=0){
-                bundle.putInt("E_SPINNER_VAL",binding.spinner.getSelectedIndex());
-            }
+            tvm.task.getValue().setTaskName(binding.taskName.getText().toString());
+            tvm.task.getValue().setTaskDescription(binding.taskDesc.getText().toString());
+            tvm.task.getValue().setStatus(binding.spinner.getSelectedIndex());
             if(employeeId!=0){
-                bundle.putLong("E_EMPLOYEE_ID",employeeId);
+                tvm.task.getValue().setEmployeeId(employeeId);
             }
-            NavOptions.Builder navBuilder =  new NavOptions.Builder();
-            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-            navController.navigate(R.id.action_editTask_to_editTaskProjectsList,bundle);
+            tvm.updateTaskToProject();
+            tvm.getEventTaskToProjectUpd().observe(getViewLifecycleOwner(),aBoolean -> {
+                if(aBoolean) {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("E_TASK_ID", taskId);
+                    bundle.putLong("E_USER_ID",employeeId);
+                    NavOptions.Builder navBuilder = new NavOptions.Builder();
+                    navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+                    navController.navigate(R.id.action_editTask_to_editTaskProjectsList, bundle, navBuilder.build());
+                    tvm.eventTaskToProjectUpdateFinished();
+                }
+            });
+
         });
+
         mutedAddEmployee.setOnClickListener(v->{
-            Bundle bundle = new Bundle();
-            if(binding.taskName.getText().length()!=0){
-                bundle.putString("E_TASK_NAME",binding.taskName.getText().toString());
-            }
-            if(binding.taskDesc.getText().length()!=0){
-                bundle.putString("E_TASK_DESCRIPTION",binding.taskDesc.getText().toString());
-            }
-            if(binding.spinner.length()!=0){
-                bundle.putInt("E_SPINNER_VAL",binding.spinner.getSelectedIndex());
-            }
+            tvm.task.getValue().setTaskName(binding.taskName.getText().toString());
+            tvm.task.getValue().setTaskDescription(binding.taskDesc.getText().toString());
+            tvm.task.getValue().setStatus(binding.spinner.getSelectedIndex());
             if(projectId!=0){
-                bundle.putLong("E_PROJECT_ID",projectId);
+                tvm.task.getValue().setProjectId(projectId);
             }
-            NavOptions.Builder navBuilder =  new NavOptions.Builder();
-            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-            navController.navigate(R.id.action_editTask_to_editTaskUserList,bundle);
+            tvm.updateTaskToEmployee();
+            tvm.getEventTaskToEmployeeUpd().observe(getViewLifecycleOwner(), aBoolean -> {
+                if(aBoolean){
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("E_TASK_ID",taskId);
+                    bundle.putLong("E_PROJECT_ID",employeeId);
+                    NavHostFragment.findNavController(this).navigate(R.id.action_editTask_to_editTaskUserList,bundle);
+                    tvm.eventTaskToEmployeeUpdateFinished();
+                }
+            });
         });
+
     }
 
     //Дата и время
@@ -245,4 +235,5 @@ public class EditTask extends Fragment {
         dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         setInitialDateTime();
     };
+
 }

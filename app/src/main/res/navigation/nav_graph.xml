@@ -70,6 +70,7 @@
         <action
             android:id="@+id/action_kanbanStartTask_to_editTask"
             app:destination="@id/editTask" />
+
     </fragment>
     <fragment
         android:id="@+id/createTask"
@@ -161,10 +162,10 @@
         android:id="@+id/editTask"
         android:name="ru.sfedu.diplomaapp.backgroundActivity.EditTask"
         android:label="fragment_edit_task"
-        tools:layout="@layout/fragment_edit_task" >
+        tools:layout="@layout/fragment_edit_task">
         <action
             android:id="@+id/action_editTask_to_editProject"
-            app:destination="@id/editProject" />
+            app:destination="@id/editProject"/>
         <action
             android:id="@+id/action_editTask_to_editTaskUserList"
             app:destination="@id/editTaskUserList" />
