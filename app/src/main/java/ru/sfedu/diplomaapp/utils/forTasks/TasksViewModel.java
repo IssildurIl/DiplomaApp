@@ -30,14 +30,14 @@ public class TasksViewModel extends AndroidViewModel {
         navigateToTask.setValue(null);
     }
 
-    public void getTaskListOpen(long projectId){
-        taskListOpen = taskDao.getStartedTask(projectId);
+    public void getTaskListOpen(long projectId,long employeeId){
+        taskListOpen = taskDao.getStartedTask(projectId, employeeId);
     }
-    public void getTaskListResume(long projectId){
-        taskListResume = taskDao.getProcessingTask(projectId);
+    public void getTaskListResume(long projectId,long employeeId){
+        taskListResume = taskDao.getProcessingTask(projectId, employeeId);
     }
-    public void getTaskListFinished(long projectId){
-        taskListFinished = taskDao.getEndedTask(projectId);
+    public void getTaskListFinished(long projectId,long employeeId){
+        taskListFinished = taskDao.getEndedTask(projectId, employeeId);
     }
     public void onTaskItemClicked(Long id){
         navigateToTask.setValue(id);

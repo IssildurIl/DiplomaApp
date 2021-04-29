@@ -1,6 +1,8 @@
 package ru.sfedu.diplomaapp.mainlist.mainfragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.utils.forProjects.ProjectDiffCallback;
@@ -24,6 +27,10 @@ import ru.sfedu.diplomaapp.utils.forProjects.ProjectItemAdapter;
 public class MyProject extends Fragment {
     NavController navController;
     ProjectsViewModel pvm;
+    public static final String APP_PREFERENCES = "settings";
+    public static final String APP_PREFERENCES_EMPLOYEE_ID = "SP_EMPLOYEE_ID";
+    long employeeId;
+    SharedPreferences mSettings;
     Bundle bundle = new Bundle();
 
     public MyProject() {
@@ -46,6 +53,7 @@ public class MyProject extends Fragment {
             pvm.onProjectItemClicked(project.get_id());
         });
         binding.recview.setAdapter(pia);
+        shared();
 
         pvm.getNavigateToProjectEdit().observe(getViewLifecycleOwner(), projectId -> {
             if(projectId!=null){
@@ -54,15 +62,12 @@ public class MyProject extends Fragment {
                 pvm.onProjectItemNavigated();
             }
         });
-
         pvm.projectList.observe(getViewLifecycleOwner(), projects -> {
             if (projects != null) {
                 pia.submitList(projects);
             }
         });
         return binding.getRoot();
-
-
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -82,4 +87,20 @@ public class MyProject extends Fragment {
         });
     }
 
+    private void shared() {
+        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
+            employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
+        }
+        try{
+            Bundle catchbundle = getParentFragment().getArguments();
+            employeeId = catchbundle.getLong("Auth_Employee_Id");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        bundle.putLong("Auth_Employee_Id",employeeId);
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
+        editor.apply();
+    }
 }

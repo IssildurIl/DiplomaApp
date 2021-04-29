@@ -23,11 +23,12 @@ import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeViewModel;
 
 public class HelloAct extends Fragment {
     public static final String APP_PREFERENCES = "settings";
-    public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID"; // имя кота
+    public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
     SharedPreferences mSettings;
     NavController navController;
     EmployeeViewModel evm;
     long employeeId;
+    Bundle bundle = new Bundle();
     public HelloAct() {
 
     }
@@ -41,29 +42,15 @@ public class HelloAct extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+
         FragmentHellofragmentBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_hellofragment,container,false);
         binding.setLifecycleOwner(this);
         evm = new ViewModelProvider(this).get(EmployeeViewModel.class);
         binding.setEmployeeListViewModel(evm);
-        Bundle bundle = getParentFragment().getArguments();
-        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
-           employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
-        }
-        try{
-            employeeId = bundle.getLong("Auth_Employee_Id");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        if(employeeId!=0){
-            evm.getEmployee(employeeId);
-        }
-
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
-        editor.apply();
+        shared();
         evm.employee.observe(getViewLifecycleOwner(),employee -> {
-            String hellostr = String.format("Добрый день, %s",employee.getFirstName());
+            String name = employee.getFirstName().split("\u0020")[0];
+            String hellostr = String.format("Добрый день, %s",name);
             binding.descriptionView1.setText(hellostr);
         });
         return binding.getRoot();
@@ -76,6 +63,25 @@ public class HelloAct extends Fragment {
         view.findViewById(R.id.fab).setOnClickListener(v -> {
             navController.navigate(R.id.action_hellofragment_to_createTask);
         });
+    }
+
+    private void shared() {
+        Bundle catchbundle = getParentFragment().getArguments();
+        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
+            employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
+        }
+        try{
+            employeeId = catchbundle.getLong("Auth_Employee_Id");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(employeeId!=0){
+            evm.getEmployee(employeeId);
+        }
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
+        editor.apply();
     }
 
 }

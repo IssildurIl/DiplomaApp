@@ -31,7 +31,7 @@
             android:id="@+id/descriptionView1" >
             <CustomAttribute
                 motion:attributeName="textSize"
-                motion:customFloatValue="35" />
+                motion:customFloatValue="24" />
         </Constraint>
         <Constraint
             android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
             android:layout_marginTop="8dp">
             <CustomAttribute
                 motion:attributeName="textSize"
-                motion:customFloatValue="24"/>
+                motion:customFloatValue="20"/>
         </Constraint>
     </ConstraintSet>
 </MotionScene>

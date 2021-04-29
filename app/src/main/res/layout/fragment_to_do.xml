@@ -15,7 +15,7 @@
         android:layout_marginTop="50dp"
         android:text="Текущие дела"
         android:textColor="@color/white"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/recview"
         app:layout_constraintEnd_toEndOf="parent"

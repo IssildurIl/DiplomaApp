@@ -1,5 +1,7 @@
 package ru.sfedu.diplomaapp.backgroundActivity.kanban;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -19,7 +21,10 @@ import ru.sfedu.diplomaapp.utils.forTasks.TasksViewModel;
 
 
 public class KanbanDoingTask extends Fragment {
-
+    public static final String APP_PREFERENCES = "settings";
+    public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
+    long employeeId;
+    SharedPreferences mSettings;
     TasksViewModel tvm;
     Bundle bundle = new Bundle();
     long projectId;
@@ -44,7 +49,9 @@ public class KanbanDoingTask extends Fragment {
         TaskItemAdapter tia = new TaskItemAdapter(new TaskDiffCallback(), task -> {
             tvm.onTaskItemClicked(task.get_id());
         });
+        bundle = getParentFragment().getArguments();
         binding.recview.setAdapter(tia);
+        shared();
 
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
             if(taskId!=null){
@@ -53,9 +60,9 @@ public class KanbanDoingTask extends Fragment {
                 tvm.onTaskItemNavigated();
             }
         });
-        Bundle bundle = getParentFragment().getArguments();
+
         projectId = bundle.getLong("projectId");
-        tvm.getTaskListResume(projectId);
+        tvm.getTaskListResume(projectId,employeeId);
         tvm.taskListResume.observe(getViewLifecycleOwner(), tasks -> {
             if (tasks != null) {
                 tia.submitList(tasks);
@@ -63,5 +70,20 @@ public class KanbanDoingTask extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    private void shared() {
+        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
+            employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
+        }
+        try{
+            employeeId = bundle.getLong("Auth_Employee_Id");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
+        editor.apply();
     }
 }

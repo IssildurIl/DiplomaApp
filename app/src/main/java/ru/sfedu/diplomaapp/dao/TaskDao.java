@@ -19,14 +19,14 @@ public interface TaskDao {
     @Query("SELECT * FROM Task")
     LiveData<List<Task>> getAllTasks();
 
-    @Query("SELECT * FROM Task WHERE status = 0 and projectId=:projectId")
-    LiveData<List<Task>> getStartedTask(long projectId);
+    @Query("SELECT * FROM Task WHERE status = 0 and projectId=:projectId and employeeId=:employeeId")
+    LiveData<List<Task>> getStartedTask(long projectId,long employeeId);
 
-    @Query("SELECT * FROM Task WHERE status = 1 and projectId=:projectId")
-    LiveData<List<Task>> getProcessingTask(long projectId);
+    @Query("SELECT * FROM Task WHERE status = 1 and projectId=:projectId and employeeId=:employeeId")
+    LiveData<List<Task>> getProcessingTask(long projectId,long employeeId);
 
-    @Query("SELECT * FROM Task WHERE status = 2 and projectId=:projectId")
-    LiveData<List<Task>> getEndedTask(long projectId);
+    @Query("SELECT * FROM Task WHERE status = 2 and projectId=:projectId and employeeId=:employeeId")
+    LiveData<List<Task>> getEndedTask(long projectId,long employeeId);
 
     @Query("SELECT * FROM Task WHERE _id = :id")
     LiveData<Task> getTaskById(long id);

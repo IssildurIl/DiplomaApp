@@ -22,7 +22,7 @@
             android:layout_height="51dp"
             android:layout_marginTop="50dp"
             android:textColor="@color/white"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:text="Обновления"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/recview"
