@@ -7,8 +7,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.List;
+
 import ru.sfedu.diplomaapp.dao.AppDatabase;
 import ru.sfedu.diplomaapp.dao.TaskDao;
+import ru.sfedu.diplomaapp.models.Project;
 import ru.sfedu.diplomaapp.models.Task;
 
 public class TaskViewModel extends AndroidViewModel {
@@ -19,6 +22,7 @@ public class TaskViewModel extends AndroidViewModel {
     public LiveData<Task> task;
     private MutableLiveData<Boolean> _eventAddTask = new MutableLiveData<>();
     private MutableLiveData<Boolean> _eventUpdTask = new MutableLiveData<>();
+    private MutableLiveData<Boolean> _eventLoadDataTask = new MutableLiveData<>();
     private MutableLiveData<Boolean> _eventUpdTaskToEmployee = new MutableLiveData<>();
     private MutableLiveData<Boolean> _eventUpdTaskToProject = new MutableLiveData<>();
 
@@ -27,7 +31,7 @@ public class TaskViewModel extends AndroidViewModel {
 
         appdb = AppDatabase.getDatabase(application);
         taskDao = appdb.taskDao();
-
+        _eventLoadDataTask.setValue(true);
         _eventAddTask.setValue(false);
         _eventUpdTaskToEmployee.setValue(true);
     }
@@ -84,7 +88,6 @@ public class TaskViewModel extends AndroidViewModel {
     }
 
 
-
     public void eventTaskAddFinished() {
         this._eventAddTask.setValue(false);
     }
@@ -92,4 +95,14 @@ public class TaskViewModel extends AndroidViewModel {
     public LiveData<Boolean> getEventTaskAdd(){
         return _eventAddTask;
     }
+
+
+    public LiveData<Boolean> loadTaskData(){
+        return _eventLoadDataTask;
+    }
+    public void eventTaskDataLoaded() {
+        this._eventLoadDataTask.setValue(false);
+    }
+
+
 }

@@ -58,13 +58,14 @@ public class KanbanStartTask extends Fragment {
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
             if(taskId!=null){
                 bundle.putLong("E_TASK_ID", taskId);
+                bundle.putLong("E_PROJECT_ID",projectId);
                 NavHostFragment.findNavController(this).navigate(R.id.action_kanbanStartTask_to_editTask,bundle);
                 tvm.onTaskItemNavigated();
             }
         });
 
         projectId = bundle.getLong("projectId");
-        tvm.getTaskListOpen(projectId,employeeId);
+        tvm.getTaskListOpen(projectId);
         tvm.taskListOpen.observe(getViewLifecycleOwner(), tasks -> {
             if (tasks != null) {
                 tia.submitList(tasks);

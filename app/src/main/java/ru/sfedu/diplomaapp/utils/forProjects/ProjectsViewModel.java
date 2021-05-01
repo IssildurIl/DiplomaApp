@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.sfedu.diplomaapp.dao.AppDatabase;
@@ -42,6 +43,11 @@ public class ProjectsViewModel extends AndroidViewModel {
     public void deleteProject(Project project) { databaseWriteExecutor.execute(() -> projectDao.deleteProject(project)); }
 
     public void deleteAllProject() { AppDatabase.databaseWriteExecutor.execute(() -> projectDao.deleteAll()); }
+
+    public Project getProjectByPosition(int position){
+        List<Project> listProjects = projectList.getValue();
+        return listProjects.get(position);
+    }
 
     public void onProjectItemClicked(Long id){
         navigateToProject.setValue(id);

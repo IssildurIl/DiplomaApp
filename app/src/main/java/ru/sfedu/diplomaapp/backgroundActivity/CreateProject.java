@@ -43,7 +43,7 @@ public class CreateProject extends Fragment {
         });
 
         binding.createProjectButton.setOnClickListener(v -> {
-            pvm.insertProject(new Project(binding.projectName.getText().toString()));
+            pvm.insertProject(new Project(binding.projectName.getText().toString(),binding.projectDesc.getText().toString()));
             requireActivity().onBackPressed();
         });
         return binding.getRoot();

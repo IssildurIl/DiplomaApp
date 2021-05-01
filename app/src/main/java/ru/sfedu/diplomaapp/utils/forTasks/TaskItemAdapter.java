@@ -2,18 +2,24 @@ package ru.sfedu.diplomaapp.utils.forTasks;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ru.sfedu.diplomaapp.databinding.RvListTaskBinding;
 import ru.sfedu.diplomaapp.interfaces.TaskClickListener;
 import ru.sfedu.diplomaapp.models.Project;
 import ru.sfedu.diplomaapp.models.Task;
 
-public class TaskItemAdapter extends ListAdapter<Task,TaskItemAdapter.ItemViewHolder> {
+public class TaskItemAdapter extends ListAdapter<Task,TaskItemAdapter.ItemViewHolder>{
 
     TaskClickListener clickListener;
 

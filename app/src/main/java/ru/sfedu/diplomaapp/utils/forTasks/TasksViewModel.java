@@ -11,33 +11,40 @@ import java.util.List;
 
 import ru.sfedu.diplomaapp.dao.AppDatabase;
 import ru.sfedu.diplomaapp.dao.TaskDao;
+import ru.sfedu.diplomaapp.models.Project;
 import ru.sfedu.diplomaapp.models.Task;
+
+import static ru.sfedu.diplomaapp.dao.AppDatabase.databaseWriteExecutor;
 
 public class TasksViewModel extends AndroidViewModel {
     private AppDatabase appDatabase;
     private TaskDao taskDao;
-
+    public LiveData<List<Task>> taskList;
     public LiveData<List<Task>> taskListOpen;
     public LiveData<List<Task>> taskListResume;
     public LiveData<List<Task>> taskListFinished;
-
+    public LiveData<List<Task>> taskListByEmployee;
     private MutableLiveData<Long> navigateToTask = new MutableLiveData<>();
 
     public TasksViewModel(@NonNull Application application) {
         super(application);
         appDatabase = AppDatabase.getDatabase(application);
         taskDao = appDatabase.taskDao();
+        taskList = taskDao.getAllTasks();
         navigateToTask.setValue(null);
     }
 
-    public void getTaskListOpen(long projectId,long employeeId){
-        taskListOpen = taskDao.getStartedTask(projectId, employeeId);
+    public void getTaskListOpen(long projectId){
+        taskListOpen = taskDao.getStartedTask(projectId);
     }
-    public void getTaskListResume(long projectId,long employeeId){
-        taskListResume = taskDao.getProcessingTask(projectId, employeeId);
+    public void getTaskListResume(long projectId){
+        taskListResume = taskDao.getProcessingTask(projectId);
     }
-    public void getTaskListFinished(long projectId,long employeeId){
-        taskListFinished = taskDao.getEndedTask(projectId, employeeId);
+    public void getTaskListFinished(long projectId){
+        taskListFinished = taskDao.getEndedTask(projectId);
+    }
+    public void getTaskByEmployee(long employeeId){
+        taskListByEmployee = taskDao.getTasksByEmployee(employeeId);
     }
     public void onTaskItemClicked(Long id){
         navigateToTask.setValue(id);
@@ -48,4 +55,5 @@ public class TasksViewModel extends AndroidViewModel {
     public LiveData<Long> getNavigateToTaskEdit(){
         return navigateToTask;
     }
+
 }

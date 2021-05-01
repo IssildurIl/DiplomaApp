@@ -21,7 +21,7 @@ import ru.sfedu.diplomaapp.models.Tester;
 import ru.sfedu.diplomaapp.models.TestersTask;
 
 @Database(entities = {Employee.class, Developer.class, Tester.class, Task.class, DevelopersTask.class,
-        TestersTask.class, Project.class}, version = 7,exportSchema = false)
+        TestersTask.class, Project.class}, version = 8,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract EmployeeDao employeeDao();
     public abstract ProjectDao projectDao();
@@ -70,10 +70,6 @@ public abstract class AppDatabase extends RoomDatabase {
                 dao.deleteAll();
 
                 Project project;
-                for (int i = 0; i < 30; i++) {
-                    project = new Project("Project " + i);
-                    dao.insertProject(project);
-                }
             });
         }
     };

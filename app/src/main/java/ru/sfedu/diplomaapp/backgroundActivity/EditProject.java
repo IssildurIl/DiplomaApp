@@ -1,6 +1,8 @@
 package ru.sfedu.diplomaapp.backgroundActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -29,12 +31,10 @@ import ru.sfedu.diplomaapp.utils.forProjects.ProjectViewModel;
 
 
 public class EditProject extends Fragment {
-    public static final String APP_PREFERENCES = "settings";
-    public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
-    SharedPreferences mSettings;
     private ProjectViewModel pvm;
     private FragmentEditProjectBinding binding;
-    long projectId,employeeId;
+    long projectId;
+    int count = 1;
     Bundle bundle = new Bundle();
     public EditProject() {
 
@@ -57,7 +57,6 @@ public class EditProject extends Fragment {
         projectId = getbundle.getLong("projectId");
         pvm.getProject(projectId);
         binding.setProjectViewModel(pvm);
-        shared(getbundle);
 
         pvm.getEventProjectUpd().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
@@ -66,6 +65,29 @@ public class EditProject extends Fragment {
                 pvm.eventProjectUpdateFinished();
             }
         });
+        binding.correctProjectButton.setOnClickListener(v -> {
+            count++;
+            if(count%2 == 0){
+                binding.projectName.setEnabled(true);
+            }
+            else{
+                binding.projectName.setEnabled(false);
+            }
+        });
+
+        binding.infoProjectButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(pvm.project.getValue().getTitle())
+                    .setMessage(pvm.project.getValue().getDescription())
+                    .setIcon(R.drawable.ic_project)
+                    .setPositiveButton("Оk", (dialog, id) -> {
+                        // Закрываем окно
+                        dialog.cancel();
+                    })
+                    .show();
+            builder.create();
+        });
+
 
         binding.editProjectButton.setOnClickListener(v -> {
             pvm.project.getValue().setTitle(binding.projectName.getText().toString());
@@ -86,19 +108,5 @@ public class EditProject extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-    private void shared(Bundle getbundle) {
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
-            employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
-        }
-        try{
-            employeeId = getbundle.getLong("Auth_Employee_Id");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
-        editor.apply();
-        getbundle.putLong("Auth_Employee_Id",employeeId);
-    }
+
 }

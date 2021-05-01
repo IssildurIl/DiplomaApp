@@ -21,14 +21,15 @@
             android:layout_gravity="center_horizontal"
             android:autofillHints=""
             android:backgroundTint="@color/primary"
+            android:enabled="false"
             android:hint="@string/projectname"
             android:inputType="textUri|textLongMessage"
             android:text="@{projectViewModel.project.title}"
             android:textCursorDrawable="@drawable/colorcursor"
-            android:textSize="22sp"
-            android:focusable="false"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/viewpager"
-            app:layout_constraintEnd_toStartOf="@+id/correctProjectButton"
+            app:layout_constraintEnd_toStartOf="@+id/infoProjectButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,7 +37,7 @@
             android:id="@+id/editProjectButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:background="@null"
@@ -51,13 +52,13 @@
             android:id="@+id/correctProjectButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:background="@null"
             android:backgroundTint="@color/third"
             android:src="@drawable/ic_correct"
             app:layout_constraintEnd_toStartOf="@+id/editProjectButton"
-            app:layout_constraintStart_toEndOf="@+id/projectName"
+            app:layout_constraintStart_toEndOf="@+id/infoProjectButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.viewpager.widget.ViewPager
@@ -69,5 +70,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/projectName" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/infoProjectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:backgroundTint="@color/third"
+            android:src="@drawable/ic_information"
+            app:layout_constraintEnd_toStartOf="@+id/correctProjectButton"
+            app:layout_constraintStart_toEndOf="@+id/projectName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

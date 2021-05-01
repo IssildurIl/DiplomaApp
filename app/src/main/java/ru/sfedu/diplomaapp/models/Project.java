@@ -20,7 +20,7 @@ public class Project implements Serializable {
   @PrimaryKey(autoGenerate = true)
   private long _id;
 
-  private String title;
+  private String title,description;
   private int taskNumber;
   @TypeConverters({DateConverter.class})
   private Long takeIntoDevelopment;
@@ -28,7 +28,8 @@ public class Project implements Serializable {
   public Project () { }
 
 
-  public Project(String s) {
-    this.title = s;
+  public Project(String title,String description) {
+    this.title = title;
+    this.description = description;
   }
 }

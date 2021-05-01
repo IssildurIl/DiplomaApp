@@ -140,6 +140,9 @@
         <action
             android:id="@+id/action_myProject_to_createProject"
             app:destination="@id/createProject" />
+        <action
+            android:id="@+id/action_navFragment_to_watchTask"
+            app:destination="@id/watchTask" />
     </fragment>
     <fragment
         android:id="@+id/kanbanStartTask"
@@ -190,5 +193,14 @@
         <action
             android:id="@+id/action_editTaskProjectsList_to_editTask"
             app:destination="@id/editTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/watchTask"
+        android:name="ru.sfedu.diplomaapp.backgroundActivity.fragmentForTasks.WatchTask"
+        android:label="fragment_watch_task"
+        tools:layout="@layout/fragment_watch_task" >
+        <action
+            android:id="@+id/action_watchTask_to_navFragment"
+            app:destination="@id/navFragment" />
     </fragment>
 </navigation>

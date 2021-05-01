@@ -54,9 +54,17 @@ public class Reg extends Fragment {
             }
             evm.insertEmployee(new Employee(binding.nameFieldTxt.getText().toString(), binding.passwordHintTxt.getText().toString(),
                     binding.mailFieldTxt.getText().toString()));
-            NavOptions.Builder navBuilder =  new NavOptions.Builder();
-            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-            navController.navigate(R.id.action_reg_to_navFragment,null,navBuilder.build());
+            evm.getEmployeeByEmail(binding.mailFieldTxt.getText().toString(),binding.passwordHintTxt.getText().toString());
+            evm.employeeByEmail.observe(getViewLifecycleOwner(),employee -> {
+                if(employee!=null){
+                long employeeId = employee.get_id();
+                Bundle bundle = new Bundle();
+                bundle.putLong("Auth_Employee_Id",employeeId);
+                NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+                navController.navigate(R.id.action_reg_to_navFragment,bundle,navBuilder.build());
+                }
+            });
         });
         return binding.getRoot();
         }

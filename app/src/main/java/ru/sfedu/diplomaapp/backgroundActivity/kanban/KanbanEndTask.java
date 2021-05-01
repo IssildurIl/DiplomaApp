@@ -60,7 +60,7 @@ public class KanbanEndTask extends Fragment {
             }
         });
         projectId = bundle.getLong("projectId");
-        tvm.getTaskListFinished(projectId,employeeId);
+        tvm.getTaskListFinished(projectId);
         tvm.taskListFinished.observe(getViewLifecycleOwner(), tasks -> {
             if (tasks != null) {
                 tia.submitList(tasks);

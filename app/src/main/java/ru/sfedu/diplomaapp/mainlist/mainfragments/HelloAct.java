@@ -27,8 +27,7 @@ public class HelloAct extends Fragment {
     SharedPreferences mSettings;
     NavController navController;
     EmployeeViewModel evm;
-    long employeeId;
-    Bundle bundle = new Bundle();
+    long employeeId,employeeIdFromBundle,employeeIdFromSp;
     public HelloAct() {
 
     }
@@ -48,6 +47,7 @@ public class HelloAct extends Fragment {
         evm = new ViewModelProvider(this).get(EmployeeViewModel.class);
         binding.setEmployeeListViewModel(evm);
         shared();
+
         evm.employee.observe(getViewLifecycleOwner(),employee -> {
             String name = employee.getFirstName().split("\u0020")[0];
             String hellostr = String.format("Добрый день, %s",name);
@@ -66,22 +66,27 @@ public class HelloAct extends Fragment {
     }
 
     private void shared() {
-        Bundle catchbundle = getParentFragment().getArguments();
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
-            employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
-        }
         try{
-            employeeId = catchbundle.getLong("Auth_Employee_Id");
+            Bundle catchbundle = getParentFragment().getArguments();
+            employeeIdFromBundle = catchbundle.getLong("Auth_Employee_Id");
         }catch (Exception e){
             e.printStackTrace();
         }
-        if(employeeId!=0){
-            evm.getEmployee(employeeId);
+        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
+            employeeIdFromSp=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
         }
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
-        editor.apply();
+        if(employeeIdFromBundle!=0){
+            evm.getEmployee(employeeIdFromBundle);
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeIdFromBundle);
+            editor.apply();
+        }else{
+            evm.getEmployee(employeeIdFromSp);
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeIdFromSp);
+            editor.apply();
+        }
     }
 
 }
