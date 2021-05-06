@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -69,10 +70,29 @@ public class EditTask extends Fragment {
         binding.setTaskViewModel(tvm);
         Bundle getFrom = getArguments();
 
+        taskId = getFrom.getLong("E_TASK_ID");
 
-        long taskId = getFrom.getLong("E_TASK_ID");
         tvm.getTask(taskId);
-
+        try{
+            projectId= getFrom.getLong("E_PROJECT_ID");
+            employeeId = getFrom.getLong("E_USER_ID");
+            tvm.task.observe(getViewLifecycleOwner(),task -> {
+                binding.spinner.selectItemByIndex((int) task.getStatus());
+                binding.addTime.setText(DateUtils.formatDateTime(getContext(),
+                        task.getDeadline(),
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+                pvm.getProject(task.getProjectId());
+                pvm.project.observe(getViewLifecycleOwner(),project -> {
+                    binding.addProjectTo.setText(project.getTitle());
+                });
+                evm.getEmployee(task.getEmployeeId());
+                evm.employee.observe(getViewLifecycleOwner(),employee -> {
+                    binding.addEmployee.setText(employee.getFirstName());
+                });
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         tvm.getEventTaskUpd().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
                 tvm.task.observe(getViewLifecycleOwner(),task -> {
@@ -87,6 +107,22 @@ public class EditTask extends Fragment {
         });
         init(binding);
         buttons(binding);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true){
+            @Override
+            public void handleOnBackPressed() {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("projectId",projectId);
+                    NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                    navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+                    navController.navigate(R.id.action_editTask_to_editProject,bundle,navBuilder.build());
+                    tvm.eventTaskUpdateFinished();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
+
+
         return binding.getRoot();
     }
 
@@ -116,7 +152,6 @@ public class EditTask extends Fragment {
     }
 
 
-    //нажатия
     protected void buttons(FragmentEditTaskBinding binding){
         binding.returnto.setOnClickListener(v -> {
             if(binding.taskName.getText().toString().length()!=0){
@@ -125,10 +160,10 @@ public class EditTask extends Fragment {
             if(binding.taskDesc.getText().toString().length()!=0){
                 tvm.task.getValue().setTaskDescription(binding.taskDesc.getText().toString());
             }
-            if(projectId!=null){
+            if(projectId!=null && projectId!=0){
                 tvm.task.getValue().setProjectId(projectId);
             }
-            if(employeeId!=null){
+            if(employeeId!=null && employeeId!=0){
                 tvm.task.getValue().setEmployeeId(employeeId);
             }
             tvm.task.getValue().setStatus(binding.spinner.getSelectedIndex());
@@ -136,7 +171,6 @@ public class EditTask extends Fragment {
             tvm.updateTask();
         });
         mutedAddTime.setOnClickListener(v -> {
-            setTime(v);
             setDate(v);
         });
 
@@ -147,6 +181,7 @@ public class EditTask extends Fragment {
             if(employeeId!=0){
                 tvm.task.getValue().setEmployeeId(employeeId);
             }
+            tvm.task.getValue().setDeadline(dateAndTime.getTime().getTime());
             tvm.updateTaskToProject();
             tvm.getEventTaskToProjectUpd().observe(getViewLifecycleOwner(),aBoolean -> {
                 if(aBoolean) {
@@ -169,6 +204,7 @@ public class EditTask extends Fragment {
             if(projectId!=0){
                 tvm.task.getValue().setProjectId(projectId);
             }
+            tvm.task.getValue().setDeadline(dateAndTime.getTime().getTime());
             tvm.updateTaskToEmployee();
             tvm.getEventTaskToEmployeeUpd().observe(getViewLifecycleOwner(), aBoolean -> {
                 if(aBoolean){
@@ -192,26 +228,12 @@ public class EditTask extends Fragment {
                 .show();
     }
 
-    // отображаем диалоговое окно для выбора времени
-    public void setTime(View v) {
-        new TimePickerDialog(this.getContext(), t,
-                dateAndTime.get(Calendar.HOUR_OF_DAY),
-                dateAndTime.get(Calendar.MINUTE), true)
-                .show();
-    }
     private void setInitialDateTime() {
         mutedAddTime.setText(DateUtils.formatDateTime(getContext(),
                 dateAndTime.getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-                        | DateUtils.FORMAT_SHOW_TIME));
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
     }
 
-    // установка обработчика выбора времени
-    TimePickerDialog.OnTimeSetListener t= (view, hourOfDay, minute) -> {
-        dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        dateAndTime.set(Calendar.MINUTE, minute);
-        setInitialDateTime();
-    };
 
     // установка обработчика выбора даты
     DatePickerDialog.OnDateSetListener d= (view, year, monthOfYear, dayOfMonth) -> {

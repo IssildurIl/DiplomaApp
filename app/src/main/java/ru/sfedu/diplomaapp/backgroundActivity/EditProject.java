@@ -6,11 +6,15 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -35,6 +39,7 @@ public class EditProject extends Fragment {
     private FragmentEditProjectBinding binding;
     long projectId;
     int count = 1;
+    NavController navController;
     Bundle bundle = new Bundle();
     public EditProject() {
 
@@ -61,7 +66,9 @@ public class EditProject extends Fragment {
         pvm.getEventProjectUpd().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
                 bundle.putInt("item", 1);
-                NavHostFragment.findNavController(this).navigate(R.id.action_editProject_to_navFragment,bundle);
+                NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+                navController.navigate(R.id.action_editProject_to_navFragment,bundle,navBuilder.build());
                 pvm.eventProjectUpdateFinished();
             }
         });
@@ -81,13 +88,22 @@ public class EditProject extends Fragment {
                     .setMessage(pvm.project.getValue().getDescription())
                     .setIcon(R.drawable.ic_project)
                     .setPositiveButton("Оk", (dialog, id) -> {
-                        // Закрываем окно
                         dialog.cancel();
                     })
                     .show();
             builder.create();
         });
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true){
+            @Override
+            public void handleOnBackPressed() {
+                bundle.putInt("item", 1);
+                NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+                navController.navigate(R.id.action_editProject_to_navFragment,bundle,navBuilder.build());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         binding.editProjectButton.setOnClickListener(v -> {
             pvm.project.getValue().setTitle(binding.projectName.getText().toString());
@@ -107,6 +123,7 @@ public class EditProject extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
     }
 
 }

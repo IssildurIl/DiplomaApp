@@ -34,6 +34,12 @@ public interface TaskDao {
     @Query("SELECT * FROM Task Where employeeId = :employeeId")
     LiveData<List<Task>> getTasksByEmployee(long employeeId);
 
+    @Query("SELECT Count(*) FROM Task Where projectId = :ProjectId")
+    Integer getNumberOfTasksByProject(long ProjectId);
+
+    @Query("Select * from Task where ((deadline-:deadline)< 604800000) and employeeId=:employeeId")
+    LiveData<List<Task>> getTaskWeekDeadline(long deadline,long employeeId);
+
     @Insert
     void insertTask(Task task);
 

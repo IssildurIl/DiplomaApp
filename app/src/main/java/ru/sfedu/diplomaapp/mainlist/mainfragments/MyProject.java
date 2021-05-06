@@ -24,6 +24,8 @@ import ru.sfedu.diplomaapp.utils.forProjects.ProjectDiffCallback;
 import ru.sfedu.diplomaapp.utils.forProjects.ProjectsViewModel;
 import ru.sfedu.diplomaapp.databinding.FragmentMyProjectBinding;
 import ru.sfedu.diplomaapp.utils.forProjects.ProjectItemAdapter;
+import ru.sfedu.diplomaapp.utils.forTasks.TaskViewModel;
+import ru.sfedu.diplomaapp.utils.forTasks.TasksViewModel;
 import ru.sfedu.diplomaapp.utils.otherUtils.RecyclerDecoration;
 
 public class MyProject extends Fragment {
@@ -32,6 +34,7 @@ public class MyProject extends Fragment {
     public static final String APP_PREFERENCES = "settings";
     public static final String APP_PREFERENCES_EMPLOYEE_ID = "SP_EMPLOYEE_ID";
     long employeeId;
+    TasksViewModel tvm;
     SharedPreferences mSettings;
     Bundle bundle = new Bundle();
 
@@ -50,13 +53,13 @@ public class MyProject extends Fragment {
         FragmentMyProjectBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_project, container, false);
         binding.setLifecycleOwner(this);
         pvm = new ViewModelProvider(this).get(ProjectsViewModel.class);
+        tvm = new ViewModelProvider(this).get(TasksViewModel.class);
         binding.setProjectsListViewModel(pvm);
         ProjectItemAdapter pia = new ProjectItemAdapter(new ProjectDiffCallback(), project -> {
             pvm.onProjectItemClicked(project.get_id());
-        });
+        },tvm);
         binding.recview.setAdapter(pia);
         shared();
-
         pvm.getNavigateToProjectEdit().observe(getViewLifecycleOwner(), projectId -> {
             if(projectId!=null){
                 bundle.putLong("projectId", projectId);

@@ -21,7 +21,7 @@ import ru.sfedu.diplomaapp.models.Tester;
 import ru.sfedu.diplomaapp.models.TestersTask;
 
 @Database(entities = {Employee.class, Developer.class, Tester.class, Task.class, DevelopersTask.class,
-        TestersTask.class, Project.class}, version = 8,exportSchema = false)
+        TestersTask.class, Project.class}, version = 9,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract EmployeeDao employeeDao();
     public abstract ProjectDao projectDao();

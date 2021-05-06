@@ -21,7 +21,7 @@ public class Project implements Serializable {
   private long _id;
 
   private String title,description;
-  private int taskNumber;
+  private String taskNumber;
   @TypeConverters({DateConverter.class})
   private Long takeIntoDevelopment;
 

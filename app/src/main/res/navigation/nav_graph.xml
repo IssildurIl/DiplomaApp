@@ -168,7 +168,8 @@
         tools:layout="@layout/fragment_edit_task">
         <action
             android:id="@+id/action_editTask_to_editProject"
-            app:destination="@id/editProject"/>
+            app:destination="@id/editProject"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_editTask_to_editTaskUserList"
             app:destination="@id/editTaskUserList" />

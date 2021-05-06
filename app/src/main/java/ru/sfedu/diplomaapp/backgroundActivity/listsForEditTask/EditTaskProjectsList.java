@@ -18,10 +18,12 @@ import ru.sfedu.diplomaapp.databinding.FragmentEditTaskProjectsListBinding;
 import ru.sfedu.diplomaapp.utils.forProjects.ProjectDiffCallback;
 import ru.sfedu.diplomaapp.utils.forProjects.ProjectItemAdapterForCreatingTask;
 import ru.sfedu.diplomaapp.utils.forProjects.ProjectsViewModel;
+import ru.sfedu.diplomaapp.utils.forTasks.TaskViewModel;
 
 
 public class EditTaskProjectsList extends Fragment {
     Long transactionEmployeeId,transactionTaskId;
+    TaskViewModel tvm;
     ProjectsViewModel pvm;
     public EditTaskProjectsList() {
 
@@ -40,6 +42,7 @@ public class EditTaskProjectsList extends Fragment {
         FragmentEditTaskProjectsListBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_edit_task_projects_list,container,false);
         binding.setLifecycleOwner(this);
         pvm = new ViewModelProvider(this).get(ProjectsViewModel.class);
+        tvm = new ViewModelProvider(this).get(TaskViewModel.class);
         binding.setProjectsListViewModel(pvm);
 
         Bundle bundle = this.getArguments();
@@ -52,6 +55,7 @@ public class EditTaskProjectsList extends Fragment {
         }catch (Exception e){
             e.printStackTrace();
         }
+        tvm.getTask(transactionTaskId);
         ProjectItemAdapterForCreatingTask pia = new ProjectItemAdapterForCreatingTask(new ProjectDiffCallback(), project -> {
             pvm.onProjectToTaskItemClicked(project.get_id());
         });
@@ -62,6 +66,7 @@ public class EditTaskProjectsList extends Fragment {
                 pia.submitList(projects);
             }
         });
+
 
         pvm.getNavigateProjectToTask().observe(getViewLifecycleOwner(),projectId->{
             if(projectId!=null) {

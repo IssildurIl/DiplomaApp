@@ -73,6 +73,7 @@ public class HelloAct extends Fragment {
         }catch (Exception e){
             e.printStackTrace();
         }
+
         if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
             employeeIdFromSp=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
         }
@@ -83,10 +84,8 @@ public class HelloAct extends Fragment {
             editor.apply();
         }else{
             evm.getEmployee(employeeIdFromSp);
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeIdFromSp);
-            editor.apply();
         }
     }
+
 
 }

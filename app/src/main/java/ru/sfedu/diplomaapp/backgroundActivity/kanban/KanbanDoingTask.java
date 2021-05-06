@@ -21,10 +21,6 @@ import ru.sfedu.diplomaapp.utils.forTasks.TasksViewModel;
 
 
 public class KanbanDoingTask extends Fragment {
-    public static final String APP_PREFERENCES = "settings";
-    public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
-    long employeeId;
-    SharedPreferences mSettings;
     TasksViewModel tvm;
     Bundle bundle = new Bundle();
     long projectId;
@@ -51,7 +47,6 @@ public class KanbanDoingTask extends Fragment {
         });
         bundle = getParentFragment().getArguments();
         binding.recview.setAdapter(tia);
-        shared();
 
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
             if(taskId!=null){
@@ -72,18 +67,4 @@ public class KanbanDoingTask extends Fragment {
         return binding.getRoot();
     }
 
-    private void shared() {
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
-            employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
-        }
-        try{
-            employeeId = bundle.getLong("Auth_Employee_Id");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
-        editor.apply();
-    }
 }

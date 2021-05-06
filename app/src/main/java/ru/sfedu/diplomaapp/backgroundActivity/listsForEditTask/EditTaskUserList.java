@@ -26,7 +26,7 @@ public class EditTaskUserList extends Fragment {
 
     EmployeesViewModel evm;
     NavController navController;
-    Long transactionTaskId, transactionProejctId;
+    Long transactionTaskId, transactionProjectId;
     public EditTaskUserList() {
 
     }
@@ -47,9 +47,9 @@ public class EditTaskUserList extends Fragment {
         Bundle sendBundle = new Bundle();
         try{
             transactionTaskId = bundle.getLong("E_TASK_ID");
-            transactionProejctId = bundle.getLong("E_PROJECT_ID");
+            transactionProjectId = bundle.getLong("E_PROJECT_ID");
             sendBundle.putLong("E_TASK_ID",transactionTaskId);
-            sendBundle.putLong("E_PROJECT_ID",transactionProejctId);
+            sendBundle.putLong("E_PROJECT_ID",transactionProjectId);
         }catch(Exception e){
             e.printStackTrace();
         }

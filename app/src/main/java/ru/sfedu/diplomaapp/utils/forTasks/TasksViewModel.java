@@ -19,12 +19,15 @@ import static ru.sfedu.diplomaapp.dao.AppDatabase.databaseWriteExecutor;
 public class TasksViewModel extends AndroidViewModel {
     private AppDatabase appDatabase;
     private TaskDao taskDao;
+    public int numberOfTasks=0;
     public LiveData<List<Task>> taskList;
     public LiveData<List<Task>> taskListOpen;
     public LiveData<List<Task>> taskListResume;
     public LiveData<List<Task>> taskListFinished;
     public LiveData<List<Task>> taskListByEmployee;
+    public LiveData<List<Task>> outdatedTask;
     private MutableLiveData<Long> navigateToTask = new MutableLiveData<>();
+    private MutableLiveData<Boolean> _eventCount = new MutableLiveData<>();
 
     public TasksViewModel(@NonNull Application application) {
         super(application);
@@ -32,7 +35,16 @@ public class TasksViewModel extends AndroidViewModel {
         taskDao = appDatabase.taskDao();
         taskList = taskDao.getAllTasks();
         navigateToTask.setValue(null);
+        _eventCount.setValue(true);
     }
+
+    public void deleteTask(Task task) { databaseWriteExecutor.execute(() -> taskDao.deleteTask(task)); }
+
+    public Task getTaskEndTaskByPosition(int position){
+        List<Task> listTasks = taskListFinished.getValue();
+        return listTasks.get(position);
+    }
+
 
     public void getTaskListOpen(long projectId){
         taskListOpen = taskDao.getStartedTask(projectId);
@@ -46,6 +58,15 @@ public class TasksViewModel extends AndroidViewModel {
     public void getTaskByEmployee(long employeeId){
         taskListByEmployee = taskDao.getTasksByEmployee(employeeId);
     }
+
+    public void getTaskByEmployeeAndDate(long date,long employeeId){
+        outdatedTask = taskDao.getTaskWeekDeadline(date,employeeId);
+    }
+
+    public void getNumTaskByProject(long id){
+        numberOfTasks = taskDao.getNumberOfTasksByProject(id);
+    }
+
     public void onTaskItemClicked(Long id){
         navigateToTask.setValue(id);
     }
@@ -54,6 +75,15 @@ public class TasksViewModel extends AndroidViewModel {
     }
     public LiveData<Long> getNavigateToTaskEdit(){
         return navigateToTask;
+    }
+
+
+    public void eventUpdateFinished() {
+        this._eventCount.setValue(false);
+    }
+
+    public LiveData<Boolean> getEventUpd(){
+        return _eventCount;
     }
 
 }

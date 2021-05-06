@@ -90,13 +90,18 @@ public class WatchTask extends Fragment {
             tvm.getTask(taskId);
             tvm.task.observe(getViewLifecycleOwner(),task -> {
                 binding.spinner.selectItemByIndex((int) task.getStatus());
+                binding.addTime.setText(DateUtils.formatDateTime(getContext(),
+                        task.getDeadline(),
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+                pvm.getProject(task.getProjectId());
+                pvm.project.observe(getViewLifecycleOwner(),project -> {
+                    binding.addProjectTo.setText(project.getTitle());
+                });
+                evm.getEmployee(task.getEmployeeId());
+                evm.employee.observe(getViewLifecycleOwner(),employee -> {
+                    binding.addEmployee.setText(employee.getFirstName());
+                });
             });
-            if(projectId!=0){
-                pvm.getProject(projectId);
-            }
-            if(employeeId!=0){
-                evm.getEmployee(employeeId);
-            }
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,41 +145,13 @@ public class WatchTask extends Fragment {
             tvm.task.getValue().setDeadline(dateAndTime.getTime().getTime());
             tvm.updateTask();
         });
-        mutedAddTime.setOnClickListener(v -> {
-            setTime(v);
-            setDate(v);
-        });
     }
 
-    public void setDate(View v) {
-        new DatePickerDialog(this.getContext(), d,
-                dateAndTime.get(Calendar.YEAR),
-                dateAndTime.get(Calendar.MONTH),
-                dateAndTime.get(Calendar.DAY_OF_MONTH))
-                .show();
-    }
-    public void setTime(View v) {
-        new TimePickerDialog(this.getContext(), t,
-                dateAndTime.get(Calendar.HOUR_OF_DAY),
-                dateAndTime.get(Calendar.MINUTE), true)
-                .show();
-    }
     private void setInitialDateTime() {
         mutedAddTime.setText(DateUtils.formatDateTime(getContext(),
                 dateAndTime.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
                         | DateUtils.FORMAT_SHOW_TIME));
     }
-    TimePickerDialog.OnTimeSetListener t= (view, hourOfDay, minute) -> {
-        dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        dateAndTime.set(Calendar.MINUTE, minute);
-        setInitialDateTime();
-    };
-    DatePickerDialog.OnDateSetListener d= (view, year, monthOfYear, dayOfMonth) -> {
-        dateAndTime.set(Calendar.YEAR, year);
-        dateAndTime.set(Calendar.MONTH, monthOfYear);
-        dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        setInitialDateTime();
-    };
 
 }

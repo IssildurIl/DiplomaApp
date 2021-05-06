@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +23,6 @@ import ru.sfedu.diplomaapp.utils.forTasks.TasksViewModel;
 
 
 public class KanbanEndTask extends Fragment {
-    public static final String APP_PREFERENCES = "settings";
-    public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
-    long employeeId;
-    SharedPreferences mSettings;
     TasksViewModel tvm;
     Bundle bundle = new Bundle();
     long projectId;
@@ -50,7 +48,6 @@ public class KanbanEndTask extends Fragment {
         });
         binding.recview.setAdapter(tia);
         bundle = getParentFragment().getArguments();
-        shared();
 
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
             if(taskId!=null){
@@ -59,6 +56,7 @@ public class KanbanEndTask extends Fragment {
                 tvm.onTaskItemNavigated();
             }
         });
+
         projectId = bundle.getLong("projectId");
         tvm.getTaskListFinished(projectId);
         tvm.taskListFinished.observe(getViewLifecycleOwner(), tasks -> {
@@ -67,21 +65,18 @@ public class KanbanEndTask extends Fragment {
             }
         });
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                tvm.deleteTask(tvm.getTaskEndTaskByPosition(viewHolder.getAdapterPosition()));
+            }
+        }).attachToRecyclerView(binding.recview);
         return binding.getRoot();
     }
 
-    private void shared() {
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
-            employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
-        }
-        try{
-            employeeId = bundle.getLong("Auth_Employee_Id");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
-        editor.apply();
-    }
 }

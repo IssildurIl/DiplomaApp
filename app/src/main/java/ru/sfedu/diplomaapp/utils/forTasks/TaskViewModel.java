@@ -20,6 +20,7 @@ public class TaskViewModel extends AndroidViewModel {
     private TaskDao taskDao;
 
     public LiveData<Task> task;
+
     private MutableLiveData<Boolean> _eventAddTask = new MutableLiveData<>();
     private MutableLiveData<Boolean> _eventUpdTask = new MutableLiveData<>();
     private MutableLiveData<Boolean> _eventLoadDataTask = new MutableLiveData<>();

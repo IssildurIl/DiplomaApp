@@ -1,7 +1,6 @@
 package ru.sfedu.diplomaapp.backgroundActivity;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -77,6 +77,18 @@ public class CreateTask extends Fragment {
         }catch (Exception e) {
             e.printStackTrace();
         }
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true){
+            @Override
+            public void handleOnBackPressed() {
+                NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+                navController.navigate(R.id.action_createTask_to_navFragment,null,navBuilder.build());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
+
         binding.setProjectViewModel(pvm);
         binding.setEmployeeViewModel(evm);
         init(binding);
@@ -113,14 +125,25 @@ public class CreateTask extends Fragment {
     //нажатия
     protected void buttons(ru.sfedu.diplomaapp.databinding.FragmentCreateTaskBinding binding){
         returnto.setOnClickListener(v -> {
+            if(binding.taskName.getText().length() == 0){
+                binding.taskName.setError("Выберите исполнителя");
+                return;
+            }
+            if(binding.addEmployee.getText().length() == 0){
+                binding.addEmployee.setError("Выберите исполнителя");
+                return;
+            }
+            if(binding.addProjectTo.getText().length() == 0){
+                 binding.addProjectTo.setError("Выберите исполнителя");
+                 return;
+            }
             tvm.insertTask(new Task(binding.taskName.getText().toString(),binding.taskDesc.getText().toString(),
                     employeeId,projectId, binding.spinner.getSelectedIndex(),new Date().getTime(),dateAndTime.getTime().getTime()));
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-            navController.navigate(R.id.action_createTask_to_navFragment);
+            navController.navigate(R.id.action_createTask_to_navFragment,null,navBuilder.build());
         });
         mutedAddTime.setOnClickListener(v -> {
-            setTime(v);
             setDate(v);
         });
         mutedAddProjectTo.setOnClickListener(v->{
@@ -170,26 +193,13 @@ public class CreateTask extends Fragment {
                 .show();
     }
 
-    // отображаем диалоговое окно для выбора времени
-    public void setTime(View v) {
-        new TimePickerDialog(this.getContext(), t,
-                dateAndTime.get(Calendar.HOUR_OF_DAY),
-                dateAndTime.get(Calendar.MINUTE), true)
-                .show();
-    }
+
     private void setInitialDateTime() {
         mutedAddTime.setText(DateUtils.formatDateTime(getContext(),
                 dateAndTime.getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-                        | DateUtils.FORMAT_SHOW_TIME));
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
     }
 
-    // установка обработчика выбора времени
-    TimePickerDialog.OnTimeSetListener t= (view, hourOfDay, minute) -> {
-        dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        dateAndTime.set(Calendar.MINUTE, minute);
-        setInitialDateTime();
-    };
 
     // установка обработчика выбора даты
     DatePickerDialog.OnDateSetListener d= (view, year, monthOfYear, dayOfMonth) -> {
@@ -198,4 +208,6 @@ public class CreateTask extends Fragment {
         dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         setInitialDateTime();
     };
+
+
 }
