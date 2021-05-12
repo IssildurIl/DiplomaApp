@@ -11,8 +11,10 @@ import java.util.List;
 
 import ru.sfedu.diplomaapp.dao.AppDatabase;
 import ru.sfedu.diplomaapp.dao.TaskDao;
+import ru.sfedu.diplomaapp.models.DevelopersTask;
 import ru.sfedu.diplomaapp.models.Project;
 import ru.sfedu.diplomaapp.models.Task;
+import ru.sfedu.diplomaapp.models.TestersTask;
 
 public class TaskViewModel extends AndroidViewModel {
 
@@ -41,6 +43,17 @@ public class TaskViewModel extends AndroidViewModel {
         appdb.databaseWriteExecutor.execute(() -> taskDao.insertTask(task));
         _eventAddTask.setValue(true);
     }
+
+    public void insertDevelopersTask(DevelopersTask developersTask){
+        appdb.databaseWriteExecutor.execute(() -> taskDao.insertDevelopersTask(developersTask));
+        _eventAddTask.setValue(true);
+    }
+
+    public void insertTestersTask(TestersTask testersTask){
+        appdb.databaseWriteExecutor.execute(() -> taskDao.insertTestersTask(testersTask));
+        _eventAddTask.setValue(true);
+    }
+
 
     public void updateTask() {
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTask(task.getValue()));

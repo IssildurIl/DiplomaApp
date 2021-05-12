@@ -15,12 +15,14 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.sfedu.diplomaapp.R;
+import ru.sfedu.diplomaapp.databinding.FragmentHellofragmentBinding;
 import ru.sfedu.diplomaapp.databinding.FragmentMyTaskBinding;
 import ru.sfedu.diplomaapp.utils.forTasks.TaskDiffCallback;
 import ru.sfedu.diplomaapp.utils.forTasks.TaskItemAdapter;
@@ -30,7 +32,9 @@ import ru.sfedu.diplomaapp.utils.otherUtils.RecyclerDecoration;
 public class MyTask extends Fragment {
     public static final String APP_PREFERENCES = "settings";
     public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
-    long employeeIdFromBundle,employeeIdFromSp;;
+    public static final String APP_PREFERENCES_EMPLOYEE_TYPE= "SP_EMPLOYEE_TYPE";
+    long employeeIdFromSp;
+    int employeeTypeFromSp;
     Bundle bundle = new Bundle();
     SharedPreferences mSettings;
     TasksViewModel tvm;
@@ -56,7 +60,7 @@ public class MyTask extends Fragment {
         TaskItemAdapter tia = new TaskItemAdapter(new TaskDiffCallback(), task -> {
             tvm.onTaskItemClicked(task.get_id());
         });
-        shared();
+        shared(tia);
 
         binding.recview.setAdapter(tia);
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
@@ -66,10 +70,10 @@ public class MyTask extends Fragment {
                 tvm.onTaskItemNavigated();
             }
         });
-        tvm.taskListByEmployee.observe(getViewLifecycleOwner(), tasks -> {
-            if (tasks != null) {
-                tia.submitList(tasks);
-            }
+        binding.goToPersonal.setOnClickListener(v -> {
+            NavOptions.Builder navBuilder =  new NavOptions.Builder();
+            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+            navController.navigate(R.id.action_navFragment_to_personalCabinet,null,navBuilder.build());
         });
 
         return binding.getRoot();
@@ -84,27 +88,46 @@ public class MyTask extends Fragment {
         });
     }
 
-    private void shared() {
+    private void shared(TaskItemAdapter tia) {
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        try{
-            Bundle catchbundle = getParentFragment().getArguments();
-            employeeIdFromBundle = catchbundle.getLong("Auth_Employee_Id");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
             employeeIdFromSp=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
         }
-        if(employeeIdFromBundle!=0){
-            tvm.getTaskByEmployee(employeeIdFromBundle);
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeIdFromBundle);
-            editor.apply();
-        }else{
-            tvm.getTaskByEmployee(employeeIdFromSp);
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeIdFromSp);
-            editor.apply();
+        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_TYPE)) {
+            employeeTypeFromSp=mSettings.getInt(APP_PREFERENCES_EMPLOYEE_TYPE,0);
+        }
+        methodTaskEmployee(employeeIdFromSp,employeeTypeFromSp,tia);
+
+    }
+
+    private void methodTaskEmployee(long employeeIdFromSp, int status,TaskItemAdapter tia) {
+        switch (status) {
+            case 0:
+                tvm.getTaskByEmployee(employeeIdFromSp);
+                tvm.taskListByEmployee.observe(getViewLifecycleOwner(), tasks -> {
+                    if (tasks != null) {
+                        tia.submitList(tasks);
+                    }
+                });
+                break;
+            case 1:
+                tvm.getTaskByDeveloper(employeeIdFromSp);
+                tvm.taskListByDeveloper.observe(getViewLifecycleOwner(), tasks -> {
+                    if (tasks != null) {
+                        tia.submitList(tasks);
+                    }
+                });
+                break;
+            case 2:
+                tvm.getTaskByTester(employeeIdFromSp);
+                tvm.taskListByTester.observe(getViewLifecycleOwner(), tasks -> {
+                    if (tasks != null) {
+                        tia.submitList(tasks);
+                    }
+                });
+                break;
+            default:
+                break;
         }
     }
 }

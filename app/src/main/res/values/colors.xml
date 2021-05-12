@@ -18,5 +18,6 @@
 
     <color name="bluelight">#cfd8dc</color>
     <color name="lighblue">#eceff1</color>
+    <color name="red">#ff2400</color>
 <!--    <color name="sky">#1e88e5</color>-->
 </resources>

@@ -1,15 +1,12 @@
 package ru.sfedu.diplomaapp.models;
 
 
-import androidx.annotation.CallSuper;
 import androidx.room.Entity;
-
-import java.io.Serializable;
+import androidx.room.Ignore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import ru.sfedu.diplomaapp.models.enums.TypeOfTester;
 
 @ToString
 @Data
@@ -17,9 +14,15 @@ import ru.sfedu.diplomaapp.models.enums.TypeOfTester;
 @EqualsAndHashCode(callSuper = true)
 public class Tester extends Developer {
 
-  private int typeOfTester;
+  protected int typeOfTester;
 
 
   public Tester () { }
-
+  @Ignore
+  public Tester(String firstName, String password,String email,int typeOfEmployee) {
+    super.firstName = firstName;
+    super.password = password;
+    super.email = email;
+    super.TypeOfEmployee = typeOfEmployee;
+  }
 }

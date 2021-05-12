@@ -146,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/secondary"
-                android:hint="Статус задачи?"
+                android:hint="Тип задачи?"
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
@@ -156,11 +156,10 @@
                 app:spinner_divider_color="@color/primary"
                 app:spinner_divider_show="true"
                 app:spinner_divider_size="0.4dp"
-                app:spinner_item_array="@array/status"
+                app:spinner_item_array="@array/TaskType"
                 app:spinner_popup_animation="bounce"
                 app:spinner_popup_background="@color/secondary"
                 app:spinner_popup_elevation="14dp" />
-
 
             <EditText
                 android:id="@+id/addEmployee"

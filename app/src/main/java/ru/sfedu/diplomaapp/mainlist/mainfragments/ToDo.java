@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -31,10 +32,12 @@ public class ToDo extends Fragment {
 
     public static final String APP_PREFERENCES = "settings";
     public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
-    long employeeIdFromBundle,employeeIdFromSp;;
+    public static final String APP_PREFERENCES_EMPLOYEE_TYPE= "SP_EMPLOYEE_TYPE";
+    long employeeIdFromSp;;
     Bundle bundle = new Bundle();
     SharedPreferences mSettings;
     TasksViewModel tvm;
+    int employeeTypeFromSp;
     NavController navController;
 
     public ToDo() {
@@ -57,7 +60,7 @@ public class ToDo extends Fragment {
         TaskItemAdapter tia = new TaskItemAdapter(new TaskDiffCallback(), task -> {
             tvm.onTaskItemClicked(task.get_id());
         });
-        shared();
+        shared(tia);
 
         binding.recview.setAdapter(tia);
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
@@ -73,7 +76,11 @@ public class ToDo extends Fragment {
                 tia.submitList(tasks);
             }
         });
-
+        binding.goToPersonal.setOnClickListener(v -> {
+            NavOptions.Builder navBuilder =  new NavOptions.Builder();
+            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+            navController.navigate(R.id.action_navFragment_to_personalCabinet,null,navBuilder.build());
+        });
         return binding.getRoot();
     }
 
@@ -85,27 +92,30 @@ public class ToDo extends Fragment {
             navController.navigate(R.id.action_toDo_to_createTask);
         });
     }
-    private void shared() {
+    private void shared(TaskItemAdapter tia) {
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        try{
-            Bundle catchbundle = getParentFragment().getArguments();
-            employeeIdFromBundle = catchbundle.getLong("Auth_Employee_Id");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
             employeeIdFromSp=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
         }
-        if(employeeIdFromBundle!=0){
-            tvm.getTaskByEmployeeAndDate(new Date().getTime(),employeeIdFromBundle);
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeIdFromBundle);
-            editor.apply();
-        }else{
-            tvm.getTaskByEmployeeAndDate(new Date().getTime(),employeeIdFromSp);
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeIdFromSp);
-            editor.apply();
+        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_TYPE)) {
+            employeeTypeFromSp=mSettings.getInt(APP_PREFERENCES_EMPLOYEE_TYPE,0);
+        }
+        methodTaskEmployee(employeeIdFromSp,employeeTypeFromSp,tia);
+    }
+
+    private void methodTaskEmployee(long employeeIdFromSp, int status,TaskItemAdapter tia) {
+        switch (status) {
+            case 0:
+                tvm.getTaskByEmployeeAndDate(new Date().getDate(),employeeIdFromSp);
+                break;
+            case 1:
+                tvm.getDevelopersTaskByDeveloperAndDate(new Date().getDate(),employeeIdFromSp);
+                break;
+            case 2:
+                tvm.getTestersTaskByTesterAndDate(new Date().getDate(),employeeIdFromSp);
+                break;
+            default:
+                break;
         }
     }
 }

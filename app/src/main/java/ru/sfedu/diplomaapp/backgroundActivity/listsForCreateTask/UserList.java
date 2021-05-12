@@ -12,8 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.List;
+
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentUserListBinding;
+import ru.sfedu.diplomaapp.models.Employee;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeDiffCallback;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeItemAdapterForCreatingTask;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeesViewModel;
@@ -25,7 +28,6 @@ public class UserList extends Fragment {
     Integer transactionSpinnerVal;
     String transactionTaskName,transactionTaskDescription;
     Long transactionProjectId;
-    TaskViewModel tvm;
     public UserList() {
 
     }
@@ -63,13 +65,27 @@ public class UserList extends Fragment {
             evm.onEmployeeToTaskItemClicked(employee.get_id());
         });
         binding.recview.setAdapter(eia);
-
-        evm.employeeList.observe(getViewLifecycleOwner(), projects -> {
-            if (projects != null) {
-                eia.submitList(projects);
-            }
-        });
-
+        if(transactionSpinnerVal==0) {
+            evm.employeeList.observe(getViewLifecycleOwner(), employees -> {
+                if (employees != null) {
+                    eia.submitList(employees);
+                }
+            });
+        }
+        if(transactionSpinnerVal==1) {
+            evm.developerList.observe(getViewLifecycleOwner(), employees -> {
+                if (employees != null) {
+                    eia.submitList(employees);
+                }
+            });
+        }
+        if(transactionSpinnerVal==2) {
+            evm.testerList.observe(getViewLifecycleOwner(), employees -> {
+                if (employees != null) {
+                    eia.submitList(employees);
+                }
+            });
+        }
         evm.getNavigateEmployeeToTask().observe(getViewLifecycleOwner(), userId->{
             if(userId!=null) {
                 sendBundle.putLong("EMPLOYEE_ID",userId);

@@ -18,23 +18,23 @@ import ru.sfedu.diplomaapp.utils.forOthers.DateConverter;
 @TypeConverters({DateConverter.class})
 public class Task implements Serializable {
   @PrimaryKey(autoGenerate = true)
-  private long _id;
+  protected long _id;
 
-  private String taskName, taskDescription;
+  protected String taskName, taskDescription;
 
-  private long employeeId, projectId, status;
+  protected long employeeId, projectId, status;
 
-  private long createdDate,deadline;
+  protected long createdDate,deadline;
 
   public Task () { }
 
 
-  public Task(String taskName, String taskDescription, Long employeeId, Long projectId,int selectedIndex, long createdDate, long deadline) {
+  public Task(String taskName, String taskDescription, Long employeeId, Long projectId,int status,  long createdDate, long deadline) {
     this.taskName = taskName;
     this.taskDescription = taskDescription;
     this.employeeId = employeeId;
     this.projectId = projectId;
-    this.status = selectedIndex;
+    this.status = status;
     this.createdDate = createdDate;
     this.deadline = deadline;
   }

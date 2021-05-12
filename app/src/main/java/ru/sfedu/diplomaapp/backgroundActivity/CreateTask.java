@@ -27,7 +27,9 @@ import java.util.Date;
 
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentCreateTaskBinding;
+import ru.sfedu.diplomaapp.models.DevelopersTask;
 import ru.sfedu.diplomaapp.models.Task;
+import ru.sfedu.diplomaapp.models.TestersTask;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeViewModel;
 import ru.sfedu.diplomaapp.utils.forProjects.ProjectViewModel;
 import ru.sfedu.diplomaapp.utils.forTasks.TaskViewModel;
@@ -126,7 +128,7 @@ public class CreateTask extends Fragment {
     protected void buttons(ru.sfedu.diplomaapp.databinding.FragmentCreateTaskBinding binding){
         returnto.setOnClickListener(v -> {
             if(binding.taskName.getText().length() == 0){
-                binding.taskName.setError("Выберите исполнителя");
+                binding.taskName.setError("Назовите задачу");
                 return;
             }
             if(binding.addEmployee.getText().length() == 0){
@@ -134,11 +136,21 @@ public class CreateTask extends Fragment {
                 return;
             }
             if(binding.addProjectTo.getText().length() == 0){
-                 binding.addProjectTo.setError("Выберите исполнителя");
+                 binding.addProjectTo.setError("Выберите проект");
                  return;
             }
-            tvm.insertTask(new Task(binding.taskName.getText().toString(),binding.taskDesc.getText().toString(),
-                    employeeId,projectId, binding.spinner.getSelectedIndex(),new Date().getTime(),dateAndTime.getTime().getTime()));
+            switch (binding.spinner.getSelectedIndex()){
+                case 0:
+                    tvm.insertTask(new Task(binding.taskName.getText().toString(),binding.taskDesc.getText().toString(),
+                            employeeId,projectId,0,new Date().getTime(),dateAndTime.getTime().getTime()));
+                case 1:
+                    tvm.insertDevelopersTask(new DevelopersTask(binding.taskName.getText().toString(),binding.taskDesc.getText().toString(),
+                            employeeId,projectId,0,new Date().getTime(),dateAndTime.getTime().getTime()));
+                case 2:
+                    tvm.insertTestersTask(new TestersTask(binding.taskName.getText().toString(),binding.taskDesc.getText().toString(),
+                            employeeId,projectId,0,new Date().getTime(),dateAndTime.getTime().getTime()));
+            }
+
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
             navController.navigate(R.id.action_createTask_to_navFragment,null,navBuilder.build());

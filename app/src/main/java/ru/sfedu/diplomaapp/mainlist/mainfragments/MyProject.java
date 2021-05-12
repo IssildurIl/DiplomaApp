@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -31,11 +32,7 @@ import ru.sfedu.diplomaapp.utils.otherUtils.RecyclerDecoration;
 public class MyProject extends Fragment {
     NavController navController;
     ProjectsViewModel pvm;
-    public static final String APP_PREFERENCES = "settings";
-    public static final String APP_PREFERENCES_EMPLOYEE_ID = "SP_EMPLOYEE_ID";
-    long employeeId;
     TasksViewModel tvm;
-    SharedPreferences mSettings;
     Bundle bundle = new Bundle();
 
     public MyProject() {
@@ -59,7 +56,6 @@ public class MyProject extends Fragment {
             pvm.onProjectItemClicked(project.get_id());
         },tvm);
         binding.recview.setAdapter(pia);
-        shared();
         pvm.getNavigateToProjectEdit().observe(getViewLifecycleOwner(), projectId -> {
             if(projectId!=null){
                 bundle.putLong("projectId", projectId);
@@ -73,21 +69,11 @@ public class MyProject extends Fragment {
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                pvm.deleteProject(pvm.getProjectByPosition(viewHolder.getAdapterPosition()));
-            }
-        }).attachToRecyclerView(binding.recview);
-
-        int sidePadding = 0;
-        int topPadding = 0;
-        binding.recview.addItemDecoration(new RecyclerDecoration(sidePadding, topPadding));
+        binding.goToPersonal.setOnClickListener(v -> {
+            NavOptions.Builder navBuilder =  new NavOptions.Builder();
+            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+            navController.navigate(R.id.action_navFragment_to_personalCabinet,null,navBuilder.build());
+        });
 
         return binding.getRoot();
     }
@@ -110,22 +96,6 @@ public class MyProject extends Fragment {
 
     }
 
-    private void shared() {
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        try{
-            Bundle catchbundle = getParentFragment().getArguments();
-            employeeId = catchbundle.getLong("Auth_Employee_Id");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_ID)) {
-            employeeId=mSettings.getLong(APP_PREFERENCES_EMPLOYEE_ID,0);
-        }
-        bundle.putLong("Auth_Employee_Id",employeeId);
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
-        editor.apply();
-    }
 
 
 

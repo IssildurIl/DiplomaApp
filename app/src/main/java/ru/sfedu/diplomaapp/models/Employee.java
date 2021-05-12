@@ -15,20 +15,23 @@ import lombok.ToString;
 @Data
 public class Employee implements Serializable {
   @PrimaryKey(autoGenerate = true)
-  private long _id;
+  protected long _id;
 
-  private String firstName;
-
-  private String password;
-
-  private String email;
+  protected String firstName;
+  protected String password;
+  protected int TypeOfEmployee;
+  protected int age;
+  protected int sex;
+  protected String email;
 
   public Employee () { }
+
   @Ignore
-  public Employee(String firstName, String password,String email) {
+  public Employee(String firstName, String password,String email,int typeOfEmployee) {
     this.firstName = firstName;
     this.password = password;
     this.email = email;
+    this.TypeOfEmployee = typeOfEmployee;
   }
 
 }

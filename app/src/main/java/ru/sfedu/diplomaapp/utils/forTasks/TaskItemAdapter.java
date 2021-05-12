@@ -19,11 +19,11 @@ import ru.sfedu.diplomaapp.interfaces.TaskClickListener;
 import ru.sfedu.diplomaapp.models.Project;
 import ru.sfedu.diplomaapp.models.Task;
 
-public class TaskItemAdapter extends ListAdapter<Task,TaskItemAdapter.ItemViewHolder>{
+public class TaskItemAdapter <T extends Task>  extends ListAdapter<T,TaskItemAdapter.ItemViewHolder>{
 
     TaskClickListener clickListener;
 
-    public TaskItemAdapter(@NonNull DiffUtil.ItemCallback<Task> diffCallback, TaskClickListener clickListener) {
+    public TaskItemAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback, TaskClickListener clickListener) {
         super(diffCallback);
         this.clickListener = clickListener;
     }
@@ -37,7 +37,7 @@ public class TaskItemAdapter extends ListAdapter<Task,TaskItemAdapter.ItemViewHo
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         if(getCurrentList()!= null){
-            Task task = getItem(position);
+            T task = getItem(position);
             holder.bind(task, clickListener);
         }else{
             holder.binding.taskName.setText("No projects");

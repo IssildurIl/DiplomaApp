@@ -143,6 +143,9 @@
         <action
             android:id="@+id/action_navFragment_to_watchTask"
             app:destination="@id/watchTask" />
+        <action
+            android:id="@+id/action_navFragment_to_personalCabinet"
+            app:destination="@id/personalCabinet" />
     </fragment>
     <fragment
         android:id="@+id/kanbanStartTask"
@@ -203,5 +206,17 @@
         <action
             android:id="@+id/action_watchTask_to_navFragment"
             app:destination="@id/navFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalCabinet"
+        android:name="ru.sfedu.diplomaapp.mainlist.PersonalCabinet"
+        android:label="fragment_personal_cabinet"
+        tools:layout="@layout/fragment_personal_cabinet" >
+        <action
+            android:id="@+id/action_personalCabinet_to_navFragment"
+            app:destination="@id/navFragment" />
+        <action
+            android:id="@+id/action_personalCabinet_to_auth"
+            app:destination="@id/auth" />
     </fragment>
 </navigation>

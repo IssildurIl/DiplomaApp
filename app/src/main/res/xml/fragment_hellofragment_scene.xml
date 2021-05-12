@@ -40,12 +40,11 @@
             android:id="@+id/descriptionView1"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginStart="16dp"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toEndOf="@+id/imageButton"
             motion:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            motion:layout_constraintStart_toEndOf="@+id/goToPersonal"
+            android:layout_marginStart="8dp">
             <CustomAttribute
                 motion:attributeName="textSize"
                 motion:customFloatValue="20"/>

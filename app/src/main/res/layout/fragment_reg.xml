@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/primary"
+                android:singleLine="true"
                 android:textColor="@color/grey" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -61,31 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/primary"
-                android:textColor="@color/grey" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/mailRepeatField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="24dp"
-            android:hint="@string/mail_rep_hint"
-            app:boxStrokeColor="@color/grey"
-            app:errorEnabled="true"
-            app:hintTextColor="@color/grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mailField"
-            app:startIconDrawable="@drawable/ic_email_lock">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/mailRepeatFieldTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary"
+                android:singleLine="true"
                 android:textColor="@color/grey" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -103,7 +80,7 @@
             app:hintTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mailRepeatField"
+            app:layout_constraintTop_toBottomOf="@+id/mailField"
             app:startIconDrawable="@drawable/ic_key">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -116,31 +93,31 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordRepeatHint"
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="27dp"
             android:layout_marginEnd="24dp"
-            android:hint="@string/pass_rep_hint"
-            app:boxStrokeColor="@color/grey"
-            app:errorEnabled="true"
-            app:hintTextColor="@color/grey"
+            android:background="@color/primary"
+            android:hint="Выберите занимаемую должность:"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="14.5sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordHint"
-            app:startIconDrawable="@drawable/ic_key">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordRepeatHintTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:inputType="textPassword"
-                android:textColor="@color/grey" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:spinner_arrow_gravity="end"
+            app:spinner_arrow_padding="8dp"
+            app:spinner_divider_color="@color/primary"
+            app:spinner_divider_show="true"
+            app:spinner_divider_size="0.4dp"
+            app:spinner_item_array="@array/EmployeeType"
+            app:spinner_popup_animation="bounce"
+            app:spinner_popup_background="@color/primary"
+            app:spinner_popup_elevation="14dp" />
 
         <Button
             android:id="@+id/reg_btn"
@@ -155,7 +132,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordRepeatHint" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
         <Button
             android:id="@+id/return_to_auth"

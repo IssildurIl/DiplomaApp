@@ -12,11 +12,11 @@ import ru.sfedu.diplomaapp.databinding.RvListEmployeeForCreatingTaskBinding;
 import ru.sfedu.diplomaapp.interfaces.EmployeeClickListener;
 import ru.sfedu.diplomaapp.models.Employee;
 
-public class EmployeeItemAdapterForCreatingTask extends ListAdapter<Employee, EmployeeItemAdapterForCreatingTask.ItemViewHolder> {
+public class EmployeeItemAdapterForCreatingTask <T extends Employee> extends ListAdapter<T, EmployeeItemAdapterForCreatingTask.ItemViewHolder> {
 
     private EmployeeClickListener employeeClickListener;
 
-    public EmployeeItemAdapterForCreatingTask(@NonNull DiffUtil.ItemCallback<Employee> diffCallback,EmployeeClickListener employeeClickListener) {
+    public EmployeeItemAdapterForCreatingTask(@NonNull DiffUtil.ItemCallback<T> diffCallback,EmployeeClickListener employeeClickListener) {
         super(diffCallback);
         this.employeeClickListener = employeeClickListener;
     }
@@ -30,7 +30,7 @@ public class EmployeeItemAdapterForCreatingTask extends ListAdapter<Employee, Em
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         if (getCurrentList()!= null) {
-            Employee employee = getItem(position);
+            T employee = getItem(position);
             holder.bind(employee,employeeClickListener);
         }
         else {
