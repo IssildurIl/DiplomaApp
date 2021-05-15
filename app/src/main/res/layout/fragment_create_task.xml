@@ -172,8 +172,7 @@
                 android:focusable="false"
                 android:hint="@string/addEmployee"
                 android:textCursorDrawable="@color/primary"
-                android:textSize="14sp"
-                android:text="@{employeeViewModel.employee.firstName}"/>
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/addProjectTo"

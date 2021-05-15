@@ -41,12 +41,12 @@
                 android:layout_gravity="center_horizontal"
                 android:backgroundTint="@color/black"
                 android:hint="@string/taskName"
+                android:focusable="false"
                 android:textCursorDrawable="@drawable/colorcursor"
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@{taskViewModel.task.taskName}"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <EditText
                 android:id="@+id/taskDesc"
@@ -57,12 +57,12 @@
                 android:hint="@string/taskTeg"
                 android:textCursorDrawable="@color/primary"
                 android:textSize="18sp"
+                android:focusable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/taskName"
-                android:text="@{taskViewModel.task.taskDescription}"/>
+                app:layout_constraintTop_toBottomOf="@+id/taskName"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,6 +85,7 @@
                 android:backgroundTint="@color/secondary"
                 android:drawableStart="@drawable/ic_add_blue"
                 android:drawablePadding="10dp"
+                android:focusable="false"
                 android:hint="@string/addPoint"
                 android:textCursorDrawable="@color/primary"
                 android:textSize="14sp"
@@ -156,6 +157,7 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="14.5sp"
+                android:enabled="false"
                 app:spinner_arrow_gravity="end"
                 app:spinner_arrow_padding="8dp"
                 app:spinner_divider_color="@color/primary"

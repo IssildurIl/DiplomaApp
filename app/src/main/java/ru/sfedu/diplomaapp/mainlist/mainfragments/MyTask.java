@@ -66,6 +66,7 @@ public class MyTask extends Fragment {
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
             if(taskId!=null){
                 bundle.putLong("E_TASK_ID", taskId);
+                bundle.putInt("E_TASK_TYPE",employeeTypeFromSp);
                 NavHostFragment.findNavController(this).navigate(R.id.action_navFragment_to_watchTask,bundle);
                 tvm.onTaskItemNavigated();
             }

@@ -24,6 +24,10 @@ public class KanbanDoingTask extends Fragment {
     TasksViewModel tvm;
     Bundle bundle = new Bundle();
     long projectId;
+    public static final String APP_PREFERENCES = "settings";
+    public static final String APP_PREFERENCES_EMPLOYEE_TYPE= "SP_EMPLOYEE_TYPE";
+    int employeeTypeFromSp;
+    SharedPreferences mSettings;
     public KanbanDoingTask() {
 
     }
@@ -45,26 +49,62 @@ public class KanbanDoingTask extends Fragment {
         TaskItemAdapter tia = new TaskItemAdapter(new TaskDiffCallback(), task -> {
             tvm.onTaskItemClicked(task.get_id());
         });
-        bundle = getParentFragment().getArguments();
         binding.recview.setAdapter(tia);
+        bundle = getParentFragment().getArguments();
 
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
             if(taskId!=null){
                 bundle.putLong("E_TASK_ID", taskId);
+                bundle.putLong("E_PROJECT_ID",projectId);
+                bundle.putInt("E_TASK_TYPE", employeeTypeFromSp);
                 NavHostFragment.findNavController(this).navigate(R.id.action_kanbanStartTask_to_editTask,bundle);
                 tvm.onTaskItemNavigated();
             }
         });
-
         projectId = bundle.getLong("projectId");
-        tvm.getTaskListResume(projectId);
-        tvm.taskListResume.observe(getViewLifecycleOwner(), tasks -> {
-            if (tasks != null) {
-                tia.submitList(tasks);
-            }
-        });
+        shared(tia);
 
         return binding.getRoot();
+    }
+
+    private void shared(TaskItemAdapter tia) {
+        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_TYPE)) {
+            employeeTypeFromSp=mSettings.getInt(APP_PREFERENCES_EMPLOYEE_TYPE,0);
+        }
+        methodTaskEmployee(employeeTypeFromSp,tia);
+
+    }
+
+    private void methodTaskEmployee(int status,TaskItemAdapter tia) {
+        switch (status) {
+            case 0:
+                tvm.getTaskListResume(projectId);
+                tvm.taskListResume.observe(getViewLifecycleOwner(), tasks -> {
+                    if (tasks != null) {
+                        tia.submitList(tasks);
+                    }
+                });
+                break;
+            case 1:
+                tvm.getDevelopersTaskListResume(projectId);
+                tvm.developersTaskListResume.observe(getViewLifecycleOwner(), developersTask -> {
+                    if (developersTask != null) {
+                        tia.submitList(developersTask);
+                    }
+                });
+                break;
+            case 2:
+                tvm.getTestersTaskListResume(projectId);
+                tvm.testersTaskListResume.observe(getViewLifecycleOwner(), testersTask -> {
+                    if (testersTask != null) {
+                        tia.submitList(testersTask);
+                    }
+                });
+                break;
+            default:
+                break;
+        }
     }
 
 }

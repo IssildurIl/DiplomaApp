@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -29,6 +30,7 @@ import java.util.Calendar;
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentEditTaskBinding;
 import ru.sfedu.diplomaapp.databinding.FragmentWatchTaskBinding;
+import ru.sfedu.diplomaapp.models.Task;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeViewModel;
 import ru.sfedu.diplomaapp.utils.forProjects.ProjectViewModel;
 import ru.sfedu.diplomaapp.utils.forTasks.TaskViewModel;
@@ -41,6 +43,7 @@ public class WatchTask extends Fragment {
     ProjectViewModel pvm;
     EmployeeViewModel evm;
     Long projectId,employeeId,taskId;
+    int taskType;
 
     public WatchTask() {
 
@@ -66,18 +69,6 @@ public class WatchTask extends Fragment {
         binding.setEmployeeViewModel(evm);
         binding.setTaskViewModel(tvm);
         catchData(binding);
-        tvm.getEventTaskUpd().observe(getViewLifecycleOwner(), aBoolean -> {
-            if(aBoolean){
-                tvm.task.observe(getViewLifecycleOwner(),task -> {
-                    Bundle bundle = new Bundle();
-                    bundle.putLong("projectId",task.getProjectId());
-                    NavOptions.Builder navBuilder =  new NavOptions.Builder();
-                    navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-                    navController.navigate(R.id.action_watchTask_to_navFragment,bundle,navBuilder.build());
-                    tvm.eventTaskUpdateFinished();
-                });
-            }
-        });
         init(binding);
         buttons(binding);
         return binding.getRoot();
@@ -87,21 +78,27 @@ public class WatchTask extends Fragment {
         try {
             Bundle getFromProjectList= this.getArguments();
             taskId = getFromProjectList.getLong("E_TASK_ID");
+            taskType = getFromProjectList.getInt("E_TASK_TYPE");
+
+            switch (taskType){
+                case 0:{
+                    tvm.getTask(taskId);
+                    initEmployee(binding,tvm.task);
+                    break;
+                }
+                case 1:{
+                    tvm.getDevelopersTask(taskId);
+                    initEmployee(binding,tvm.developersTask);
+                    break;
+                }
+                case 2:{
+                    tvm.getTestersTask(taskId);
+                    initEmployee(binding,tvm.testersTask);
+                    break;
+                }
+            }
             tvm.getTask(taskId);
-            tvm.task.observe(getViewLifecycleOwner(),task -> {
-                binding.spinner.selectItemByIndex((int) task.getStatus());
-                binding.addTime.setText(DateUtils.formatDateTime(getContext(),
-                        task.getDeadline(),
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
-                pvm.getProject(task.getProjectId());
-                pvm.project.observe(getViewLifecycleOwner(),project -> {
-                    binding.addProjectTo.setText(project.getTitle());
-                });
-                evm.getEmployee(task.getEmployeeId());
-                evm.employee.observe(getViewLifecycleOwner(),employee -> {
-                    binding.addEmployee.setText(employee.getFirstName());
-                });
-            });
+
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -112,7 +109,6 @@ public class WatchTask extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         colorBar();
-        setInitialDateTime();
     }
 
 
@@ -135,23 +131,47 @@ public class WatchTask extends Fragment {
     //нажатия
     protected void buttons(FragmentWatchTaskBinding binding){
         binding.returnto.setOnClickListener(v -> {
-            if(binding.taskName.getText().toString().length()!=0){
-                tvm.task.getValue().setTaskName(binding.taskName.getText().toString());
-            }
-            if(binding.taskDesc.getText().toString().length()!=0){
-                tvm.task.getValue().setTaskDescription(binding.taskDesc.getText().toString());
-            }
-            tvm.task.getValue().setStatus(binding.spinner.getSelectedIndex());
-            tvm.task.getValue().setDeadline(dateAndTime.getTime().getTime());
-            tvm.updateTask();
+            NavOptions.Builder navBuilder =  new NavOptions.Builder();
+            navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+            navController.navigate(R.id.action_watchTask_to_navFragment,null,navBuilder.build());
         });
     }
 
-    private void setInitialDateTime() {
-        mutedAddTime.setText(DateUtils.formatDateTime(getContext(),
-                dateAndTime.getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-                        | DateUtils.FORMAT_SHOW_TIME));
+    private void initEmployee(FragmentWatchTaskBinding binding, LiveData<? extends Task> taskLiveData) {
+        taskLiveData.observe(getViewLifecycleOwner(),task -> {
+            binding.taskName.setText(task.getTaskName());
+            binding.taskDesc.setText(task.getTaskDescription());
+            binding.spinner.selectItemByIndex((int) task.getStatus());
+            binding.addTime.setText(DateUtils.formatDateTime(getContext(),
+                    task.getDeadline(),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+            pvm.getProject(task.getProjectId());
+            pvm.project.observe(getViewLifecycleOwner(),project -> {
+                binding.addProjectTo.setText(project.getTitle());
+            });
+            switch (task.getClass().getName().toLowerCase()){
+                case "ru.sfedu.diplomaapp.models.task":{
+                    evm.getEmployee(task.getEmployeeId());
+                    evm.employee.observe(getViewLifecycleOwner(),employee -> {
+                        binding.addEmployee.setText(employee.getFirstName());
+                    });
+                    break;
+                }
+                case "ru.sfedu.diplomaapp.models.developerstask":{
+                    evm.getDeveloper(task.getEmployeeId());
+                    evm.developer.observe(getViewLifecycleOwner(),employee -> {
+                        binding.addEmployee.setText(employee.getFirstName());
+                    });
+                    break;
+                }
+                case "ru.sfedu.diplomaapp.models.testerstask":{
+                    evm.getTester(task.getEmployeeId());
+                    evm.tester.observe(getViewLifecycleOwner(),employee -> {
+                        binding.addEmployee.setText(employee.getFirstName());
+                    });
+                    break;
+                }
+            }
+        });
     }
-
 }

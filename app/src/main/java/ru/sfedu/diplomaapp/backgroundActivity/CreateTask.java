@@ -72,9 +72,32 @@ public class CreateTask extends Fragment {
             binding.taskName.setText(getFromProjectList.getString("TASK_NAME"));
             binding.taskDesc.setText(getFromProjectList.getString("TASK_DESCRIPTION"));
             binding.spinner.selectItemByIndex(getFromProjectList.getInt("SPINNER_VAL"));
+            if(employeeId!=0) {
+                switch (getFromProjectList.getInt("SPINNER_VAL")) {
+                    case 0: {
+                        evm.getEmployee(employeeId);
+                        evm.employee.observe(getViewLifecycleOwner(), employee -> {
+                            binding.addEmployee.setText(employee.getFirstName());
+                        });
+                        break;
+                    }
+                    case 1: {
+                        evm.getDeveloper(employeeId);
+                        evm.developer.observe(getViewLifecycleOwner(), developer -> {
+                            binding.addEmployee.setText(developer.getFirstName());
+                        });
+                        break;
+                    }
+                    case 2: {
+                        evm.getTester(employeeId);
+                        evm.tester.observe(getViewLifecycleOwner(), tester -> {
+                            binding.addEmployee.setText(tester.getFirstName());
+                        });
+                        break;
+                    }
+                }
+            }
             pvm.getProject(projectId);
-            evm.getEmployee(employeeId);
-            binding.addEmployee.setText(getFromProjectList.getString("EMPLOYEE_NAME"));
             binding.addProjectTo.setText(getFromProjectList.getString("PROJECT_NAME"));
         }catch (Exception e) {
             e.printStackTrace();

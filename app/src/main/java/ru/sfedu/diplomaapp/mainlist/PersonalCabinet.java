@@ -30,6 +30,8 @@ public class PersonalCabinet extends Fragment {
     public static final String APP_PREFERENCES = "settings";
     public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
     public static final String APP_PREFERENCES_EMPLOYEE_TYPE= "SP_EMPLOYEE_TYPE";
+    public static final String APP_PREFERENCES_EMPLOYEE_EMAIL= "SP_EMPLOYEE_EMAIL";
+    public static final String APP_PREFERENCES_EMPLOYEE_PASSWORD= "SP_EMPLOYEE_PASSWORD";
     SharedPreferences mSettings;
     long employeeIdFromSp;
     int employeeTypeFromSp;
@@ -58,8 +60,10 @@ public class PersonalCabinet extends Fragment {
         binding.radioFemale.setOnClickListener(v -> binding.imageView.setImageResource(R.drawable.avatar_woman));
         binding.logOutBtn.setOnClickListener(v->{
             SharedPreferences.Editor editor = mSettings.edit();
-            editor.remove(APP_PREFERENCES_EMPLOYEE_ID);
-            editor.remove(APP_PREFERENCES_EMPLOYEE_TYPE);
+            editor.putInt(APP_PREFERENCES_EMPLOYEE_ID,0);
+            editor.putInt(APP_PREFERENCES_EMPLOYEE_TYPE,0);
+            editor.putString(APP_PREFERENCES_EMPLOYEE_EMAIL,"");
+            editor.putString(APP_PREFERENCES_EMPLOYEE_PASSWORD,"");
             editor.apply();
 
             NavOptions.Builder navBuilder =  new NavOptions.Builder();

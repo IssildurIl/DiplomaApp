@@ -25,9 +25,20 @@ public class TasksViewModel extends AndroidViewModel {
     private TaskDao taskDao;
     public int numberOfTasks=0;
     public LiveData<List<Task>> taskList;
+
+
     public LiveData<List<Task>> taskListOpen;
+    public LiveData<List<DevelopersTask>> developersTaskListOpen;
+    public LiveData<List<TestersTask>> testersTaskListOpen;
+
     public LiveData<List<Task>> taskListResume;
+    public LiveData<List<DevelopersTask>> developersTaskListResume;
+    public LiveData<List<TestersTask>> testersTaskListResume;
+
     public LiveData<List<Task>> taskListFinished;
+    public LiveData<List<DevelopersTask>> developersTaskListFinished;
+    public LiveData<List<TestersTask>> testersTaskListFinished;
+
 
     public LiveData<List<Task>> taskListByEmployee;
     public LiveData<List<DevelopersTask>> taskListByDeveloper;
@@ -35,6 +46,9 @@ public class TasksViewModel extends AndroidViewModel {
 
 
     public LiveData<List<Task>> outdatedTask;
+    public LiveData<List<DevelopersTask>> outdatedDevelopersTask;
+    public LiveData<List<TestersTask>> outdatedTestersTask;
+
     private MutableLiveData<Long> navigateToTask = new MutableLiveData<>();
     private MutableLiveData<Boolean> _eventCount = new MutableLiveData<>();
 
@@ -58,11 +72,35 @@ public class TasksViewModel extends AndroidViewModel {
     public void getTaskListOpen(long projectId){
         taskListOpen = taskDao.getStartedTask(projectId);
     }
+    public void getDevelopersTaskListOpen(long projectId){
+        developersTaskListOpen = taskDao.getStartedDevelopersTask(projectId);
+    }
+    public void getTestersTaskListOpen(long projectId){
+        testersTaskListOpen = taskDao.getStartedTestersTask(projectId);
+    }
+
+
+
     public void getTaskListResume(long projectId){
         taskListResume = taskDao.getProcessingTask(projectId);
     }
+    public void getDevelopersTaskListResume(long projectId){
+        developersTaskListResume = taskDao.getProcessingDevelopersTask(projectId);
+    }
+    public void getTestersTaskListResume(long projectId){
+        testersTaskListResume = taskDao.getProcessingTestersTask(projectId);
+    }
+
+
+
     public void getTaskListFinished(long projectId){
         taskListFinished = taskDao.getEndedTask(projectId);
+    }
+    public void getDevelopersTaskListFinished(long projectId){
+        developersTaskListFinished = taskDao.getEndedDevelopersTask(projectId);
+    }
+    public void getTestersTaskListFinished(long projectId){
+        testersTaskListFinished = taskDao.getEndedTestersTask(projectId);
     }
 
 
@@ -86,11 +124,11 @@ public class TasksViewModel extends AndroidViewModel {
         outdatedTask = taskDao.getTaskWeekDeadline(date,employeeId);
     }
     public void getDevelopersTaskByDeveloperAndDate(long date,long employeeId){
-        outdatedTask = taskDao.getDevelopersTaskWeekDeadline(date,employeeId);
+        outdatedDevelopersTask = taskDao.getDevelopersTaskWeekDeadline(date,employeeId);
     }
 
     public void getTestersTaskByTesterAndDate(long date,long employeeId){
-        outdatedTask = taskDao.getTestersTaskWeekDeadline(date,employeeId);
+        outdatedTestersTask = taskDao.getTestersTaskWeekDeadline(date,employeeId);
     }
 
 

@@ -60,31 +60,36 @@ public class UserList extends Fragment {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         EmployeeItemAdapterForCreatingTask eia = new EmployeeItemAdapterForCreatingTask(new EmployeeDiffCallback(),employee -> {
             evm.onEmployeeToTaskItemClicked(employee.get_id());
         });
+
         binding.recview.setAdapter(eia);
-        if(transactionSpinnerVal==0) {
-            evm.employeeList.observe(getViewLifecycleOwner(), employees -> {
-                if (employees != null) {
-                    eia.submitList(employees);
+        switch (transactionSpinnerVal){
+            case 0: {
+                evm.employeeList.observe(getViewLifecycleOwner(), employees -> {
+                    if (employees != null) {
+                        eia.submitList(employees);
+                    }
+                });
+                break;
+            }
+            case 1:{
+                evm.developerList.observe(getViewLifecycleOwner(), developers -> {
+                    if (developers != null) {
+                        eia.submitList(developers);
+                    }
+                });
+                break;
+            }
+            case 2:{
+                evm.testerList.observe(getViewLifecycleOwner(), testers -> {
+                if (testers != null) {
+                    eia.submitList(testers);
                 }
-            });
-        }
-        if(transactionSpinnerVal==1) {
-            evm.developerList.observe(getViewLifecycleOwner(), employees -> {
-                if (employees != null) {
-                    eia.submitList(employees);
-                }
-            });
-        }
-        if(transactionSpinnerVal==2) {
-            evm.testerList.observe(getViewLifecycleOwner(), employees -> {
-                if (employees != null) {
-                    eia.submitList(employees);
-                }
-            });
+                });
+                break;
+            }
         }
         evm.getNavigateEmployeeToTask().observe(getViewLifecycleOwner(), userId->{
             if(userId!=null) {

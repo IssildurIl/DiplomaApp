@@ -25,6 +25,7 @@ public class EditTaskProjectsList extends Fragment {
     Long transactionEmployeeId,transactionTaskId;
     TaskViewModel tvm;
     ProjectsViewModel pvm;
+    int taskType;
     public EditTaskProjectsList() {
 
     }
@@ -50,6 +51,8 @@ public class EditTaskProjectsList extends Fragment {
         try{
             transactionTaskId = bundle.getLong("E_TASK_ID");
             transactionEmployeeId = bundle.getLong("E_USER_ID");
+            taskType =  bundle.getInt("E_TASK_TYPE");
+            sendBundle.putInt("E_TASK_TYPE",taskType);
             sendBundle.putLong("E_TASK_ID",transactionTaskId);
             sendBundle.putLong("E_USER_ID",transactionEmployeeId);
         }catch (Exception e){

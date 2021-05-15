@@ -66,14 +66,9 @@ public class ToDo extends Fragment {
         tvm.getNavigateToTaskEdit().observe(getViewLifecycleOwner(), taskId -> {
             if(taskId!=null){
                 bundle.putLong("E_TASK_ID", taskId);
+                bundle.putInt("E_TASK_TYPE",employeeTypeFromSp);
                 NavHostFragment.findNavController(this).navigate(R.id.action_navFragment_to_watchTask,bundle);
                 tvm.onTaskItemNavigated();
-            }
-        });
-
-        tvm.outdatedTask.observe(getViewLifecycleOwner(), tasks -> {
-            if (tasks != null) {
-                tia.submitList(tasks);
             }
         });
         binding.goToPersonal.setOnClickListener(v -> {
@@ -81,6 +76,7 @@ public class ToDo extends Fragment {
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
             navController.navigate(R.id.action_navFragment_to_personalCabinet,null,navBuilder.build());
         });
+
         return binding.getRoot();
     }
 
@@ -106,13 +102,28 @@ public class ToDo extends Fragment {
     private void methodTaskEmployee(long employeeIdFromSp, int status,TaskItemAdapter tia) {
         switch (status) {
             case 0:
-                tvm.getTaskByEmployeeAndDate(new Date().getDate(),employeeIdFromSp);
+                tvm.getTaskByEmployeeAndDate(new Date().getTime(),employeeIdFromSp);
+                tvm.outdatedTask.observe(getViewLifecycleOwner(), tasks -> {
+                    if (tasks != null) {
+                        tia.submitList(tasks);
+                    }
+                });
                 break;
             case 1:
-                tvm.getDevelopersTaskByDeveloperAndDate(new Date().getDate(),employeeIdFromSp);
+                tvm.getDevelopersTaskByDeveloperAndDate(new Date().getTime(),employeeIdFromSp);
+                tvm.outdatedDevelopersTask.observe(getViewLifecycleOwner(), tasks -> {
+                    if (tasks != null) {
+                        tia.submitList(tasks);
+                    }
+                });
                 break;
             case 2:
-                tvm.getTestersTaskByTesterAndDate(new Date().getDate(),employeeIdFromSp);
+                tvm.getTestersTaskByTesterAndDate(new Date().getTime(),employeeIdFromSp);
+                tvm.outdatedTestersTask.observe(getViewLifecycleOwner(), tasks -> {
+                    if (tasks != null) {
+                        tia.submitList(tasks);
+                    }
+                });
                 break;
             default:
                 break;

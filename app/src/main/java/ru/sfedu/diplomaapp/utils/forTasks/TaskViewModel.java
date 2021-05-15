@@ -22,6 +22,8 @@ public class TaskViewModel extends AndroidViewModel {
     private TaskDao taskDao;
 
     public LiveData<Task> task;
+    public LiveData<DevelopersTask> developersTask;
+    public LiveData<TestersTask> testersTask;
 
     private MutableLiveData<Boolean> _eventAddTask = new MutableLiveData<>();
     private MutableLiveData<Boolean> _eventUpdTask = new MutableLiveData<>();
@@ -60,13 +62,44 @@ public class TaskViewModel extends AndroidViewModel {
         _eventUpdTask.setValue(true);
     }
 
+    public void updateDevelopersTask() {
+        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateDevelopersTask(developersTask.getValue()));
+        _eventUpdTask.setValue(true);
+    }
+
+    public void updateTestersTask() {
+        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTestersTask(testersTask.getValue()));
+        _eventUpdTask.setValue(true);
+    }
+
     public void updateTaskToEmployee() {
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTask(task.getValue()));
         _eventUpdTaskToEmployee.setValue(true);
     }
 
+    public void updateDevelopersTaskToEmployee() {
+        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateDevelopersTask(developersTask.getValue()));
+        _eventUpdTaskToEmployee.setValue(true);
+    }
+
+    public void updateTestersTaskToEmployee() {
+        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTestersTask(testersTask.getValue()));
+        _eventUpdTaskToEmployee.setValue(true);
+    }
+
+
+
+
     public void updateTaskToProject() {
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTask(task.getValue()));
+        _eventUpdTaskToProject.setValue(true);
+    }
+    public void updateDevelopersTaskToProject() {
+        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateDevelopersTask(developersTask.getValue()));
+        _eventUpdTaskToProject.setValue(true);
+    }
+    public void updateTestersTaskToProject() {
+        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTestersTask(testersTask.getValue()));
         _eventUpdTaskToProject.setValue(true);
     }
 
@@ -74,6 +107,14 @@ public class TaskViewModel extends AndroidViewModel {
     public void getTask(long id) {
         task = taskDao.getTaskById(id);
     }
+    public void getDevelopersTask(long id) {
+        developersTask = taskDao.getDevelopersTaskById(id);
+    }
+    public void getTestersTask(long id) {
+        testersTask = taskDao.getTestersTaskById(id);
+    }
+
+
 
     public void eventTaskUpdateFinished() {
         this._eventUpdTask.setValue(false);

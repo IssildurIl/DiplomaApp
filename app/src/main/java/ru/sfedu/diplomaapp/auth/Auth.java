@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -21,6 +22,8 @@ import android.widget.EditText;
 
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentAuthBinding;
+import ru.sfedu.diplomaapp.models.Employee;
+import ru.sfedu.diplomaapp.models.Tester;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeViewModel;
 
 public class Auth extends Fragment {
@@ -44,23 +47,22 @@ public class Auth extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
         if(mSettings.contains(APP_PREFERENCES_EMPLOYEE_EMAIL) && mSettings.contains(APP_PREFERENCES_EMPLOYEE_PASSWORD)){
             email=mSettings.getString(APP_PREFERENCES_EMPLOYEE_EMAIL,"");
             password=mSettings.getString(APP_PREFERENCES_EMPLOYEE_PASSWORD,"");
-            if(employeeIdFromSp!=0 && employeeTypeFromSp!=0){
-                switch (employeeTypeFromSp){
-                    case 0:{
-                        evm.getEmployeeByEmail(email,password);
-                        emlpoyeePreSearch();
+            if(email.length()!=0 && password.length()!=0) {
+                switch (employeeTypeFromSp) {
+                    case 0: {
+                        evm.getEmployeeByEmail(email, password);
+                        empPreSearch(evm.employeeByEmail);
                     }
-                    case 1:{
-                        evm.getDeveloperByEmail(email,password);
-                        developerPreSearch();
+                    case 1: {
+                        evm.getDeveloperByEmail(email, password);
+                        empPreSearch(evm.developerByEmail);
                     }
-                    case 2:{
-                        evm.getTesterByEmail(email,password);
-                        testerPreSearch();
+                    case 2: {
+                        evm.getTesterByEmail(email, password);
+                        empPreSearch(evm.testerByEmail);
                     }
                 }
             }
@@ -100,9 +102,9 @@ public class Auth extends Fragment {
                 evm.getDeveloperByEmail(binding.mailFieldTxt.getText().toString(), binding.passwordFieldTxt.getText().toString());
                 evm.getTesterByEmail(binding.mailFieldTxt.getText().toString(), binding.passwordFieldTxt.getText().toString());
             }catch (Exception e){}
-            emlpoyeeSearch(binding);
-            developerSearch(binding);
-            testerSearch(binding);
+            emlpoyeeSearch(binding,evm.employeeByEmail,0);
+            emlpoyeeSearch(binding,evm.developerByEmail, 1);
+            emlpoyeeSearch(binding,evm.testerByEmail,2);
         });
         return binding.getRoot();
     }
@@ -130,64 +132,8 @@ public class Auth extends Fragment {
         return false;
     }
 
-
-    private void testerSearch(FragmentAuthBinding binding) {
-        evm.testerByEmail.observe(getViewLifecycleOwner(),tester -> {
-            if(tester!=null){
-                employeeId = tester.get_id();
-                password = tester.getPassword();
-                email = tester.getEmail();
-                if(isEquals(password, binding.passwordFieldTxt.getText().toString())){
-                    SharedPreferences.Editor editor = mSettings.edit();
-                    editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
-                    editor.putInt(APP_PREFERENCES_EMPLOYEE_TYPE,2);
-                    editor.putString(APP_PREFERENCES_EMPLOYEE_EMAIL,email);
-                    editor.putString(APP_PREFERENCES_EMPLOYEE_PASSWORD,password);
-                    editor.apply();
-                }
-            }else{
-                binding.mailFieldTxt.setError("Такой пользователь не зарегестрирован");
-                return;
-            }
-            if(employeeId!=0 && observeCount == 0){
-                observeCount +=1;
-                NavOptions.Builder navBuilder = new NavOptions.Builder();
-                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-                navController.navigate(R.id.action_auth_to_navFragment, null, navBuilder.build());
-            }
-
-        });
-    }
-
-    private void developerSearch(FragmentAuthBinding binding) {
-        evm.developerByEmail.observe(getViewLifecycleOwner(), developer -> {
-            if (developer != null) {
-                employeeId = developer.get_id();
-                password = developer.getPassword();
-                email = developer.getEmail();
-                if (isEquals(password, binding.passwordFieldTxt.getText().toString())) {
-                    SharedPreferences.Editor editor = mSettings.edit();
-                    editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
-                    editor.putInt(APP_PREFERENCES_EMPLOYEE_TYPE,1);
-                    editor.putString(APP_PREFERENCES_EMPLOYEE_EMAIL,email);
-                    editor.putString(APP_PREFERENCES_EMPLOYEE_PASSWORD,password);
-                    editor.apply();
-                }
-            }else{
-                binding.mailFieldTxt.setError("Такой пользователь не зарегестрирован");
-                return;
-            }
-            if(employeeId!=0 && observeCount == 0){
-                observeCount +=1;
-                NavOptions.Builder navBuilder = new NavOptions.Builder();
-                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-                navController.navigate(R.id.action_auth_to_navFragment, null, navBuilder.build());
-            }
-        });
-    }
-
-    private void emlpoyeeSearch(FragmentAuthBinding binding) {
-        evm.employeeByEmail.observe(getViewLifecycleOwner(), employee -> {
+    private void emlpoyeeSearch(FragmentAuthBinding binding,LiveData<? extends Employee> empByEmail, int type) {
+        empByEmail.observe(getViewLifecycleOwner(), employee -> {
             if (employee != null) {
                 employeeId = employee.get_id();
                 password = employee.getPassword();
@@ -195,7 +141,7 @@ public class Auth extends Fragment {
                 if (isEquals(password, binding.passwordFieldTxt.getText().toString())) {
                     SharedPreferences.Editor editor = mSettings.edit();
                     editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
-                    editor.putInt(APP_PREFERENCES_EMPLOYEE_TYPE,0);
+                    editor.putInt(APP_PREFERENCES_EMPLOYEE_TYPE,type);
                     editor.putString(APP_PREFERENCES_EMPLOYEE_EMAIL,email);
                     editor.putString(APP_PREFERENCES_EMPLOYEE_PASSWORD,password);
                     editor.apply();
@@ -212,10 +158,9 @@ public class Auth extends Fragment {
             }
         });
     }
-
-
-    private void testerPreSearch() {
-        evm.testerByEmail.observe(getViewLifecycleOwner(),tester -> {
+    
+    private void empPreSearch( LiveData<? extends Employee> empByEmail) {
+        empByEmail.observe(getViewLifecycleOwner(),tester -> {
             if(tester!=null){
                 employeeId = tester.get_id();
             }
@@ -228,31 +173,5 @@ public class Auth extends Fragment {
         });
     }
 
-    private void developerPreSearch() {
-        evm.developerByEmail.observe(getViewLifecycleOwner(), developer -> {
-            if (developer != null) {
-                employeeId = developer.get_id();
-            }if(employeeId!=0 && observeCount == 0){
-                observeCount +=1;
-                NavOptions.Builder navBuilder = new NavOptions.Builder();
-                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-                navController.navigate(R.id.action_auth_to_navFragment, null, navBuilder.build());
-            }
-        });
-    }
-
-    private void emlpoyeePreSearch() {
-        evm.employeeByEmail.observe(getViewLifecycleOwner(), employee -> {
-            if (employee != null) {
-                employeeId = employee.get_id();
-            }
-            if(employeeId!=0 && observeCount == 0){
-                observeCount +=1;
-                NavOptions.Builder navBuilder = new NavOptions.Builder();
-                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
-                navController.navigate(R.id.action_auth_to_navFragment, null, navBuilder.build());
-            }
-        });
-    }
 
 }

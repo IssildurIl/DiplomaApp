@@ -25,7 +25,7 @@ import ru.sfedu.diplomaapp.utils.forTasks.TaskViewModel;
 public class EditTaskUserList extends Fragment {
 
     EmployeesViewModel evm;
-    NavController navController;
+    Integer transactionSpinnerVal,taskType;
     Long transactionTaskId, transactionProjectId;
     public EditTaskUserList() {
 
@@ -46,10 +46,15 @@ public class EditTaskUserList extends Fragment {
         Bundle bundle = this.getArguments();
         Bundle sendBundle = new Bundle();
         try{
+            transactionSpinnerVal = bundle.getInt("SPINNER_VAL");
             transactionTaskId = bundle.getLong("E_TASK_ID");
             transactionProjectId = bundle.getLong("E_PROJECT_ID");
+            taskType =  bundle.getInt("E_TASK_TYPE");
+            sendBundle.putInt("E_TASK_TYPE",taskType);
             sendBundle.putLong("E_TASK_ID",transactionTaskId);
             sendBundle.putLong("E_PROJECT_ID",transactionProjectId);
+            sendBundle.putInt("SPINNER_VAL",transactionSpinnerVal);
+
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -62,11 +67,32 @@ public class EditTaskUserList extends Fragment {
         });
         binding.recview.setAdapter(eia);
 
-        evm.employeeList.observe(getViewLifecycleOwner(), employees -> {
-            if (employees != null) {
-                eia.submitList(employees);
+        switch (taskType){
+            case 0: {
+                evm.employeeList.observe(getViewLifecycleOwner(), employees -> {
+                    if (employees != null) {
+                        eia.submitList(employees);
+                    }
+                });
+                break;
             }
-        });
+            case 1:{
+                evm.developerList.observe(getViewLifecycleOwner(), developers -> {
+                    if (developers != null) {
+                        eia.submitList(developers);
+                    }
+                });
+                break;
+            }
+            case 2:{
+                evm.testerList.observe(getViewLifecycleOwner(), testers -> {
+                    if (testers != null) {
+                        eia.submitList(testers);
+                    }
+                });
+                break;
+            }
+        }
 
         evm.getNavigateEmployeeToTask().observe(getViewLifecycleOwner(),employeeId->{
             if(employeeId!=null) {
