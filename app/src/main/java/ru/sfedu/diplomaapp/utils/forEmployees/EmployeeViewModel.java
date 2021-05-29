@@ -7,11 +7,15 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Date;
+
 import ru.sfedu.diplomaapp.dao.AppDatabase;
 import ru.sfedu.diplomaapp.dao.EmployeeDao;
 import ru.sfedu.diplomaapp.models.Developer;
 import ru.sfedu.diplomaapp.models.Employee;
 import ru.sfedu.diplomaapp.models.Tester;
+
+import static ru.sfedu.diplomaapp.dao.AppDatabase.databaseWriteExecutor;
 
 public class EmployeeViewModel extends AndroidViewModel {
 
@@ -27,6 +31,7 @@ public class EmployeeViewModel extends AndroidViewModel {
     public LiveData<Tester> testerByEmail;
     private MutableLiveData<Boolean> _eventAddEmployee = new MutableLiveData<>();
     private MutableLiveData<Boolean> _eventGetEmployeeByEmail = new MutableLiveData<>();
+    private MutableLiveData<Boolean> _eventUpdEmployee = new MutableLiveData<>();
     public EmployeeViewModel(@NonNull Application application) {
         super(application);
         appdb = AppDatabase.getDatabase(application);
@@ -92,5 +97,30 @@ public class EmployeeViewModel extends AndroidViewModel {
 
     public void eventEmployeeGetEmployeeByEmailFinished() {
         this._eventGetEmployeeByEmail.setValue(false);
+    }
+    public void updateEmployee() {
+        employee.getValue().setTimestamp(new Date().getTime());
+        AppDatabase.databaseWriteExecutor.execute(() -> employeeDao.update(employee.getValue()));
+        _eventUpdEmployee.setValue(true);
+    }
+
+    public void updateDeveloper() {
+        developer.getValue().setTimestamp(new Date().getTime());
+        AppDatabase.databaseWriteExecutor.execute(() -> employeeDao.update(developer.getValue()));
+        _eventUpdEmployee.setValue(true);
+    }
+
+    public void updateTester() {
+        tester.getValue().setTimestamp(new Date().getTime());
+        AppDatabase.databaseWriteExecutor.execute(() -> employeeDao.update(tester.getValue()));
+        _eventUpdEmployee.setValue(true);
+    }
+
+    public void eventEmployeeUpdateFinished() {
+        this._eventUpdEmployee.setValue(false);
+    }
+
+    public LiveData<Boolean> getEventEmployeeUpd(){
+        return _eventUpdEmployee;
     }
 }

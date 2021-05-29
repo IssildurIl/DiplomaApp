@@ -2,17 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.sfedu.diplomaapp">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_icon_white"
         android:label="@string/app_name"
-        android:windowSoftInputMode="stateHidden"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DiplomaApp">
+        android:theme="@style/Theme.DiplomaApp"
+        android:windowSoftInputMode="stateHidden">
+        <service
+            android:enabled="true"
+            android:name=".services.EmployeesService">
+        </service>
+        <service
+            android:enabled="true"
+            android:name=".services.ProjectService">
+        </service>
+        <service
+            android:enabled="true"
+            android:name=".services.TaskService">
+        </service>
         <activity android:name=".mainlist.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,4 +34,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

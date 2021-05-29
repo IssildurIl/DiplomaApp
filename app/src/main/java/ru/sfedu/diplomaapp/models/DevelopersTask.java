@@ -2,6 +2,7 @@ package ru.sfedu.diplomaapp.models;
 
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +20,7 @@ public class DevelopersTask extends Task{
   private int developerTaskType;
 
   public DevelopersTask () { }
-
+  @Ignore
   public DevelopersTask(String taskName, String taskDescription, Long employeeId, Long projectId,int status,  long createdDate, long deadline) {
     super.taskName = taskName;
     super.taskDescription = taskDescription;

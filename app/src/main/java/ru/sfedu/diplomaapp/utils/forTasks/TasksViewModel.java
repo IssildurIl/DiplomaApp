@@ -11,18 +11,18 @@ import java.util.List;
 
 import ru.sfedu.diplomaapp.dao.AppDatabase;
 import ru.sfedu.diplomaapp.dao.TaskDao;
-import ru.sfedu.diplomaapp.models.Developer;
 import ru.sfedu.diplomaapp.models.DevelopersTask;
-import ru.sfedu.diplomaapp.models.Project;
 import ru.sfedu.diplomaapp.models.Task;
-import ru.sfedu.diplomaapp.models.Tester;
 import ru.sfedu.diplomaapp.models.TestersTask;
+import ru.sfedu.diplomaapp.services.ProjectService;
+import ru.sfedu.diplomaapp.services.TaskService;
 
 import static ru.sfedu.diplomaapp.dao.AppDatabase.databaseWriteExecutor;
 
 public class TasksViewModel extends AndroidViewModel {
     private AppDatabase appDatabase;
     private TaskDao taskDao;
+    TaskService ts = new TaskService();
     public int numberOfTasks=0;
     public LiveData<List<Task>> taskList;
 
@@ -61,7 +61,7 @@ public class TasksViewModel extends AndroidViewModel {
         _eventCount.setValue(true);
     }
 
-    public void deleteTask(Task task) { databaseWriteExecutor.execute(() -> taskDao.deleteTask(task)); }
+    public void deleteTask(Task task) { ts.deleteTask(task);databaseWriteExecutor.execute(() -> taskDao.deleteTask(task)); }
 
     public Task getTaskEndTaskByPosition(int position){
         List<Task> listTasks = taskListFinished.getValue();
@@ -132,8 +132,6 @@ public class TasksViewModel extends AndroidViewModel {
     }
 
 
-
-
     public void getNumTaskByProject(long id){
         numberOfTasks = taskDao.getNumberOfTasksByProject(id);
     }
@@ -148,13 +146,5 @@ public class TasksViewModel extends AndroidViewModel {
         return navigateToTask;
     }
 
-
-    public void eventUpdateFinished() {
-        this._eventCount.setValue(false);
-    }
-
-    public LiveData<Boolean> getEventUpd(){
-        return _eventCount;
-    }
 
 }

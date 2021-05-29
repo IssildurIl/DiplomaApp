@@ -3,6 +3,9 @@ package ru.sfedu.diplomaapp.mainlist.mainfragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.Date;
 
 import ru.sfedu.diplomaapp.R;
@@ -33,7 +38,7 @@ public class ToDo extends Fragment {
     public static final String APP_PREFERENCES = "settings";
     public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
     public static final String APP_PREFERENCES_EMPLOYEE_TYPE= "SP_EMPLOYEE_TYPE";
-    long employeeIdFromSp;;
+    long employeeIdFromSp;
     Bundle bundle = new Bundle();
     SharedPreferences mSettings;
     TasksViewModel tvm;
@@ -72,6 +77,10 @@ public class ToDo extends Fragment {
             }
         });
         binding.goToPersonal.setOnClickListener(v -> {
+            RippleDrawable rippledImage = new
+                    RippleDrawable(ColorStateList.valueOf(Color.BLACK),
+                    binding.goToPersonal.getDrawable(), null);
+            binding.goToPersonal.setImageDrawable(rippledImage);
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
             navController.navigate(R.id.action_navFragment_to_personalCabinet,null,navBuilder.build());
@@ -84,7 +93,12 @@ public class ToDo extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        view.findViewById(R.id.fab).setOnClickListener(v -> {
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+            RippleDrawable rippledImage = new
+                    RippleDrawable(ColorStateList.valueOf(Color.BLACK),
+                    fab.getDrawable(), null);
+            fab.setImageDrawable(rippledImage);
             navController.navigate(R.id.action_toDo_to_createTask);
         });
     }

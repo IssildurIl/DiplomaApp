@@ -7,14 +7,18 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Date;
 import java.util.List;
 
 import ru.sfedu.diplomaapp.dao.AppDatabase;
 import ru.sfedu.diplomaapp.dao.TaskDao;
 import ru.sfedu.diplomaapp.models.DevelopersTask;
+import ru.sfedu.diplomaapp.models.Employee;
 import ru.sfedu.diplomaapp.models.Project;
 import ru.sfedu.diplomaapp.models.Task;
 import ru.sfedu.diplomaapp.models.TestersTask;
+
+import static ru.sfedu.diplomaapp.dao.AppDatabase.databaseWriteExecutor;
 
 public class TaskViewModel extends AndroidViewModel {
 
@@ -33,7 +37,6 @@ public class TaskViewModel extends AndroidViewModel {
 
     public TaskViewModel(@NonNull Application application) {
         super(application);
-
         appdb = AppDatabase.getDatabase(application);
         taskDao = appdb.taskDao();
         _eventLoadDataTask.setValue(true);
@@ -58,47 +61,53 @@ public class TaskViewModel extends AndroidViewModel {
 
 
     public void updateTask() {
+        task.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTask(task.getValue()));
         _eventUpdTask.setValue(true);
     }
 
     public void updateDevelopersTask() {
+        developersTask.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateDevelopersTask(developersTask.getValue()));
         _eventUpdTask.setValue(true);
     }
 
     public void updateTestersTask() {
+        testersTask.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTestersTask(testersTask.getValue()));
         _eventUpdTask.setValue(true);
     }
 
     public void updateTaskToEmployee() {
+        task.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTask(task.getValue()));
         _eventUpdTaskToEmployee.setValue(true);
     }
 
     public void updateDevelopersTaskToEmployee() {
+        developersTask.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateDevelopersTask(developersTask.getValue()));
         _eventUpdTaskToEmployee.setValue(true);
     }
 
     public void updateTestersTaskToEmployee() {
+        testersTask.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTestersTask(testersTask.getValue()));
         _eventUpdTaskToEmployee.setValue(true);
     }
 
-
-
-
     public void updateTaskToProject() {
+        task.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTask(task.getValue()));
         _eventUpdTaskToProject.setValue(true);
     }
     public void updateDevelopersTaskToProject() {
+        developersTask.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateDevelopersTask(developersTask.getValue()));
         _eventUpdTaskToProject.setValue(true);
     }
     public void updateTestersTaskToProject() {
+        testersTask.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTestersTask(testersTask.getValue()));
         _eventUpdTaskToProject.setValue(true);
     }
@@ -159,5 +168,9 @@ public class TaskViewModel extends AndroidViewModel {
         this._eventLoadDataTask.setValue(false);
     }
 
+    public void updateTask(Task task) {
+        task.setTimestamp(new Date().getTime());
+        databaseWriteExecutor.execute(() -> taskDao.updateTask(task));
+    }
 
 }

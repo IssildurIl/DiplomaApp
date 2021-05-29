@@ -2,10 +2,12 @@ package ru.sfedu.diplomaapp.models;
 
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,12 +26,13 @@ public class Project implements Serializable {
   private String taskNumber;
   @TypeConverters({DateConverter.class})
   private Long takeIntoDevelopment;
-
+  protected long timestamp;
   public Project () { }
 
-
+  @Ignore
   public Project(String title,String description) {
     this.title = title;
     this.description = description;
+    this.timestamp = new Date().getTime();
   }
 }

@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Date;
+
 import ru.sfedu.diplomaapp.dao.AppDatabase;
 import ru.sfedu.diplomaapp.dao.ProjectDao;
 import ru.sfedu.diplomaapp.models.Project;
@@ -42,6 +44,7 @@ public class ProjectViewModel extends AndroidViewModel {
     }
 
     public void updateProject() {
+        project.getValue().setTimestamp(new Date().getTime());
         AppDatabase.databaseWriteExecutor.execute(() -> projectDao.updateProject(project.getValue()));
         _eventUpdProject.setValue(true);
     }

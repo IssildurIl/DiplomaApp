@@ -26,8 +26,14 @@ public interface EmployeeDao {
     @Query("SELECT * FROM tester")
     LiveData<List<Tester>> getAllTesters();
 
-//    @Query("SELECT _id,firstName,TypeOfEmployee FROM employee union Select _id,firstName,TypeOfEmployee from developer d union Select _id,firstName,TypeOfEmployee from tester")
-//    LiveData<List<Employee>> getAllUsers();
+    @Query("SELECT * FROM employee")
+    List<Employee> getAllEmployeeSync();
+
+    @Query("SELECT * FROM developer")
+    List<Developer> getAllDevelopersSync();
+
+    @Query("SELECT * FROM tester")
+    List<Tester> getAllTestersSync();
 
     @Query("SELECT * FROM employee WHERE _id = :id")
     LiveData<Employee> getById(long id);

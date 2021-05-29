@@ -10,10 +10,11 @@
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primary"
-        app:layoutDescription="@xml/fragment_hellofragment_scene"
+        app:layoutDescription="@xml/fragment_hellofragment_xml_constraintlayout4_scene"
         tools:context=".mainlist.mainfragments.HelloAct">
 
         <TextView
@@ -21,11 +22,10 @@
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="50dp"
+            android:text="Обновления"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:text="Обновления"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/recview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,12 +43,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_personal_cab" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <TextView
+            android:id="@+id/motivation"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.111"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptionView1" />
 
@@ -63,6 +67,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_outline_add_24"
             app:tint="@color/white" />
+
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

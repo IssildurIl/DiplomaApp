@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.Data;
 import lombok.ToString;
@@ -19,11 +20,11 @@ public class Employee implements Serializable {
 
   protected String firstName;
   protected String password;
-  protected int TypeOfEmployee;
+  protected int typeOfEmployee;
   protected int age;
   protected int sex;
   protected String email;
-
+  protected long timestamp;
   public Employee () { }
 
   @Ignore
@@ -31,7 +32,7 @@ public class Employee implements Serializable {
     this.firstName = firstName;
     this.password = password;
     this.email = email;
-    this.TypeOfEmployee = typeOfEmployee;
+    this.typeOfEmployee = typeOfEmployee;
+    this.timestamp = new Date().getTime();
   }
-
 }

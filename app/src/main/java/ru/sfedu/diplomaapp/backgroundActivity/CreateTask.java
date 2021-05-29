@@ -1,6 +1,9 @@
 package ru.sfedu.diplomaapp.backgroundActivity;
 
 import android.app.DatePickerDialog;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -38,14 +41,12 @@ public class CreateTask extends Fragment {
 
     TaskViewModel tvm;
 
-    EditText mutedAddEmployee,mutedAddProjectTo,mutedAddTime,mutedAddPoint;
     Calendar dateAndTime= Calendar.getInstance();
-    ImageButton returnto;
     NavController navController;
     ProjectViewModel pvm;
     EmployeeViewModel evm;
     Long projectId,employeeId;
-
+    EditText mutedAddTime;
     public CreateTask() {
 
     }
@@ -113,10 +114,10 @@ public class CreateTask extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
+        mutedAddTime = binding.addTime;
 
         binding.setProjectViewModel(pvm);
         binding.setEmployeeViewModel(evm);
-        init(binding);
         buttons(binding);
         return binding.getRoot();
     }
@@ -129,16 +130,6 @@ public class CreateTask extends Fragment {
         setInitialDateTime();
     }
 
-
-    private void init(ru.sfedu.diplomaapp.databinding.FragmentCreateTaskBinding binding) {
-        mutedAddEmployee =binding.addEmployee;
-        mutedAddProjectTo = binding.addProjectTo;
-        mutedAddTime = binding.addTime;
-        mutedAddPoint = binding.addPoint;
-        returnto = binding.returnto;
-    }
-
-
     protected void colorBar() {
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -149,7 +140,11 @@ public class CreateTask extends Fragment {
 
     //нажатия
     protected void buttons(ru.sfedu.diplomaapp.databinding.FragmentCreateTaskBinding binding){
-        returnto.setOnClickListener(v -> {
+        binding.returnto.setOnClickListener(v -> {
+            RippleDrawable rippledImage = new
+                    RippleDrawable(ColorStateList.valueOf(Color.BLACK),
+                    binding.returnto.getDrawable(), null);
+            binding.returnto.setImageDrawable(rippledImage);
             if(binding.taskName.getText().length() == 0){
                 binding.taskName.setError("Назовите задачу");
                 return;
@@ -178,10 +173,10 @@ public class CreateTask extends Fragment {
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
             navController.navigate(R.id.action_createTask_to_navFragment,null,navBuilder.build());
         });
-        mutedAddTime.setOnClickListener(v -> {
+        binding.addTime.setOnClickListener(v -> {
             setDate(v);
         });
-        mutedAddProjectTo.setOnClickListener(v->{
+        binding.addProjectTo.setOnClickListener(v->{
             Bundle bundle = new Bundle();
             if(binding.taskName.getText().length()!=0){
                 bundle.putString("TASK_NAME",binding.taskName.getText().toString());
@@ -199,7 +194,7 @@ public class CreateTask extends Fragment {
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
             navController.navigate(R.id.action_createTask_to_projectList,bundle);
         });
-        mutedAddEmployee.setOnClickListener(v->{
+        binding.addEmployee.setOnClickListener(v->{
             Bundle bundle = new Bundle();
             if(binding.taskName.getText().length()!=0){
                 bundle.putString("TASK_NAME",binding.taskName.getText().toString());

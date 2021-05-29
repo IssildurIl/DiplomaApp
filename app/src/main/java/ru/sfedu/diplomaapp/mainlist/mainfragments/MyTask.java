@@ -3,6 +3,9 @@ package ru.sfedu.diplomaapp.mainlist.mainfragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentHellofragmentBinding;
@@ -72,6 +77,10 @@ public class MyTask extends Fragment {
             }
         });
         binding.goToPersonal.setOnClickListener(v -> {
+            RippleDrawable rippledImage = new
+                    RippleDrawable(ColorStateList.valueOf(Color.BLACK),
+                    binding.goToPersonal.getDrawable(), null);
+            binding.goToPersonal.setImageDrawable(rippledImage);
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
             navController.navigate(R.id.action_navFragment_to_personalCabinet,null,navBuilder.build());
@@ -84,8 +93,13 @@ public class MyTask extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        view.findViewById(R.id.fab).setOnClickListener(v -> {
-            navController.navigate(R.id.action_myTask_to_createTask);
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+            RippleDrawable rippledImage = new
+                    RippleDrawable(ColorStateList.valueOf(Color.BLACK),
+                    fab.getDrawable(), null);
+            fab.setImageDrawable(rippledImage);
+            navController.navigate(R.id.action_toDo_to_createTask);
         });
     }
 

@@ -2,6 +2,9 @@ package ru.sfedu.diplomaapp.mainlist.mainfragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,9 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+
+import java.util.List;
 
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentHellofragmentBinding;
@@ -50,10 +56,17 @@ public class HelloAct extends Fragment {
         binding.setEmployeeListViewModel(evm);
         shared(binding);
         binding.goToPersonal.setOnClickListener(v -> {
+            RippleDrawable rippledImage = new
+                    RippleDrawable(ColorStateList.valueOf(Color.BLACK),
+                    binding.goToPersonal.getDrawable(), null);
+            binding.goToPersonal.setImageDrawable(rippledImage);
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
             navController.navigate(R.id.action_navFragment_to_personalCabinet,null,navBuilder.build());
         });
+        String[] motivation = getResources().getStringArray(R.array.helloActScene);
+        int a = (int) (Math.random()*(motivation.length));
+        binding.motivation.setText(motivation[a]);
         return binding.getRoot();
     }
 

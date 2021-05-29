@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ru.sfedu.diplomaapp.dao.AppDatabase;
@@ -18,17 +19,11 @@ import static ru.sfedu.diplomaapp.dao.AppDatabase.databaseWriteExecutor;
 public class ProjectsViewModel extends AndroidViewModel {
     private AppDatabase appDatabase;
     private ProjectDao projectDao;
-
     public LiveData<List<Project>> projectList;
     private MutableLiveData<Long> navigateToProject = new MutableLiveData<>();
-
     private MutableLiveData<Long> navigateToCreateTask = new MutableLiveData<>();
-
-
-
     public ProjectsViewModel(Application application) {
         super(application);
-
         appDatabase = AppDatabase.getDatabase(application);
         projectDao = appDatabase.projectDao();
         navigateToProject.setValue(null);
@@ -38,7 +33,10 @@ public class ProjectsViewModel extends AndroidViewModel {
 
     public void insertProject(Project project) { databaseWriteExecutor.execute(() -> projectDao.insertProject(project)); }
 
-    public void updateProject(Project project) { databaseWriteExecutor.execute(() -> projectDao.updateProject(project)); }
+    public void updateProject(Project project) {
+        project.setTimestamp(new Date().getTime());
+        databaseWriteExecutor.execute(() -> projectDao.updateProject(project));
+    }
 
     public void deleteProject(Project project) { databaseWriteExecutor.execute(() -> projectDao.deleteProject(project)); }
 

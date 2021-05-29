@@ -13,12 +13,11 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @Entity(tableName = "Developer")
-
 public class Developer extends Employee {
 
   protected int status;
 
-  protected int programmingLanguage;
+  protected String programmingLanguage;
 
   public Developer () {
   }
@@ -28,7 +27,7 @@ public class Developer extends Employee {
     super.firstName = firstName;
     super.password = password;
     super.email = email;
-    super.TypeOfEmployee = typeOfEmployee;
+    super.typeOfEmployee = typeOfEmployee;
   }
 
 }

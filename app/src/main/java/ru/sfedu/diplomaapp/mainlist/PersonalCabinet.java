@@ -36,6 +36,7 @@ public class PersonalCabinet extends Fragment {
     long employeeIdFromSp;
     int employeeTypeFromSp;
     NavController navController;
+    int count=0;
     public PersonalCabinet() {
     }
 
@@ -65,12 +66,73 @@ public class PersonalCabinet extends Fragment {
             editor.putString(APP_PREFERENCES_EMPLOYEE_EMAIL,"");
             editor.putString(APP_PREFERENCES_EMPLOYEE_PASSWORD,"");
             editor.apply();
-
             NavOptions.Builder navBuilder =  new NavOptions.Builder();
             navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
             navController.navigate(R.id.action_personalCabinet_to_auth,null,navBuilder.build());
-
         });
+
+        binding.correctbtn.setOnClickListener(v->{
+            count+=1;
+            boolean click = (count & 1) != 0;
+            binding.nameField.setEnabled(click);
+            binding.ageField.setEnabled(click);
+            binding.userStackField.setEnabled(click);
+            if (click) {
+                binding.radioSex.setVisibility(View.VISIBLE);
+            } else {
+                binding.radioSex.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        binding.saveandexit.setOnClickListener(v->{
+            switch (employeeTypeFromSp) {
+                case 0:
+                    if(binding.nameField.getText().toString().length()!=0){
+                        evm.employee.getValue().setFirstName(binding.nameField.getText().toString());
+                    }
+                    if(binding.ageField.getText().toString().length()!=0){
+                        evm.employee.getValue().setAge(Integer.parseInt(binding.ageField.getText().toString()));
+                    }
+                    evm.updateEmployee();
+                    break;
+                case 1:
+                    if(binding.nameField.getText().toString().length()!=0){
+                        evm.developer.getValue().setFirstName(binding.nameField.getText().toString());
+                    }
+                    if(binding.ageField.getText().toString().length()!=0){
+                        evm.developer.getValue().setAge(Integer.parseInt(binding.ageField.getText().toString()));
+                    }
+                    if(binding.userStackField.getText().toString().length()!=0) {
+                        evm.developer.getValue().setProgrammingLanguage(binding.userStackField.getText().toString());
+                    }
+                    evm.updateDeveloper();
+                    break;
+                case 2:
+                    if(binding.nameField.getText().toString().length()!=0) {
+                        evm.tester.getValue().setFirstName(binding.nameField.getText().toString());
+                    }
+                    if(binding.ageField.getText().toString().length()!=0) {
+                        evm.tester.getValue().setAge(Integer.parseInt(binding.ageField.getText().toString()));
+                    }
+                    if(binding.userStackField.getText().toString().length()!=0) {
+                        evm.tester.getValue().setProgrammingLanguage(binding.userStackField.getText().toString());
+                    }
+                    evm.updateTester();
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        evm.getEventEmployeeUpd().observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean){
+                NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
+                navController.navigate(R.id.action_personalCabinet_to_navFragment,null,navBuilder.build());
+                evm.eventEmployeeUpdateFinished();
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -94,24 +156,25 @@ public class PersonalCabinet extends Fragment {
     private void methodGetEmployee(FragmentPersonalCabinetBinding binding, long employeeIdFromSp, int status) {
         switch (status) {
             case 0:
+                binding.userProfField.setVisibility(View.INVISIBLE);
                 evm.getEmployee(employeeIdFromSp);
                 evm.employee.observe(getViewLifecycleOwner(),employee -> {
-                    binding.userName.setText(employee.getFirstName());
-                    binding.userProfession.setText("Employee");
+                    binding.nameField.setText(employee.getFirstName());
+                    binding.userProfField.setText("Employee");
                 });
                 break;
             case 1:
                 evm.getDeveloper(employeeIdFromSp);
                 evm.developer.observe(getViewLifecycleOwner(),developer -> {
-                    binding.userName.setText(developer.getFirstName());
-                    binding.userProfession.setText("Developer");
+                    binding.nameField.setText(developer.getFirstName());
+                    binding.userProfField.setText("Developer");
                 });
                 break;
             case 2:
                 evm.getTester(employeeIdFromSp);
                 evm.tester.observe(getViewLifecycleOwner(),tester -> {
-                    binding.userName.setText(tester.getFirstName());
-                    binding.userProfession.setText("Tester");
+                    binding.nameField.setText(tester.getFirstName());
+                    binding.userProfField.setText("Tester");
                 });
                 break;
             default:

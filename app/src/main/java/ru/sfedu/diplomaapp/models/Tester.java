@@ -23,6 +23,6 @@ public class Tester extends Developer {
     super.firstName = firstName;
     super.password = password;
     super.email = email;
-    super.TypeOfEmployee = typeOfEmployee;
+    super.typeOfEmployee = typeOfEmployee;
   }
 }

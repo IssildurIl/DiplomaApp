@@ -21,8 +21,6 @@ import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeDiffCallback;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeItemAdapterForCreatingTask;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeesViewModel;
 import ru.sfedu.diplomaapp.utils.forTasks.TaskViewModel;
-
-
 public class UserList extends Fragment {
     EmployeesViewModel evm;
     Integer transactionSpinnerVal;
@@ -31,13 +29,11 @@ public class UserList extends Fragment {
     public UserList() {
 
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,7 +41,6 @@ public class UserList extends Fragment {
         binding.setLifecycleOwner(this);
         evm = new ViewModelProvider(this).get(EmployeesViewModel.class);
         binding.setEmployeesListViewModel(evm);
-
         Bundle bundle = this.getArguments();
         Bundle sendBundle = new Bundle();
         try{
@@ -63,7 +58,6 @@ public class UserList extends Fragment {
         EmployeeItemAdapterForCreatingTask eia = new EmployeeItemAdapterForCreatingTask(new EmployeeDiffCallback(),employee -> {
             evm.onEmployeeToTaskItemClicked(employee.get_id());
         });
-
         binding.recview.setAdapter(eia);
         switch (transactionSpinnerVal){
             case 0: {

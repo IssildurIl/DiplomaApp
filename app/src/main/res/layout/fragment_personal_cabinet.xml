@@ -22,119 +22,195 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/animationView" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameField"
-            android:layout_width="0dp"
-            android:layout_height="77dp"
+        <TextView
+            android:id="@+id/txtNameField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
+            android:singleLine="true"
+            android:text="Имя пользователя:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <EditText
+            android:id="@+id/nameField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="32dp"
-            android:hint="Введите имя"
-            app:boxStrokeColor="@color/grey"
+            android:background="@color/primary"
+            android:enabled="false"
+            android:singleLine="true"
+            android:textColor="@color/silver"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:boxStrokeColor="@color/silver"
             app:errorEnabled="true"
-            app:hintTextColor="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@+id/txtNameField"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:startIconDrawable="@drawable/ic_account_edit">
+            app:layout_constraintStart_toEndOf="@+id/txtNameField"
+            app:startIconDrawable="@drawable/ic_account_edit" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/userName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:textColor="@color/grey" />
+        <TextView
+            android:id="@+id/txtUserProfField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:singleLine="true"
+            android:text="Профессия:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/txtNameField"
+            app:layout_constraintTop_toBottomOf="@+id/txtNameField" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:id="@+id/userProfField"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="32dp"
-            android:hint="Профессия"
-            app:boxStrokeColor="@color/grey"
+            android:background="@color/primary"
+            android:enabled="false"
+            android:singleLine="true"
+            android:textColor="@color/silver"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:boxStrokeColor="@color/silver"
             app:errorEnabled="true"
-            app:hintTextColor="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@+id/txtUserProfField"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/nameField"
-            app:layout_constraintTop_toBottomOf="@+id/nameField"
-            app:startIconDrawable="@drawable/ic_account_edit">
+            app:layout_constraintStart_toEndOf="@+id/txtUserProfField"
+            app:startIconDrawable="@drawable/ic_account_edit" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/userProfession"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:textColor="@color/grey" />
+        <TextView
+            android:id="@+id/txtAgeField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:singleLine="true"
+            android:text="Возраст:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/txtUserProfField"
+            app:layout_constraintTop_toBottomOf="@+id/txtUserProfField" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:id="@+id/ageField"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="32dp"
-            android:hint="Возраст"
-            app:boxStrokeColor="@color/grey"
+            android:background="@color/primary"
+            android:enabled="false"
+            android:singleLine="true"
+            android:textColor="@color/silver"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:boxStrokeColor="@color/silver"
             app:errorEnabled="true"
-            app:hintTextColor="@color/grey"
+            android:inputType="number"
+            android:maxLength="2"
+            app:layout_constraintBottom_toBottomOf="@+id/txtAgeField"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/userProfField"
-            app:layout_constraintTop_toBottomOf="@+id/userProfField"
-            app:startIconDrawable="@drawable/ic_account_edit">
+            app:layout_constraintStart_toEndOf="@+id/txtAgeField"
+            app:startIconDrawable="@drawable/ic_account_edit" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:textColor="@color/grey" />
+        <TextView
+            android:id="@+id/txtUserStackField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:singleLine="true"
+            android:text="Стек:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/txtAgeField"
+            app:layout_constraintTop_toBottomOf="@+id/txtAgeField" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <Button
-            android:id="@+id/button"
+        <EditText
+            android:id="@+id/userStackField"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="24dp"
-            android:text="Save and Exit"
-            android:backgroundTint="@color/third"
-            app:layout_constraintBottom_toTopOf="@+id/logOutBtn"
+            android:background="@color/primary"
+            android:enabled="false"
+            android:singleLine="true"
+            android:textColor="@color/silver"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:boxStrokeColor="@color/silver"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toBottomOf="@+id/txtUserStackField"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/txtUserStackField"
+            app:startIconDrawable="@drawable/ic_stack" />
 
-        <Button
+
+        <ImageButton
             android:id="@+id/logOutBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_logout"
+            app:layout_constraintEnd_toStartOf="@+id/correctbtn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/correctbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_correct"
+            app:tint="@color/silver" />
+
+        <Button
+            android:id="@+id/saveandexit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="24dp"
-            android:text="Log Out"
-            android:backgroundTint="@color/red"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/third"
+            android:text="Save and Exit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logOutBtn"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/face" />
 
         <RadioGroup
             android:id="@+id/radioSex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/imageView">
 
             <RadioButton
                 android:id="@+id/radioMale"
@@ -150,30 +226,19 @@
                 android:text="Жен." />
         </RadioGroup>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userStackField"
+        <TextView
+            android:id="@+id/textView4"
             android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
-            android:hint="Стек"
-            app:boxStrokeColor="@color/grey"
-            app:errorEnabled="true"
-            app:hintTextColor="@color/grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ageField"
-            app:layout_constraintTop_toBottomOf="@+id/ageField"
-            app:startIconDrawable="@drawable/ic_stack">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/userStack"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:textColor="@color/grey" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/silver"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Личный кабинет"
+            app:layout_constraintEnd_toStartOf="@+id/logOutBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

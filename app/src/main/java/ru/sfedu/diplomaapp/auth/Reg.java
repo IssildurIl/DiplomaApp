@@ -18,14 +18,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import ru.sfedu.diplomaapp.AuthorisationController;
+import ru.sfedu.diplomaapp.controllers.EmployeeController;
 import ru.sfedu.diplomaapp.R;
 import ru.sfedu.diplomaapp.databinding.FragmentRegBinding;
 
@@ -33,21 +32,16 @@ import ru.sfedu.diplomaapp.models.Developer;
 import ru.sfedu.diplomaapp.models.Employee;
 import ru.sfedu.diplomaapp.models.Tester;
 import ru.sfedu.diplomaapp.utils.forEmployees.EmployeeViewModel;
+import ru.sfedu.diplomaapp.utils.otherUtils.RetrofitConfig;
 
 public class Reg extends Fragment {
     NavController navController;
     private EmployeeViewModel evm;
-    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://young-ocean-61535.herokuapp.com")
-            .addConverterFactory(GsonConverterFactory.create()).build();
-    AuthorisationController controller = retrofit.create(AuthorisationController.class);
-
+    public RetrofitConfig retrofitConfig = new RetrofitConfig();
     public static final String APP_PREFERENCES = "settings";
     public static final String APP_PREFERENCES_EMPLOYEE_ID= "SP_EMPLOYEE_ID";
     public static final String APP_PREFERENCES_EMPLOYEE_TYPE= "SP_EMPLOYEE_TYPE";
-    public static final String APP_PREFERENCES_EMPLOYEE_EMAIL= "SP_EMPLOYEE_EMAIL";
-    public static final String APP_PREFERENCES_EMPLOYEE_PASSWORD= "SP_EMPLOYEE_PASSWORD";
     SharedPreferences mSettings;
-
 
     public Reg() {
     }
@@ -78,31 +72,24 @@ public class Reg extends Fragment {
             switch (binding.spinner.getSelectedIndex()){
                 case 0:
                     employeeEnter(binding);
+                    Employee throwEmployee = new Employee(binding.nameFieldTxt.getText().toString(), binding.passwordHintTxt.getText().toString(),
+                            binding.mailFieldTxt.getText().toString(),binding.spinner.getSelectedIndex());
+                    retrofitLogin(throwEmployee);
                     break;
                 case 1:
                     developerEnter(binding);
+                    Developer throwDeveloper = new Developer(binding.nameFieldTxt.getText().toString(), binding.passwordHintTxt.getText().toString(),
+                            binding.mailFieldTxt.getText().toString(),binding.spinner.getSelectedIndex());
+                    retrofitLogin(throwDeveloper);
                     break;
                 case 2:
                     testerEnter(binding);
+                    Tester throwTester = new Tester(binding.nameFieldTxt.getText().toString(), binding.passwordHintTxt.getText().toString(),
+                            binding.mailFieldTxt.getText().toString(),binding.spinner.getSelectedIndex());
+                    retrofitLogin(throwTester);
                     break;
                 default: break;
             }
-
-//            Call<Boolean> call = controller.addEmployee(new Employee(binding.nameFieldTxt.getText().toString(), binding.passwordHintTxt.getText().toString(),
-//                    binding.mailFieldTxt.getText().toString()));
-//            call.enqueue(new Callback<Boolean>() {
-//                @Override
-//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                    Log.d("Success", String.valueOf(response.body()));
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Boolean> call, Throwable t) {
-//                    Log.d("Err", t.getMessage());
-//                }
-//            });
-
-
         });
         return binding.getRoot();
         }
@@ -153,7 +140,6 @@ public class Reg extends Fragment {
                 editor.putLong(APP_PREFERENCES_EMPLOYEE_ID, employeeId);
                 editor.putInt(APP_PREFERENCES_EMPLOYEE_TYPE,2);
                 editor.apply();
-
                 NavOptions.Builder navBuilder =  new NavOptions.Builder();
                 navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out).setPopEnterAnim(R.anim.fade_in).setPopExitAnim(R.anim.fade_out);
                 navController.navigate(R.id.action_reg_to_navFragment,null,navBuilder.build());
@@ -197,7 +183,26 @@ public class Reg extends Fragment {
                 navController.navigate(R.id.action_reg_to_navFragment,null,navBuilder.build());
             }
         });
+
     }
 
+    private void retrofitLogin(Employee employee) {
+        Call<Boolean> call = retrofitConfig.getEmployeeController().addEmployee(employee);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(response.isSuccessful()){
+                    Log.d("Success", String.valueOf(response.body()));
+                }
+                else {
+                    Log.d("Not success","fail");
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("Err", t.getMessage());
+            }
+        });
+    }
 }
